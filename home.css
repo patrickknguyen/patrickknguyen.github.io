@@ -1,0 +1,110 @@
+/* ============================================
+   Home Page Styles
+   ============================================ */
+
+/* --- Hero --- */
+.header__bottom {
+    margin-top: calc(var(--space-md) * 0.75);
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-md);
+    padding-bottom: calc(var(--space-2xl) * 0.5);
+}
+
+.header__portrait {
+    grid-column: 10 / span 3;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: grayscale(20%);
+}
+
+#about {
+    padding-bottom: 2rem;
+}
+
+/* --- About Section --- */
+.about__layout {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-md);
+    align-items: start;
+}
+
+.about__label {
+    grid-column: 1 / span 4;
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+}
+
+.about__text {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+}
+
+.about__text:nth-child(2) {
+    grid-column: 5 / span 4;
+}
+
+.about__text:nth-child(3) {
+    grid-column: 9 / span 4;
+}
+
+/* --- Work / Projects Section --- */
+.work__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.project-card {
+    grid-column: span 4;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-card__img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.project-card:hover .project-card__img {
+    transform: scale(1.03);
+    filter: brightness(0.92);
+}
+
+.project-card__info {
+    padding: var(--space-sm) 0;
+}
+
+.project-card__title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.project-card__desc {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+}
+
+/* --- Home Responsive overrides --- */
+@media (max-width: 768px) {
+
+    .header__portrait,
+    .about__text:nth-child(2),
+    .about__text:nth-child(3),
+    .project-card {
+        grid-column: 1 / -1;
+    }
+}

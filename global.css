@@ -1,0 +1,235 @@
+/* ============================================
+   Design System — Minimal Portfolio (Global)
+   ============================================ */
+
+/* --- Custom Properties --- */
+:root {
+    --color-bg: #f5f4f0;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #555;
+    --color-border: #d4d4d0;
+    --color-accent: #1a1a1a;
+    --color-link-hover: #666;
+
+    --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 4rem;
+    --space-xl: 6rem;
+    --space-2xl: 10rem;
+
+    --max-width: 1800px;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-link-hover);
+}
+
+::selection {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+}
+
+/* --- Layout --- */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 8vw, 10rem);
+}
+
+/* --- Base Grid Rules --- */
+.header__top>*,
+.header__bottom>*,
+.about__layout>*,
+.work__grid>*,
+.footer__inner>*,
+.project__layout>* {
+    min-width: 0;
+}
+
+/* --- Header --- */
+.header {
+    padding-top: var(--space-md);
+}
+
+.header__inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.header__top {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-md);
+    align-items: baseline;
+}
+
+.header__name {
+    grid-column: 1 / span 2;
+    font-family: var(--font-heading);
+    font-size: clamp(2.02rem, 4.3vw, 3.24rem);
+    font-weight: 300;
+    line-height: 1.1;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+}
+
+.header__nav {
+    grid-column: 10 / span 3;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    gap: var(--space-md);
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--color-border);
+    line-height: 1;
+}
+
+.header__nav a {
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+}
+
+.header__nav a:hover {
+    color: var(--color-link-hover);
+}
+
+/* --- Section Shared --- */
+.section {
+    padding: 1.25rem 0;
+}
+
+.section--bordered {
+    border-top: none;
+}
+
+.section--bordered .container {
+    position: relative;
+}
+
+.section--bordered .container::before {
+    content: "";
+    position: absolute;
+    top: -1.25rem;
+    left: calc(clamp(2rem, 8vw, 10rem) * 0.25);
+    right: calc(clamp(2rem, 8vw, 10rem) * 0.25);
+    height: 1px;
+    background-color: var(--color-border);
+}
+
+.section__label {
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+    margin-bottom: var(--space-md);
+}
+
+/* --- Contact / Footer --- */
+.footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-lg) 0;
+}
+
+.footer__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-md);
+    align-items: center;
+}
+
+.footer__text {
+    grid-column: 1 / span 6;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.footer__links {
+    grid-column: 7 / span 6;
+    justify-content: flex-end;
+    display: flex;
+    gap: var(--space-md);
+}
+
+.footer__links a {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.footer__links a:hover {
+    color: var(--color-text);
+}
+
+/* ============================================
+   Global Responsive Fallbacks
+   ============================================ */
+@media (max-width: 768px) {
+    .header__inner {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .header__top,
+    .header__bottom,
+    .about__layout,
+    .work__grid,
+    .footer__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .header__nav,
+    .header__name,
+    .about__label,
+    .footer__text,
+    .footer__links,
+    .project__title,
+    .project__objective,
+    .project__overview {
+        grid-column: 1 / -1;
+    }
+
+    .header__nav,
+    .footer__links {
+        justify-content: flex-start;
+    }
+
+    .header__nav {
+        gap: var(--space-md);
+    }
+}
