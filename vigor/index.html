@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../projects.css">
+    <link rel="stylesheet" href="vigor.css">
 </head>
 
 <body>
@@ -48,10 +49,10 @@
                     <p class="project__meta">Computer Vision & Natural Language · 2026</p>
 
                     <ul class="project__toc">
-                        <li><a href="#problem-space">1 / Problem Space</a></li>
-                        <li><a href="#dataset-constraints">2 / Clinical Dataset & Constraints</a></li>
-                        <li><a href="#pipeline-design">3 / Data Pipeline Design</a></li>
-                        <li><a href="#model-architecture">4 / Model Architecture</a></li>
+                        <li><a href="#background">1 / Background & Motivation</a></li>
+                        <li><a href="#dataset">2 / Dataset & Scope</a></li>
+                        <li><a href="#pipeline">3 / Data Pipeline</a></li>
+                        <li><a href="#architecture">4 / Vision-Language Architecture</a></li>
                         <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
                     </ul>
                 </div>
@@ -59,18 +60,22 @@
                 <div class="project__objective">
                     <h3>Project Objective</h3>
                     <p>
-                        To optimize the operative note generation pipeline by refining large language model prompting
-                        strategies, utilizing multi-modal data to accurately reconstruct surgical events.
+                        With the adoption of the da Vinci SP at Stanford Medicine, Dr. Holsinger's team found themselves
+                        with an ever-growing stream of high-quality 4K surgical video. Dr. Holsinger identified the data
+                        as a largely underutilized asset and sought a research partnership to explore what was
+                        possible. ViGOR is a vision-language framework that automates operative note generation
+                        directly from surgical video.
                     </p>
                 </div>
 
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        ViGOR explores the intersection of computer vision and clinical documentation. By parsing
-                        surgical video streams, we engineered a system that converts pixel data into structured textual
-                        metadata, enabling LLMs to generate highly accurate medical reports with reduced hallucination
-                        rates.
+                        The ViGOR pipeline ingests 4K surgical video from the da Vinci SP, applies image treatment and
+                        frame sampling, then classifies each segment into one of seven surgical
+                        phases using a vision encoder. Those keyframes then feed into a two-pass language
+                        model: the first pass generates per-frame clinical captions, and the second synthesizes them
+                        into a complete, structured operative note.
                     </p>
                 </div>
 
@@ -87,40 +92,39 @@
         </div>
     </section>
 
-    <!-- ====== Problem Space ====== -->
-    <section id="problem-space" class="section section--bordered project-section">
+    <section id="background" class="section section--bordered project-section">
         <div class="container">
             <div class="project__layout vigor-problem-layout">
 
                 <div class="vigor-problem__title">
-                    <h2>1 / Problem Space</h2>
+                    <h2>1 / Background & Motivation</h2>
                 </div>
 
                 <div class="vigor-problem__text">
                     <div class="problem-point">
                         <h3>Improving Clinical Accuracy</h3>
                         <p>
-                            Currently, operative notes are dictated from memory long after surgery concludes. We aim to
-                            eliminate this subjective recall bias, translating exact visual ground-truth into flawless
-                            medical records.
+                            Operative notes written hours after procedure are subject to recall bias, omission, and
+                            compression. A system that reconstructs events directly from video produces a note anchored
+                            to visual evidence.
                         </p>
                     </div>
 
                     <div class="problem-point">
                         <h3>Reducing Administrative Burden</h3>
                         <p>
-                            Documentation is a leading cause of surgeon burnout. By automating report generation through
-                            a Vision-to-Language framework, we transform a passive administrative choke-point into an
-                            active, longitudinal clinical asset.
+                            Documentation represents a significant and growing share of a surgeon's non-clinical time.
+                            Automating the first draft of an operative note could meaningfully reduce that burden,
+                            freeing capacity for direct patient care.
                         </p>
                     </div>
 
                     <div class="problem-point">
                         <h3>Harnessing the da Vinci SP</h3>
                         <p>
-                            Robotic platforms like the da Vinci SP generate immense amounts of high-quality, stabilized
+                            Robotic surgical systems such as the da Vinci SP generate immense amounts of stabilized
                             4K video. While this sheer volume of unstructured data is difficult to process manually, it
-                            provides the perfect, highly-controlled visual environment necessary to train an AI model.
+                            provides the perfect, highly-controlled environment for computer vision research.
                         </p>
                     </div>
                 </div>
@@ -136,20 +140,20 @@
     </section>
 
     <!-- ====== Dataset & Limitations ====== -->
-    <section id="dataset-constraints" class="section section--bordered project-section">
+    <section id="dataset" class="section section--bordered project-section">
         <div class="container">
             <div class="project__layout vigor-dataset-layout">
 
                 <div class="vigor-dataset__title">
-                    <h2>2 / Clinical Dataset & Constraints</h2>
+                    <h2>2 / Dataset & Scope</h2>
                 </div>
 
                 <div class="vigor-dataset__text-left">
                     <h3>The Stanford Dataset</h3>
                     <p>
                         Initiated in collaboration with Dr. Holsinger at Stanford University, our research leverages a
-                        unique, proprietary dataset generated directly by his clinical team. We secured 75 de-identified
-                        records containing synchronized 4K surgeries paired alongside human-dictated operative notes.
+                        dataset generated directly by his clinical team. The dataset includes 75 de-identified
+                        records containing synchronized 4K surgery videos alongside human-dictated operative notes.
                     </p>
                 </div>
 
@@ -157,9 +161,9 @@
                     <h3>Scope & Surgical Target</h3>
                     <p>
                         We are strictly focused on Transoral Lateral Oropharyngectomy (TLO) procedures performed on the
-                        da Vinci SP platform. Because TLO dictates highly standardized technical stages, it serves as
-                        the perfect tightly-scoped baseline for aligning AI multimodal models before attempting to
-                        generalize to broader surgical methodologies.
+                        da Vinci SP platform at a single institution, under a single surgical team. The tradeoff is
+                        limited generalizability. Results cannot be assumed to transfer to other procedures or platforms
+                        without revalidation.
                     </p>
                 </div>
 
@@ -177,24 +181,40 @@
                 </div>
 
                 <div class="vigor-pipeline__text">
-                    <p>
-                        Processing raw surgical video requires an efficient and robust data pipeline. We developed a
-                        system that samples frames at 1Hz, applying lightweight preprocessing to normalize lighting and
-                        reduce artifact noise before downstream analysis.
-                    </p>
-                    <p>
-                        Instead of analyzing every single frame, our pipeline uses a keyframe extraction module based on
-                        scene-change detection. This reduces computational overhead by 85% while preserving all critical
-                        visual information needed for phase recognition and instrument tracking.
-                    </p>
-                </div>
+                    <div class="pipeline-point">
+                        <p>
+                            Raw surgical video cannot be fed directly into a language model. The data pipeline
+                            transforms 4K recordings into a curated set of labeled, visually informative keyframes
+                            ready for downstream processing.
+                        </p>
+                        <h3>Image Preprocessing</h3>
+                        <p>
+                            Raw endoscopic frames contain black pillarbox bars and low-contrast tissue regions that
+                            impair model performance. Frames are center-cropped to square and contrast-enhanced to
+                            improve feature visibility. Mosaic tiling was also explored as a method for presenting
+                            multiple frames within a single model input.
+                        </p>
+                    </div>
 
-                <div class="vigor-pipeline__media">
-                    <div class="placeholder-diagram">
-                        <span>Pipeline Architecture Diagram <br>(Diagnostic Placeholder)</span>
+                    <div class="pipeline-point">
+                        <h3>Sampling</h3>
+                        <p>
+                            Frames are sampled proportionally to phase duration rather than at a fixed interval —
+                            shorter phases receive fewer frames, ensuring the model's attention is distributed
+                            meaningfully across the full procedure rather than over-representing longer segments.
+                        </p>
+                    </div>
+
+                    <div class="pipeline-point">
+                        <h3>Phase Classification</h3>
+                        <p>
+                            Three frozen vision encoders were benchmarked using a Leave-One-Case-Out linear probe:
+                            PeskaVLP (surgical vision-language model), DINOv2 (general-purpose ViT), and LemonFM
+                            (surgical foundation model). The winning encoder's phase labels structure all downstream
+                            note generation.
+                        </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
