@@ -1,3 +1,10 @@
 /* ============================================
    ZipVote Project Styles
+   Only project-specific overrides belong here.
+   Shared section patterns live in projects.css.
    ============================================ */
+
+/* --- Section body text — consistent column placement --- */
+.zipvote-section__text {
+    grid-column: 5 / span 7;
+}

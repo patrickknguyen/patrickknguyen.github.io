@@ -11,9 +11,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/logo.png">
 
-    <link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="../projects.css">
-    <link rel="stylesheet" href="vigor.css">
+    <link rel="stylesheet" href="../global.css?v=2">
+    <link rel="stylesheet" href="../projects.css?v=2">
+    <link rel="stylesheet" href="vigor.css?v=2">
 </head>
 
 <body>
@@ -61,9 +61,8 @@
                     <h3>Project Objective</h3>
                     <p>
                         With the adoption of the da Vinci SP at Stanford Medicine, Dr. Holsinger's team found themselves
-                        with an ever-growing stream of high-quality 4K surgical video. Dr. Holsinger identified the data
-                        as a largely underutilized asset and sought a research partnership to explore what was
-                        possible. ViGOR is a vision-language framework that automates operative note generation
+                        with an ever-growing stream of high-quality 4K surgical video that was largely underutilized.
+                        ViGOR is a vision-language framework that automates operative note generation
                         directly from surgical video.
                     </p>
                 </div>
@@ -72,7 +71,7 @@
                     <h3>Project Overview</h3>
                     <p>
                         The ViGOR pipeline ingests 4K surgical video from the da Vinci SP, applies image treatment and
-                        frame sampling, then classifies each segment into one of seven surgical
+                        frame sampling, then classifies each segment into one of nine surgical
                         phases using a vision encoder. Those keyframes then feed into a two-pass language
                         model: the first pass generates per-frame clinical captions, and the second synthesizes them
                         into a complete, structured operative note.
@@ -92,16 +91,17 @@
         </div>
     </section>
 
+    <!-- ====== Background & Motivation ====== -->
     <section id="background" class="section section--bordered project-section">
         <div class="container">
-            <div class="project__layout vigor-problem-layout">
+            <div class="project__layout">
 
-                <div class="vigor-problem__title">
+                <div class="section-title">
                     <h2>1 / Background & Motivation</h2>
                 </div>
 
-                <div class="vigor-problem__text">
-                    <div class="problem-point">
+                <div class="vigor-background__text section-body section-body--stacked">
+                    <div class="section-point">
                         <h3>Improving Clinical Accuracy</h3>
                         <p>
                             Operative notes written hours after procedure are subject to recall bias, omission, and
@@ -110,7 +110,7 @@
                         </p>
                     </div>
 
-                    <div class="problem-point">
+                    <div class="section-point">
                         <h3>Reducing Administrative Burden</h3>
                         <p>
                             Documentation represents a significant and growing share of a surgeon's non-clinical time.
@@ -119,7 +119,7 @@
                         </p>
                     </div>
 
-                    <div class="problem-point">
+                    <div class="section-point">
                         <h3>Harnessing the da Vinci SP</h3>
                         <p>
                             Robotic surgical systems such as the da Vinci SP generate immense amounts of stabilized
@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="vigor-problem__stat">
+                <div class="section-stat">
                     <span class="stat-number">40%</span>
                     <span class="stat-label">of dictations omit critical intraoperative events compared to video
                         ground-truth.</span>
@@ -139,16 +139,16 @@
         </div>
     </section>
 
-    <!-- ====== Dataset & Limitations ====== -->
+    <!-- ====== Dataset & Scope ====== -->
     <section id="dataset" class="section section--bordered project-section">
         <div class="container">
-            <div class="project__layout vigor-dataset-layout">
+            <div class="project__layout">
 
-                <div class="vigor-dataset__title">
+                <div class="section-title">
                     <h2>2 / Dataset & Scope</h2>
                 </div>
 
-                <div class="vigor-dataset__text-left">
+                <div class="section-col-left section-body">
                     <h3>The Stanford Dataset</h3>
                     <p>
                         Initiated in collaboration with Dr. Holsinger at Stanford University, our research leverages a
@@ -157,7 +157,7 @@
                     </p>
                 </div>
 
-                <div class="vigor-dataset__text-right">
+                <div class="section-col-right section-body">
                     <h3>Scope & Surgical Target</h3>
                     <p>
                         We are strictly focused on Transoral Lateral Oropharyngectomy (TLO) procedures performed on the
@@ -171,22 +171,17 @@
         </div>
     </section>
 
-    <!-- ====== Data Pipeline Design ====== -->
-    <section id="pipeline-design" class="section section--bordered project-section">
+    <!-- ====== Data Pipeline ====== -->
+    <section id="pipeline" class="section section--bordered project-section">
         <div class="container">
-            <div class="project__layout vigor-pipeline-layout">
+            <div class="project__layout">
 
-                <div class="vigor-pipeline__title">
-                    <h2>3 / Data Pipeline Design</h2>
+                <div class="section-title">
+                    <h2>3 / Data Pipeline</h2>
                 </div>
 
-                <div class="vigor-pipeline__text">
-                    <div class="pipeline-point">
-                        <p>
-                            Raw surgical video cannot be fed directly into a language model. The data pipeline
-                            transforms 4K recordings into a curated set of labeled, visually informative keyframes
-                            ready for downstream processing.
-                        </p>
+                <div class="vigor-pipeline__text section-body section-body--stacked">
+                    <div class="section-point">
                         <h3>Image Preprocessing</h3>
                         <p>
                             Raw endoscopic frames contain black pillarbox bars and low-contrast tissue regions that
@@ -196,22 +191,27 @@
                         </p>
                     </div>
 
-                    <div class="pipeline-point">
+                    <div class="section-point">
                         <h3>Sampling</h3>
                         <p>
-                            Frames are sampled proportionally to phase duration rather than at a fixed interval —
-                            shorter phases receive fewer frames, ensuring the model's attention is distributed
-                            meaningfully across the full procedure rather than over-representing longer segments.
+                            We explored arranging multiple frames into a single mosaic. From our experiments, we found
+                            this gave the model stronger contextual awareness across time, while also keeping costs low
+                            and run time virtually unchanged. To construct the mosaics, we used SSIM to determine the
+                            most visually distinct frames within every 20-second window.
                         </p>
                     </div>
 
-                    <div class="pipeline-point">
+                    <div class="section-point">
                         <h3>Phase Classification</h3>
                         <p>
-                            Three frozen vision encoders were benchmarked using a Leave-One-Case-Out linear probe:
-                            PeskaVLP (surgical vision-language model), DINOv2 (general-purpose ViT), and LemonFM
-                            (surgical foundation model). The winning encoder's phase labels structure all downstream
-                            note generation.
+                            TLO is a procedure Dr. Holsinger himself teaches in nine distinct phases. This makes
+                            phase classification a natural and clinically grounded segmentation target, defined by
+                            surgical reality rather than imposed artificially.
+
+                            The phase labels do more than organize the video. Later we discuss how the phase labels
+                            imbue the visual embeddings with temporal metadata that guides the model through the
+                            procedure in the correct sequence. The result is a synthesized note that reads as a
+                            coherent, flowing clinical narrative rather than a disconnected series of observations.
                         </p>
                     </div>
                 </div>
@@ -219,35 +219,49 @@
         </div>
     </section>
 
-    <!-- ====== Model Architecture ====== -->
-    <section id="model-architecture" class="section section--bordered project-section">
+    <!-- ====== Vision-Language Architecture ====== -->
+    <section id="architecture" class="section section--bordered project-section">
         <div class="container">
-            <div class="project__layout vigor-model-layout">
+            <div class="project__layout">
 
-                <div class="vigor-model__title">
-                    <h2>4 / Model Architecture</h2>
+                <div class="section-title">
+                    <h2>4 / Vision-Language Architecture</h2>
                 </div>
+                <div class="vigor-architecture__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            Note generation follows a two-pass approach designed around the practical constraints of
+                            feeding surgical video to a language model.
+                        </p>
+                    </div>
 
-                <div class="vigor-model__text-left">
-                    <h3>Zero-Shot Classification</h3>
-                    <p>
-                        To identify distinct surgical phases without requiring massive annotated datasets, we
-                        implemented PeskaVLP—a vision-language model fine-tuned for the medical domain. We utilized a
-                        zero-shot classification approach, generating prompt embeddings for over 50 distinct surgical
-                        actions.
-                    </p>
+                    <div class="section-point">
+                        <h3>Pass 1</h3>
+                        <p>
+                            Each sampled keyframe is captioned individually. The model receives one frame at a time
+                            with a structured clinical prompt, producing a dense, timestamped description of the
+                            instruments, anatomy, and actions visible in that moment.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Pass 2</h3>
+                        <p>
+                            All captions are assembled into a single chronological document and submitted in one
+                            request — text only. The model synthesizes them into a fully structured operative note
+                            organized by surgical phase, written in clinical past tense, covering procedure, findings,
+                            and hemostasis.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <p>
+                            The two-pass design serves two purposes: it avoids content filter issues that arise when
+                            submitting raw medical imagery in bulk, and it reinforces sequential surgical context by
+                            building the narrative frame by frame before collapsing it into a final document.
+                        </p>
+                    </div>
                 </div>
-
-                <div class="vigor-model__text-right">
-                    <h3>LLM Orchestration</h3>
-                    <p>
-                        The structured predictions from the vision model, including phase temporal boundaries tool
-                        presence, are passed as structured JSON into a large language model. Using a carefully
-                        constrained prompt strategy, the LLM converts this telemetry into a fluent, medically-accurate
-                        operative note.
-                    </p>
-                </div>
-
             </div>
         </div>
     </section>

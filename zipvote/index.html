@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patrick K. Nguyen — ZipVote</title>
-    <meta name="description" content="ZipVote - Information & Web Design project by Patrick K. Nguyen.">
+    <meta name="description" content="ZipVote - AI-Powered Voter-Candidate Matching project by Patrick K. Nguyen.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/logo.png">
 
-    <link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="../projects.css">
-    <link rel="stylesheet" href="zipvote.css">
+    <link rel="stylesheet" href="../global.css?v=2">
+    <link rel="stylesheet" href="../projects.css?v=2">
+    <link rel="stylesheet" href="zipvote.css?v=2">
 </head>
 
 <body>
@@ -45,25 +45,34 @@
 
                 <div class="project__title">
                     <h2>ZipVote</h2>
-                    <p class="project__meta">Information & Web Design · 2026</p>
+                    <p class="project__meta">AI-Powered Voter-Candidate Matching · 2026</p>
 
+                    <ul class="project__toc">
+                        <li><a href="#background">1 / Background & Motivation</a></li>
+                        <li><a href="#personalization">2 / Ballot Scope & Personalization Challenge</a></li>
+                        <li><a href="#experience">3 / User Experience & The Likert Scale</a></li>
+                        <li><a href="#architecture">4 / Agent Architecture & Wedge Scoring</a></li>
+                        <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
+                    </ul>
                 </div>
 
                 <div class="project__objective">
                     <h3>Project Objective</h3>
                     <p>
-                        To design an intuitive web platform that empowers citizens to easily discover and engage with
-                        local electoral information based on their zip code.
+                        ZipVote is a voter-candidate matching tool designed to help first-time voters navigate the ballot
+                        with confidence. Users enter their zip code, complete a short policy preference quiz, and receive
+                        a ranked breakdown of local candidates based on alignment — covering multiple simultaneous races
+                        from a single session.
                     </p>
                 </div>
 
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        ZipVote bridges the gap between complex civic data and everyday users. By prioritizing clear
-                        information architecture and accessible user interfaces, the project transforms dense
-                        legislative and electoral data into an engaging web experience, increasing local civic awareness
-                        and participation.
+                        ZipVote uses a multi-agent AI pipeline to research local candidates automatically and generate
+                        personalized quiz questions tailored to each race. A Likert-scale input captures preference
+                        intensity rather than binary positions, and a wedge-based scoring system surfaces the
+                        distinctions between candidates that are most likely to drive a voter's decision.
                     </p>
                 </div>
 
@@ -73,6 +82,137 @@
                         <li><a href="#">Figma Prototype</a></li>
                         <li><a href="#">GitHub Repo</a></li>
                     </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Background & Motivation ====== -->
+    <section id="background" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>1 / Background & Motivation</h2>
+                </div>
+
+                <div class="zipvote-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            Voter guides tend to be either overwhelming or too generic to be actionable, particularly
+                            for first-time voters approaching a midterm ballot. The 2026 elections presented a concrete
+                            opportunity to address this: a high-stakes cycle with a large cohort of eligible first-time
+                            voters, many of whom face multiple unfamiliar races simultaneously.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Ballot Scope & Personalization Challenge ====== -->
+    <section id="personalization" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>2 / Ballot Scope & Personalization Challenge</h2>
+                </div>
+
+                <div class="zipvote-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            A ballot in Somerville, MA looks nothing like one in Phoenix, AZ — candidates, parties, and
+                            the fault lines between them are entirely local. Static content cannot scale to that
+                            variability. ZipVote is designed around zip-code-level resolution, pulling race-specific
+                            candidate data and generating questions that reflect the actual distinctions within each
+                            contest.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== User Experience & The Likert Scale ====== -->
+    <section id="experience" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>3 / User Experience & The Likert Scale</h2>
+                </div>
+
+                <div class="zipvote-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            Users are presented with a series of policy statements and asked to rate their agreement on a
+                            five-point scale, from strongly disagree to strongly agree. This captures preference
+                            intensity rather than a simple yes/no — an important distinction when two candidates both
+                            claim the same position but differ in emphasis. The result is a ranked candidate list with a
+                            per-race breakdown.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Agent Architecture & Wedge Scoring ====== -->
+    <section id="architecture" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>4 / Agent Architecture & Wedge Scoring</h2>
+                </div>
+
+                <div class="zipvote-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <h3>Scout Agent</h3>
+                        <p>
+                            A Scout agent builds candidate profiles from Ballotpedia and Wikipedia.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Wedge Agent</h3>
+                        <p>
+                            A Wedge agent then reads those profiles and identifies the specific points of disagreement
+                            between candidates in the same race — rather than scoring against a generic ideological
+                            axis. This ensures the quiz questions are the ones that actually differentiate the candidates
+                            a voter is choosing between.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Outcomes & Learnings ====== -->
+    <section id="outcomes" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>5 / Outcomes & Learnings</h2>
+                </div>
+
+                <div class="zipvote-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            The current prototype covers the 2026 Massachusetts Senate Democratic primary for a single
+                            zip code. The pipeline generalizes by design; the primary remaining work is accuracy
+                            validation of AI-generated candidate profiles and usability testing with first-time voters.
+                            The wedge-over-ideology framing proved especially valuable in primaries, where standard
+                            left/right positioning offers limited signal.
+                        </p>
+                    </div>
                 </div>
 
             </div>

@@ -20,6 +20,13 @@
     --space-xl: 6rem;
     --space-2xl: 10rem;
 
+    --font-xs: 0.8125rem;
+    --font-sm: 0.875rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+    --font-xl: clamp(2.02rem, 4.3vw, 3.24rem);
+    --font-stat: 3.5rem;
+
     --max-width: 1800px;
 }
 
@@ -41,9 +48,20 @@ body {
     font-family: var(--font-body);
     background-color: var(--color-bg);
     color: var(--color-text);
-    line-height: 1.6;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+h2 {
+    font-size: var(--font-lg);
+    font-weight: 500;
+}
+
+h3 {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 img {
@@ -104,7 +122,7 @@ a:hover {
 .header__name {
     grid-column: 1 / span 2;
     font-family: var(--font-heading);
-    font-size: clamp(2.02rem, 4.3vw, 3.24rem);
+    font-size: var(--font-xl);
     font-weight: 300;
     line-height: 1.1;
     text-transform: lowercase;
@@ -124,7 +142,7 @@ a:hover {
 }
 
 .header__nav a {
-    font-size: 0.875rem;
+    font-size: var(--font-sm);
     letter-spacing: 0.01em;
 }
 
@@ -156,7 +174,7 @@ a:hover {
 }
 
 .section__label {
-    font-size: 0.875rem;
+    font-size: var(--font-sm);
     letter-spacing: 0.01em;
     margin-bottom: var(--space-md);
 }
@@ -176,7 +194,7 @@ a:hover {
 
 .footer__text {
     grid-column: 1 / span 6;
-    font-size: 0.875rem;
+    font-size: var(--font-sm);
     color: var(--color-text-secondary);
 }
 
@@ -188,7 +206,7 @@ a:hover {
 }
 
 .footer__links a {
-    font-size: 0.875rem;
+    font-size: var(--font-sm);
     color: var(--color-text-secondary);
 }
 
