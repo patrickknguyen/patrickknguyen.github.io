@@ -8,3 +8,38 @@
 .zipvote-section__text {
     grid-column: 5 / span 7;
 }
+
+.zipvote-ux-image img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.zipvote-ux-label {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+/* Smaller body text variant for UX card descriptions */
+.section-body--xs p {
+    font-size: var(--font-xs);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--color-text);
+}
+
+/* Smaller section-point variant for compact subsections */
+.section-point--xs {
+    margin-bottom: 1rem;
+}
+
+.section-point--xs:last-child {
+    margin-bottom: 0;
+}
+
+.section-point--xs h3 {
+    font-size: var(--font-xs);
+    margin-bottom: 0.25rem;
+}

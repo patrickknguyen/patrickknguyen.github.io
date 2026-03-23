@@ -4,16 +4,6 @@
    Shared section patterns live in projects.css.
    ============================================ */
 
-/* --- Background & Motivation --- */
-.vigor-background__text {
-    grid-column: 5 / span 6;
-}
-
-/* --- Data Pipeline --- */
-.vigor-pipeline__text {
-    grid-column: 5 / span 7;
-}
-
 /* --- Vision-Language Architecture --- */
 .vigor-architecture__text {
     grid-column: 5 / span 7;
