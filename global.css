@@ -126,6 +126,7 @@ a:hover {
     line-height: 0.9;
     text-transform: lowercase;
     letter-spacing: -0.025em;
+    white-space: nowrap;
 }
 
 .header__nav {

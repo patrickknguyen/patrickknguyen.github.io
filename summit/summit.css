@@ -1,0 +1,48 @@
+/* Summit Media Center — project-specific overrides */
+
+.summit-section__text {
+    grid-column: 5 / span 7;
+}
+
+.summit-tri-col {
+    margin-top: var(--space-sm);
+}
+
+.summit-card__image img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.summit-ux-small {
+    grid-column: 1 / span 4;
+}
+
+.summit-ux-large {
+    grid-column: 5 / span 8;
+}
+
+.summit-outcomes-text {
+    grid-column: 1 / span 3;
+}
+
+.summit-outcomes {
+    grid-column: 5 / span 8;
+}
+
+.summit-card__label {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+#outcomes {
+    padding-bottom: var(--space-md);
+}
+
+.project-footnote {
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+}
