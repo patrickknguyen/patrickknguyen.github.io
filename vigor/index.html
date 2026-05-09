@@ -25,8 +25,7 @@
                 <!-- Top bar: Logo and Navigation -->
                 <div class="header__top">
                     <!-- Title acting as the new logo -->
-                    <h1 class="header__name"><a href="../"
-                            style="text-decoration: none; color: inherit;">patrick
+                    <h1 class="header__name"><a href="../" style="text-decoration: none; color: inherit;">patrick
                             k. nguyen</a></h1>
 
                     <nav class="header__nav" aria-label="Main navigation">
@@ -50,8 +49,8 @@
 
                     <ul class="project__toc">
                         <li><a href="#background">1 / Background & Motivation</a></li>
-                        <li><a href="#dataset">2 / Dataset & Scope</a></li>
-                        <li><a href="#pipeline">3 / Data Pipeline</a></li>
+                        <li><a href="#challenges">2 / Challenges</a></li>
+                        <li><a href="#discovery">3 / Discovery</a></li>
                         <li><a href="#architecture">4 / Vision-Language Architecture</a></li>
                         <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
                     </ul>
@@ -70,11 +69,10 @@
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        The ViGOR pipeline ingests 4K surgical video from the da Vinci SP, applies image treatment and
-                        frame sampling, then classifies each segment into one of nine surgical
-                        phases using a vision encoder. Those keyframes then feed into a two-pass language
-                        model: the first pass generates per-frame clinical captions, and the second synthesizes them
-                        into a complete, structured operative note.
+                        ViGOR identifies key procedural events and translates them into professional clinical
+                        narratives using a 3-stage pipeline: computer vision, information extraction, and natural
+                        language generation. This process replaces traditional, memory-based dictation with a verifiable
+                        draft grounded in visual evidence.
                     </p>
                 </div>
 
@@ -84,6 +82,12 @@
                         <li><a class="link--disabled">GitHub Repo</a></li>
                         <li><a href="https://med.stanford.edu/ohns/research/labs/holsinger-research-group.html">Holsinger
                                 Research Lab</a></li>
+                    </ul>
+
+                    <h3 class="project__links-subhead">Recognitions</h3>
+                    <ul class="baseline-adjusted-list">
+                        <li><a href="https://aimi.stanford.edu/aimi26">Selected for Presentation: Stanford AIMI Symposium</a></li>
+                        <li><span class="link--plain">Nominated: Dean's Prize for Capstone of the Year</span></li>
                     </ul>
                 </div>
 
@@ -133,82 +137,118 @@
         </div>
     </section>
 
-    <!-- ====== Dataset & Scope ====== -->
-    <section id="dataset" class="section section--bordered project-section">
+    <!-- ====== Challenges ====== -->
+    <section id="challenges" class="section section--bordered project-section">
         <div class="container">
             <div class="project__layout">
 
                 <div class="section-title">
-                    <h2>2 / Dataset & Scope</h2>
-                </div>
-
-                <div class="section-col-left section-body">
-                    <h3>The Stanford Dataset</h3>
-                    <p>
-                        Initiated in collaboration with Dr. Holsinger at Stanford University, our research leverages a
-                        dataset generated directly by his clinical team. The dataset includes 75 de-identified
-                        records containing synchronized 4K surgery videos alongside human-dictated operative notes.
-                    </p>
-                </div>
-
-                <div class="section-col-right section-body">
-                    <h3>Scope & Surgical Target</h3>
-                    <p>
-                        We are strictly focused on Transoral Lateral Oropharyngectomy (TLO) procedures performed on the
-                        da Vinci SP platform at a single institution, under a single surgical team. The tradeoff is
-                        limited generalizability. Results cannot be assumed to transfer to other procedures or platforms
-                        without revalidation.
-                    </p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== Data Pipeline ====== -->
-    <section id="pipeline" class="section section--bordered project-section">
-        <div class="container">
-            <div class="project__layout">
-
-                <div class="section-title">
-                    <h2>3 / Data Pipeline</h2>
+                    <h2>2 / Challenges</h2>
                 </div>
 
                 <div class="section-tri-col section-body">
                     <div class="section-point">
-                        <h3>Image Preprocessing</h3>
+                        <h3>The Stanford Dataset</h3>
                         <p>
-                            Raw endoscopic frames contain black pillarbox bars and low-contrast tissue regions that
-                            impair model performance. Frames are center-cropped to square and contrast-enhanced to
-                            improve feature visibility. Mosaic tiling was also explored as a method for presenting
-                            multiple frames within a single model input.
-                        </p>
-                    </div>
-
-                    <div class="section-point">
-                        <h3>Sampling</h3>
-                        <p>
-                            We explored arranging multiple frames into a single mosaic. From our experiments, we found
-                            this gave the model stronger contextual awareness across time, while also keeping costs low
-                            and run time virtually unchanged. To construct the mosaics, we used SSIM to determine the
-                            most visually distinct frames within every 20-second window.
+                            Initiated in collaboration with Dr. Holsinger at Stanford University, our project leverages
+                            a dataset created by his clinical team. The initial dataset
+                            included 62 de-identified roboticsurgical videos paired with human-dictated operative notes.
+                            However, many cases featured legacy user interfaces or were incomplete with key procedural
+                            elements unrecorded. To ensure a robust and standardized training environment, we
+                            implemented rigorous inclusion criteria, narrowing our scope from 62 to 36 relevant cases.
                         </p>
                     </div>
 
                     <div class="section-point">
                         <h3>Phase Classification</h3>
                         <p>
-                            TLO is a procedure Dr. Holsinger himself teaches in nine distinct phases. This makes
-                            phase classification a natural and clinically grounded segmentation target, defined by
-                            surgical reality rather than imposed artificially.
+                            For training, each video was expert-labeled across nine predefined surgical phases. Our
+                            initial strategy centered on training a phase classification model. We aimed to utilize a
+                            Vision Transformer (ViT) to map frames to one of nine phases. The goal was to build a
+                            pipeline capable of identifying clinical milestones. By providing the model with these
+                            specific labels, we expected to group frames by assigned phase before passing them to a
+                            language model for clinical caption generation.
+                        </p>
+                    </div>
 
-                            The phase labels do more than organize the video. Later we discuss how the phase labels
-                            imbue the visual embeddings with temporal metadata that guides the model through the
-                            procedure in the correct sequence. The result is a synthesized note that reads as a
-                            coherent, flowing clinical narrative rather than a disconnected series of observations.
+                    <div class="section-point">
+                        <h3>Label Sparsity and Non-Linear Flow</h3>
+                        <p>
+                            As we began model development, we encountered two fundamental issues. Firstly, expert
+                            surgeons assigned phase labels to only 35% of the video frames, leaving 65% as non-operative
+                            "dead time" consisting of transitions and instrument cleaning. Secondly, the procedure
+                            exhibited non-linear progression, where surgeons would repeat or skip steps. It became clear
+                            that forcing a chronological checklist onto messy video data was insufficient for clinical
+                            accuracy.
                         </p>
                     </div>
                 </div>
+
+                <div class="challenges__figure">
+                    <img src="../assets/Vigor/fold0_labels.png" alt="Fold 0 label distribution across surgical phases">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Discovery ====== -->
+    <section id="discovery" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>3 / Discovery</h2>
+                </div>
+
+                <div class="section-tri-col section-body">
+                    <div class="section-point">
+                        <p>
+                            While working with surgeons to label training data, we noticed a consistent pattern: labels
+                            were more tied to instrument activity rather than elapsed time. This led
+                            us to shift our focus from frame-level classification to segmentation. We developed two
+                            custom tools to confirm this hypothesis and help the surgeons label more efficiently and
+                            accurately.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Cautery Activity as Signal</h3>
+                        <p>
+                            To test our observation, we built a diagnostic tool to read instrument activity directly
+                            from the da Vinci’s Head-Up Display (HUD). This system extracted real-time signals of when
+                            the surgeon engaged the cautery pedals. Analyzing the data revealed a 90% correlation
+                            between these activation triggers and the segments experts deemed clinically significant.
+                            By focusing on these active beats, we could ignore 65% of the visual noise and prioritize
+                            frames with the highest information density.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Action Segmentation</h3>
+                        <p>
+                            Following this insight, we developed an Action Segmentation Tool to group cautery activity
+                            into segments. We found 30-seconds was an ideal window to account for tool repositioning
+                            and brief pauses in activity. Instead of requiring experts to scrub through hours of raw
+                            footage, this tool presented them with
+                            pre-filtered action segments for labeling. This new approach yielded a five-fold
+                            reduction in expert labeling time while also improving consistency across the team of
+                            experts.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="discovery__figures">
+                    <div class="discovery__fig-cautery">
+                        <img src="../assets/Vigor/cautery_detect.png"
+                            alt="Cautery activity detection from da Vinci HUD">
+                    </div>
+                    <div class="discovery__fig-segments">
+                        <img src="../assets/Vigor/segment1.png" alt="Action segmentation example 1">
+                        <img src="../assets/Vigor/segment2.png" alt="Action segmentation example 2">
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -223,43 +263,76 @@
                 </div>
                 <div class="vigor-architecture__text section-body section-body--stacked">
                     <div class="section-point">
+                        <h3>Stage 1. Visual Encoding</h3>
                         <p>
-                            Note generation follows a two-pass approach designed around the practical constraints of
-                            feeding surgical video to a language model.
+                            The foundation of the architecture is the DINOv3 encoder, which utilizes a patchwork
+                            attention mechanism to process the video frames. We found this general-purpose model
+                            superior to surgical models pre-trained on datasets like Cholec80, which did not
+                            translate to the unique robotic endoscopy environment.
                         </p>
                     </div>
 
                     <div class="section-point">
-                        <h3>Pass 1</h3>
+                        <h3>Stage 2. Temporal Segmentation</h3>
                         <p>
-                            Each sampled keyframe is captioned individually. The model receives one frame at a time
-                            with a structured clinical prompt, producing a dense, timestamped description of the
-                            instruments, anatomy, and actions visible in that moment.
+                            We then use a Multi-Stage Temporal Convolutional Network
+                            (MS-TCN) to infer action segments, creating a structured timeline of video segments.
+                            Segments are then passed as keyframes constructed into mosaics to the language
+                            models.
                         </p>
                     </div>
 
                     <div class="section-point">
-                        <h3>Pass 2</h3>
+                        <h3>Stage 3: Two-Pass Narrative Synthesis</h3>
                         <p>
-                            All captions are assembled into a single chronological document and submitted in one
-                            request — text only. The model synthesizes them into a fully structured operative note
-                            organized by surgical phase, written in clinical past tense, covering procedure, findings,
-                            and hemostasis.
-                        </p>
-                    </div>
-
-                    <div class="section-point">
-                        <p>
-                            The two-pass design serves two purposes: it avoids content filter issues that arise when
-                            submitting raw medical imagery in bulk, and it reinforces sequential surgical context by
-                            building the narrative frame by frame before collapsing it into a final document.
+                            The final stage uses a two-pass strategy. In Pass 1, the
+                            system identifies instruments and actions within each segment to provide key
+                            observations. In Pass 2, these observations are synthesized into a structured operative
+                            note. To ensure clinical accuracy, we developed an interface that allows surgeons to see the
+                            exact video mosaic that validates each observation.
                         </p>
                     </div>
                 </div>
+
+                <div class="vigor-architecture__figure">
+                    <img src="../assets/Vigor/walkthrough.png" alt="ViGOR architecture walkthrough">
+                </div>
+
             </div>
         </div>
     </section>
 
+    <!-- ====== Outcomes & Learnings ====== -->
+    <section id="outcomes" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>5 / Outcomes &amp; Learnings</h2>
+                </div>
+
+                <div class="vigor-outcomes__text section-body">
+                    <p>
+                        ViGOR serves as a successful proof-of-concept for how both computer vision and natural
+                        language processing can be applied to complex industries like medicine, especially in the case
+                        of robotic surgery. The results were highly encouraging, as surgeons graded the generated notes
+                        an
+                        average of 85% when compared to the human-authored notes. In 21% of evaluated cases, the
+                        experts actually rated the generated notes to be equal to or better than the official
+                        dictations.<br><br>
+
+                        The success of the project was ultimately enabled by the collaborative relationship we built
+                        with the surgeons. By approaching them as partners rather than stakeholders, we were able to
+                        translate their
+                        clinical expertise into technical solutions and find compelling discoveries in the field.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="../lightbox.js?v=5"></script>
 </body>
 
 </html>
