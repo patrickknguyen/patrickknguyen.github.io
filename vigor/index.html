@@ -61,18 +61,18 @@
                     <p>
                         With the adoption of the da Vinci SP at Stanford Medicine, Dr. Holsinger's team found themselves
                         with an ever-growing stream of high-quality 4K surgical video that was largely underutilized.
-                        ViGOR is a vision-language framework that automates operative note generation
-                        directly from surgical video.
+                        ViGOR is a vision-to-language framework designed to automate operative note generation
+                        directly from robotic surgical video.
                     </p>
                 </div>
 
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        ViGOR identifies key procedural events and translates them into professional clinical
-                        narratives using a 3-stage pipeline: computer vision, information extraction, and natural
-                        language generation. This process replaces traditional, memory-based dictation with a verifiable
-                        draft grounded in visual evidence.
+                        Our team built a working MVP that replaces traditional, memory-based dictation with a verifiable
+                        narrative grounded in visual evidence. Working with the surgical team, we also developed a
+                        human-in-the-loop interface where clinicians can verify generated text directly against the
+                        corresponding video evidence.
                     </p>
                 </div>
 
@@ -86,8 +86,11 @@
 
                     <h3 class="project__links-subhead">Recognitions</h3>
                     <ul class="baseline-adjusted-list">
-                        <li><a href="https://aimi.stanford.edu/aimi26">Selected for Presentation: Stanford AIMI Symposium</a></li>
-                        <li><span class="link--plain">Nominated: Dean's Prize for Capstone of the Year</span></li>
+                        <li><span class="link--plain">Dean's Prize for Outstanding Thesis, Harvard University</span>
+                        </li>
+                        <li><a href="https://aimi.stanford.edu/aimi26">Presenter, Stanford AIMI Symposium (2026)
+                            </a></li>
+
                     </ul>
                 </div>
 
@@ -109,8 +112,8 @@
                         <h3>Improving Clinical Accuracy</h3>
                         <p>
                             Operative notes written hours after procedure are subject to recall bias, omission, and
-                            compression. A system that reconstructs events directly from video produces a note anchored
-                            to visual evidence.
+                            compression. By reconstructing events directly from video, we can generate a structured
+                            narrative that is anchored to visual evidence.
                         </p>
                     </div>
 
@@ -124,11 +127,11 @@
                     </div>
 
                     <div class="section-point">
-                        <h3>Harnessing the da Vinci SP</h3>
+                        <h3>Leveraging Robotic Video</h3>
                         <p>
-                            Robotic surgical systems such as the da Vinci SP generate immense amounts of stabilized
-                            4K video. While this sheer volume of unstructured data is difficult to process manually, it
-                            provides the perfect, highly-controlled environment for computer vision research.
+                            Robotic surgical systems generate immense amounts of stabilized 4K video. While this sheer
+                            volume of unstructured data is difficult to process manually, it provides a highly
+                            controlled environment ideal for computer vision.
                         </p>
                     </div>
                 </div>
@@ -150,12 +153,11 @@
                     <div class="section-point">
                         <h3>The Stanford Dataset</h3>
                         <p>
-                            Initiated in collaboration with Dr. Holsinger at Stanford University, our project leverages
-                            a dataset created by his clinical team. The initial dataset
-                            included 62 de-identified roboticsurgical videos paired with human-dictated operative notes.
-                            However, many cases featured legacy user interfaces or were incomplete with key procedural
-                            elements unrecorded. To ensure a robust and standardized training environment, we
-                            implemented rigorous inclusion criteria, narrowing our scope from 62 to 36 relevant cases.
+                            Our project intitated with 62 de-identified robotic surgical videos and corresponding
+                            operative notes created by Dr. Holsinger's surgical team at Stanford.
+                            However, many cases featured legacy user interfaces or were missing key procedural
+                            elements. To ensure a robust training environment, we implemented a rigorous inclusion
+                            criteria, narrowing our scope to 36 standardized cases.
                         </p>
                     </div>
 
@@ -164,22 +166,20 @@
                         <p>
                             For training, each video was expert-labeled across nine predefined surgical phases. Our
                             initial strategy centered on training a phase classification model. We aimed to utilize a
-                            Vision Transformer (ViT) to map frames to one of nine phases. The goal was to build a
-                            pipeline capable of identifying clinical milestones. By providing the model with these
-                            specific labels, we expected to group frames by assigned phase before passing them to a
-                            language model for clinical caption generation.
+                            Vision Transformer (ViT) to map frames to one of nine phases. We designed the pipeline to
+                            identify these clinical milestones, grouping frames by assigned phase before passing them to
+                            a language model for clinical caption generation.
                         </p>
                     </div>
 
                     <div class="section-point">
                         <h3>Label Sparsity and Non-Linear Flow</h3>
                         <p>
-                            As we began model development, we encountered two fundamental issues. Firstly, expert
-                            surgeons assigned phase labels to only 35% of the video frames, leaving 65% as non-operative
-                            "dead time" consisting of transitions and instrument cleaning. Secondly, the procedure
-                            exhibited non-linear progression, where surgeons would repeat or skip steps. It became clear
-                            that forcing a chronological checklist onto messy video data was insufficient for clinical
-                            accuracy.
+                            Model development immediately exposed two fundamental data issues. First, expert surgeons
+                            labeled only 35% of the video frames, leaving 65% as non-operative "dead time". Second,
+                            procedures exhibited non-linear progression, where steps were frequently repeated or
+                            skipped. It was clear that a rigid, chronological checklist was insufficient for capturing
+                            clinical accuracy.
                         </p>
                     </div>
                 </div>
@@ -201,52 +201,41 @@
                     <h2>3 / Discovery</h2>
                 </div>
 
-                <div class="section-tri-col section-body">
-                    <div class="section-point">
-                        <p>
-                            While working with surgeons to label training data, we noticed a consistent pattern: labels
-                            were more tied to instrument activity rather than elapsed time. This led
-                            us to shift our focus from frame-level classification to segmentation. We developed two
-                            custom tools to confirm this hypothesis and help the surgeons label more efficiently and
-                            accurately.
-                        </p>
-                    </div>
-
+                <!-- Subsection 1: Cautery Activity -->
+                <div class="vigor-discovery__text section-body">
                     <div class="section-point">
                         <h3>Cautery Activity as Signal</h3>
                         <p>
-                            To test our observation, we built a diagnostic tool to read instrument activity directly
-                            from the da Vinci’s Head-Up Display (HUD). This system extracted real-time signals of when
-                            the surgeon engaged the cautery pedals. Analyzing the data revealed a 90% correlation
-                            between these activation triggers and the segments experts deemed clinically significant.
-                            By focusing on these active beats, we could ignore 65% of the visual noise and prioritize
-                            frames with the highest information density.
-                        </p>
-                    </div>
-
-                    <div class="section-point">
-                        <h3>Action Segmentation</h3>
-                        <p>
-                            Following this insight, we developed an Action Segmentation Tool to group cautery activity
-                            into segments. We found 30-seconds was an ideal window to account for tool repositioning
-                            and brief pauses in activity. Instead of requiring experts to scrub through hours of raw
-                            footage, this tool presented them with
-                            pre-filtered action segments for labeling. This new approach yielded a five-fold
-                            reduction in expert labeling time while also improving consistency across the team of
-                            experts.
+                            While observing surgeons, we noticed a consistent pattern: clinical milestones were
+                            intrinsically tied to instrument activity rather than elapsed time. To test this, we built a
+                            diagnostic tool to extract real-time signals from the da Vinci’s Head-Up Display (HUD) when
+                            cautery pedals were engaged. The data revealed a 90% correlation between these triggers and
+                            clinically significant events, allowing us to bypass 65% of the visual noise and focus
+                            solely on high-information frames.
                         </p>
                     </div>
                 </div>
+                <div class="vigor-discovery__image">
+                    <img src="../assets/Vigor/cautery_detect.png" alt="Cautery activity detection from da Vinci HUD">
+                </div>
 
-                <div class="discovery__figures">
-                    <div class="discovery__fig-cautery">
-                        <img src="../assets/Vigor/cautery_detect.png"
-                            alt="Cautery activity detection from da Vinci HUD">
+                <!-- Subsection 2: Action Segmentation -->
+                <div class="vigor-discovery__text section-body">
+                    <div class="section-point">
+                        <h3>Action Segmentation</h3>
+                        <p>
+                            Following this insight, we developed an Action Segmentation Tool to group cautery activity.
+                            We found a 30-seconds buffer was perfect to account for tool repositioning and brief pauses
+                            in activity. Instead of requiring experts to scrub through hours of raw footage, this
+                            interface presented surgeons with pre-filtered action segments for streamlined labeling.
+                            This new approach resulted in a 5x reduction in expert labeling time while also improving
+                            inter-rater consistency and accuracy.
+                        </p>
                     </div>
-                    <div class="discovery__fig-segments">
-                        <img src="../assets/Vigor/segment1.png" alt="Action segmentation example 1">
-                        <img src="../assets/Vigor/segment2.png" alt="Action segmentation example 2">
-                    </div>
+                </div>
+                <div class="vigor-discovery__image vigor-discovery__image--stacked">
+                    <img src="../assets/Vigor/segment1.png" alt="Action segmentation example 1">
+                    <img src="../assets/Vigor/segment2.png" alt="Action segmentation example 2">
                 </div>
 
             </div>
@@ -261,41 +250,43 @@
                 <div class="section-title">
                     <h2>4 / Vision-Language Architecture</h2>
                 </div>
-                <div class="vigor-architecture__text section-body section-body--stacked">
+
+                <div class="section-tri-col section-body">
+                    <!-- Column 1: The 3-Stage ML Pipeline -->
                     <div class="section-point">
-                        <h3>Stage 1. Visual Encoding</h3>
+                        <h3>The 3-Stage Vision-to-Language Pipeline</h3>
                         <p>
-                            The foundation of the architecture is the DINOv3 encoder, which utilizes a patchwork
-                            attention mechanism to process the video frames. We found this general-purpose model
-                            superior to surgical models pre-trained on datasets like Cholec80, which did not
-                            translate to the unique robotic endoscopy environment.
+                            The backend architecture processes the video through a sequential pipeline designed for
+                            clinical accuracy. <br><br>
+                            First, a Visual Encoder (DINOv3) extracts frame-level features using a
+                            patchwork attention mechanism. We found this model to generalize better to the robotic
+                            endoscopy environment than models pre-trained on datasets like Cholec80.<br><br>
+                            Second, we use a Multi-Stage Temporal Convolutional Network (MS-TCN) to infer action
+                            segments, creating a structured timeline of video segments. Segments are then passed as
+                            keyframes constructed into mosaics to the language models. <br><br>
+                            Finally, we constructed two-pass strategy. In Pass 1, the VLM identifies instruments and
+                            actions within each segment to provide key observations. In Pass 2, these observations are
+                            synthesized into a structured operative note.
                         </p>
                     </div>
 
-                    <div class="section-point">
-                        <h3>Stage 2. Temporal Segmentation</h3>
-                        <p>
-                            We then use a Multi-Stage Temporal Convolutional Network
-                            (MS-TCN) to infer action segments, creating a structured timeline of video segments.
-                            Segments are then passed as keyframes constructed into mosaics to the language
-                            models.
-                        </p>
+                    <!-- Column 2: Architecture Diagram -->
+                    <div class="vigor-architecture__image">
+                        <img src="../assets/Vigor/walkthrough.png" alt="ViGOR architecture walkthrough">
                     </div>
 
+                    <!-- Column 3: The Human-in-the-Loop Interface -->
                     <div class="section-point">
-                        <h3>Stage 3: Two-Pass Narrative Synthesis</h3>
+                        <h3>The Human-in-the-Loop Interface</h3>
                         <p>
-                            The final stage uses a two-pass strategy. In Pass 1, the
-                            system identifies instruments and actions within each segment to provide key
-                            observations. In Pass 2, these observations are synthesized into a structured operative
-                            note. To ensure clinical accuracy, we developed an interface that allows surgeons to see the
-                            exact video mosaic that validates each observation.
+                            The frontend module translates this generated text into a clinically viable
+                            tool through a custom verification interface. Because surgeons require absolute
+                            transparency, the interface anchors each line of generated text directly to its
+                            corresponding video keyframes and mosaics. This design allows clinicians to interact with
+                            and easily validate the generated narrative against the video evidence before finalizing
+                            the report.
                         </p>
                     </div>
-                </div>
-
-                <div class="vigor-architecture__figure">
-                    <img src="../assets/Vigor/walkthrough.png" alt="ViGOR architecture walkthrough">
                 </div>
 
             </div>
