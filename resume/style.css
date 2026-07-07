@@ -1,0 +1,237 @@
+/* --- Reset & Base --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000000;
+    background-color: #f5f4f0;
+    font-size: 11pt;
+    line-height: 1.30;
+    margin: 0;
+    padding: 40px 20px;
+    overflow-x: auto;
+}
+
+.resume-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.resume-page {
+    background-color: #f5f4f0;
+    width: 8.5in;
+    height: 11in;
+    padding: 0.75in;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+/* --- Header --- */
+.resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.header-primary {
+    width: 58%;
+}
+
+.header-secondary {
+    width: 38%;
+}
+
+h1 {
+    font-size: 24pt;
+    font-weight: normal;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.tagline {
+    margin-top: 10px;
+    max-width: 75%;
+    font-size: 11pt;
+
+}
+
+.contact-info {
+    font-size: 10pt;
+}
+
+.contact-info a {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* --- Rows & Columns --- */
+.resume-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.col-primary {
+    width: 58%;
+}
+
+.col-primary .entry:last-child {
+    margin-bottom: 0;
+}
+
+.col-secondary {
+    width: 38%;
+    font-size: 10pt;
+}
+
+.col-secondary h3 {
+    font-size: 10pt;
+}
+
+/* --- Section Headings --- */
+h2.section-title,
+h2.column-title {
+    font-size: 12pt;
+    font-weight: normal;
+    border-bottom: 0.5px solid #000000;
+    padding-bottom: 2px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    width: 100%;
+}
+
+/* --- Entries --- */
+.entry {
+    margin-bottom: 10px;
+}
+
+.col-primary .entry {
+    margin-bottom: 16px;
+}
+
+h3 {
+    font-size: 12pt;
+}
+
+.subtitle {
+    font-weight: 400;
+}
+
+.date {
+    margin-bottom: 6px;
+}
+
+.project-block {
+    margin-top: 10px;
+}
+
+.project-title {
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.project-name {
+    margin-bottom: 4px;
+}
+
+ul.resume-list {
+    padding-left: 12px;
+}
+
+ul.resume-list li {
+    margin-bottom: 3px;
+}
+
+/* --- Sidebar --- */
+.skills-subheading {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.skills-block+.skills-block {
+    margin-top: 8px;
+}
+
+.nested-section+.nested-section {
+    margin-top: 20px;
+}
+
+/* --- Responsive Mobile Layout --- */
+@media screen and (max-width: 850px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .resume-page {
+        width: 100%;
+        height: auto;
+        padding: 30px 20px;
+    }
+
+    .resume-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .header-primary,
+    .header-secondary,
+    .col-primary,
+    .col-secondary {
+        width: 100%;
+    }
+
+    .resume-row {
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    .header-secondary.contact-info {
+        font-size: 11pt;
+    }
+
+    .col-primary .entry {
+        margin-bottom: 20px;
+    }
+    
+    .nested-section+.nested-section {
+        margin-top: 24px;
+    }
+}
+
+/* --- Print --- */
+@page {
+    size: letter;
+    margin: 0;
+}
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+    }
+
+    .resume-wrapper {
+        transform: none !important;
+    }
+
+    .resume-page {
+        box-shadow: none;
+        width: 100%;
+        height: auto;
+    }
+
+    .entry {
+        break-inside: avoid;
+    }
+}
