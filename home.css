@@ -4,11 +4,11 @@
 
 /* --- Hero --- */
 .header__bottom {
-    margin-top: calc(var(--space-md) * 0.75);
+    margin-top: var(--space-2xl);
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--space-md);
-    padding-bottom: calc(var(--space-2xl) * 0.5);
+    padding-bottom: var(--space-lg);
 }
 
 .header__portrait {
@@ -19,9 +19,6 @@
     filter: grayscale(20%);
 }
 
-#about {
-    padding-bottom: 2rem;
-}
 
 /* --- About Section --- */
 .about__layout {

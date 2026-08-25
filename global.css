@@ -122,7 +122,7 @@ a:hover {
     grid-column: 1 / span 2;
     font-family: var(--font-heading);
     font-size: var(--font-xl);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 0.9;
     text-transform: lowercase;
     letter-spacing: -0.025em;
@@ -130,15 +130,14 @@ a:hover {
 }
 
 .header__nav {
-    grid-column: 10 / span 3;
+    grid-column: 9 / span 3;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
     gap: var(--space-md);
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--color-border);
-    line-height: 1;
+    transform: translateY(calc(var(--font-xl) * -0.5));
 }
 
 .header__nav a {

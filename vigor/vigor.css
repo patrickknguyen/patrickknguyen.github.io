@@ -20,7 +20,7 @@
 /* --- Challenges figure (spans under cols 2–3 of the tri-col) --- */
 .challenges__figure {
     grid-column: 5 / -1;
-    margin-top: var(--space-md);
+    margin-top: 0;
 }
 
 .challenges__figure img {
@@ -47,6 +47,7 @@
 }
 
 .vigor-discovery__image--stacked {
+    grid-column: 5 / -2;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);

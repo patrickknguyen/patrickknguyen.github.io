@@ -109,8 +109,8 @@
 }
 
 .project-section {
-    padding-top: calc(var(--space-xl) * 0.5);
-    padding-bottom: var(--space-xl);
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-lg);
 }
 
 /* --- Reusable Section Building Blocks --- */
@@ -163,11 +163,11 @@
     gap: var(--space-md);
 }
 
-.section-duo-col > * {
+.section-duo-col>* {
     grid-column: span 4;
 }
 
-.section-duo-col > *:first-child {
+.section-duo-col>*:first-child {
     grid-column: 5 / span 4;
 }
 

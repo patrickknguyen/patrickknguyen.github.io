@@ -148,20 +148,26 @@
 
     <script>
         function scaleResume() {
+            const wrapper = document.querySelector('.resume-wrapper');
             // Only scale on desktop (width > 850px)
             if (window.innerWidth <= 850) {
-                document.querySelector('.resume-wrapper').style.transform = 'none';
+                wrapper.style.transform = 'none';
+                wrapper.style.marginBottom = '0px';
                 return;
             }
-
-            const wrapper = document.querySelector('.resume-wrapper');
+            
             // 8.5in = 816px, 11in = 1056px. Add padding/margin to denominators.
-            const scaleX = window.innerWidth / 900;
+            const scaleX = window.innerWidth / 900; 
             const scaleY = window.innerHeight / 1150;
             const scale = Math.min(scaleX, scaleY, 1); // Cap at 1 (100%)
-
+            
             wrapper.style.transform = `scale(${scale})`;
             wrapper.style.transformOrigin = 'top center';
+            
+            // Fix the scrollable area by removing the empty space left by scaling
+            const originalHeight = wrapper.offsetHeight; // Usually 1056px (11in)
+            const lostHeight = originalHeight * (1 - scale);
+            wrapper.style.marginBottom = `-${lostHeight}px`;
         }
 
         window.addEventListener('resize', scaleResume);
