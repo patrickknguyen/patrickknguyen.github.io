@@ -4,6 +4,11 @@
    Shared section patterns live in projects.css.
    ============================================ */
 
+/* --- Section body text — consistent column placement --- */
+.clustr-section__text {
+    grid-column: 5 / span 7;
+}
+
 /* --- Demo video --- */
 .clustr-demo {
     grid-column: 2 / span 10;

@@ -50,31 +50,29 @@
 
                     <ul class="project__toc">
                         <li><a href="#background">1 / Background & Motivation</a></li>
-                        <li><a href="#challenges">2 / Challenges</a></li>
-                        <li><a href="#blend">3 / The Semantic ↔ Aesthetic Blend</a></li>
-                        <li><a href="#architecture">4 / System Architecture</a></li>
-                        <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
+                        <li><a href="#decisions">2 / Key Design Decisions</a></li>
+                        <li><a href="#practice">3 / In Practice</a></li>
+                        <li><a href="#outcomes">4 / Outcomes & Learnings</a></li>
                     </ul>
                 </div>
 
                 <div class="project__objective">
                     <h3>Project Objective</h3>
                     <p>
-                        Clustr was built to explore a more playful way of making sense of visual clutter. Moodboards
-                        tend to get messy quickly, making it difficult to verbalize emerging directions. This project
-                        explores how computer vision can serve as a lightweight creative assistant, sorting raw
-                        inspiration to make implicit aesthetic patterns visible. The goal was to see if machine learning
-                        could handle the initial taxonomy while keeping the sorting experience tactile and fun.
+                        I find my moodboards tend to fall apart as they grow. Patterns blur, and it’s hard to pinpoint
+                        what actually connects the images. Instead of using computer vision to put things into rigid
+                        boxes, I wanted to build a tool to help sort through the chaos while keeping the creative
+                        process playful.
                     </p>
                 </div>
 
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        Clustr is an experimental prototype that uses computer vision models (CLIP and DINO) to organize
-                        uncurated image collections. Users drop in a scattered batch of inspiration, and the interface
-                        automatically slides related images into aesthetic groups to reveal the themes hiding across the
-                        board.
+                        Clustr is a prototype that uses two computer vision models (CLIP and DINO) to
+                        organize messy image collections. Images are sorted into loose clusters based on either
+                        subject matter or visual style. Groups are labelled automatically using their nearest
+                        distinctive keywords within the Unsplash dataset.
                     </p>
                 </div>
 
@@ -143,6 +141,104 @@
                         <p>
                             Placeholder copy. Running the models client-side keeps the tool private, free, and instantly
                             shareable — no accounts, no uploads, no server to keep alive.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Key Design Decisions ====== -->
+    <section id="decisions" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>2 / Key Design Decisions</h2>
+                </div>
+
+                <div class="clustr-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <h3>A Dial, Not a Category</h3>
+                        <p>
+                            Placeholder copy. Rather than forcing each image into one fixed bucket, clustr exposes a
+                            semantic ↔ aesthetic slider that blends two models — CLIP for subject matter and DINO for
+                            visual style. Dragging the slider re-sorts the whole board in real time, so the user decides
+                            what "alike" means instead of the tool deciding for them.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Loose Clusters Over Rigid Boxes</h3>
+                        <p>
+                            Placeholder copy. Groupings are deliberately soft — a UMAP layout with light clustering on
+                            top — so images drift toward neighbors rather than snapping into hard partitions. The goal is
+                            to reveal a direction that is already hiding in the pile, not to impose a taxonomy.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Labels That Move With the Slider</h3>
+                        <p>
+                            Placeholder copy. Each cluster names itself from its nearest distinctive keywords, drawn from
+                            a subject vocabulary and a style vocabulary that are weighted by the slider. As the board
+                            shifts from subject to style, the labels shift with it — from nouns to aesthetic terms.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Everything in the Browser</h3>
+                        <p>
+                            Placeholder copy. Both models run client-side, so the tool is private, free, and instantly
+                            shareable — no accounts, no uploads, no server to keep alive.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== In Practice ====== -->
+    <section id="practice" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>3 / In Practice</h2>
+                </div>
+
+                <div class="clustr-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            Placeholder copy. Walk through one or two real boards — some seeded from the Unsplash sample
+                            set, some a designer's own drop-in moodboard — showing the clusters forming, the labels
+                            appearing, and the slider re-sorting the layout between subject and style. Point to where the
+                            tool shines and where it strains.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Outcomes & Learnings ====== -->
+    <section id="outcomes" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>4 / Outcomes & Learnings</h2>
+                </div>
+
+                <div class="clustr-section__text section-body section-body--stacked">
+                    <div class="section-point">
+                        <p>
+                            Placeholder copy. Reflect on the trade-offs — running vision models in the browser, keeping
+                            clustering fast and stable, and designing labels that stay legible as they shift. Note what
+                            you would change and what you learned about balancing playful exploration with useful order.
                         </p>
                     </div>
                 </div>
