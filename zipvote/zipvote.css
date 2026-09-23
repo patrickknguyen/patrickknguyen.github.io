@@ -43,3 +43,8 @@
     font-size: var(--font-xs);
     margin-bottom: 0.25rem;
 }
+@media (max-width: 768px) {
+    .zipvote-section__text {
+        grid-column: 1 / -1;
+    }
+}

@@ -47,3 +47,13 @@
     text-align: center;
     color: var(--color-text-secondary);
 }
+@media (max-width: 768px) {
+
+    .summit-section__text,
+    .summit-ux-small,
+    .summit-ux-large,
+    .summit-outcomes-text,
+    .summit-outcomes {
+        grid-column: 1 / -1;
+    }
+}

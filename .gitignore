@@ -1,0 +1,15 @@
+# macOS system files
+.DS_Store
+
+# Local tool settings
+.claude/
+
+# Design source files (not served by the site)
+*.psd
+*.ai
+
+# Unused full-size Clustr exports (the page uses the .jpg and -crop.png versions)
+assets/Clustr/inpractice-1.png
+assets/Clustr/inpractice-2.png
+assets/Clustr/inpractice-3.png
+assets/Clustr/inpractice-3.jpg

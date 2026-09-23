@@ -39,3 +39,63 @@
 .clustr-demo__caption a:hover {
     color: var(--color-link-hover);
 }
+
+/* --- Scoring equation (Key Design Decisions) --- */
+.clustr-equation {
+    margin: var(--space-md) 0 0;
+}
+
+.clustr-equation__math {
+    padding-left: 2rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 0.9rem;
+}
+
+.clustr-equation__math .katex-display {
+    margin: 0;
+}
+
+.clustr-equation__math .katex-display>.katex {
+    text-align: left;
+}
+
+.clustr-equation__caption {
+    margin-top: var(--space-sm);
+    font-size: var(--font-sm);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+}
+
+/* --- In Practice: board walkthrough (text left, stacked images right) --- */
+.clustr-practice__text {
+    grid-column: 1 / span 4;
+}
+
+.clustr-practice__images {
+    grid-column: 6 / -2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.clustr-practice__images img {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: zoom-in;
+}
+
+@media (max-width: 768px) {
+
+    .clustr-section__text,
+    .clustr-demo,
+    .clustr-practice__text,
+    .clustr-practice__images {
+        grid-column: 1 / -1;
+    }
+
+    .clustr-practice__text {
+        margin-bottom: var(--space-sm);
+    }
+}

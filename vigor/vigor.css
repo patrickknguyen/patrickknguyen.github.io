@@ -76,3 +76,11 @@
 .vigor-outcomes__text {
     grid-column: 5 / span 6;
 }
+@media (max-width: 768px) {
+
+    .challenges__figure,
+    .vigor-discovery__image--stacked,
+    .vigor-outcomes__text {
+        grid-column: 1 / -1;
+    }
+}

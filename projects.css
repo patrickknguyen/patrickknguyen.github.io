@@ -234,3 +234,29 @@
 .lightbox-arrow--next {
     right: 2rem;
 }
+/* --- Mobile: stack the 12-column project grid --- */
+@media (max-width: 768px) {
+
+    .project__title,
+    .project__objective,
+    .project__overview,
+    .project__links,
+    .section-title,
+    .section-col-left,
+    .section-col-right,
+    .section-duo-col>*,
+    .section-duo-col>*:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .section-duo-col,
+    .section-tri-col {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .section-tri-col>.section-point,
+    .section-duo-col>.section-point {
+        margin-bottom: 0;
+    }
+}
