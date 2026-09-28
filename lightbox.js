@@ -1,13 +1,13 @@
 /* ============================================
    Lightbox — click-to-expand for project images
-   Include once per page; works on any <img> inside
-   a .project-section element.
+   Include once per page; works on any <img> or <video>
+   inside a .project-section element.
    Supports left/right arrow navigation.
    ============================================ */
 
 (function () {
     /* --- Collect all project images --- */
-    var images = Array.from(document.querySelectorAll('.project-section img'));
+    var images = Array.from(document.querySelectorAll('.project-section img, .project-section video'));
     var currentIndex = -1;
 
     /* --- Build overlay DOM --- */
@@ -29,7 +29,16 @@
     var img = document.createElement('img');
     img.className = 'lightbox-img';
 
+    /* Videos open in their own element: same autoplay/loop/muted behavior, plus controls */
+    var vid = document.createElement('video');
+    vid.className = 'lightbox-img';
+    vid.muted = true;
+    vid.loop = true;
+    vid.playsInline = true;
+    vid.controls = true;
+
     overlay.appendChild(img);
+    overlay.appendChild(vid);
     overlay.appendChild(prevBtn);
     overlay.appendChild(nextBtn);
 
@@ -38,8 +47,24 @@
     /* --- Open --- */
     function open(index) {
         currentIndex = index;
-        img.src = images[index].src;
-        img.alt = images[index].alt || '';
+        var item = images[index];
+        if (item.tagName === 'VIDEO') {
+            img.style.display = 'none';
+            img.removeAttribute('src');
+            vid.style.display = '';
+            vid.src = item.currentSrc || item.src;
+            vid.poster = item.poster || '';
+            vid.setAttribute('aria-label', item.getAttribute('aria-label') || '');
+            vid.currentTime = item.currentTime || 0;
+            vid.play().catch(function () {});
+        } else {
+            vid.pause();
+            vid.style.display = 'none';
+            vid.removeAttribute('src');
+            img.style.display = '';
+            img.src = item.src;
+            img.alt = item.alt || '';
+        }
         overlay.classList.add('lightbox-overlay--visible');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -48,6 +73,7 @@
 
     /* --- Close --- */
     function close() {
+        vid.pause();
         overlay.classList.remove('lightbox-overlay--visible');
         overlay.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
@@ -81,6 +107,9 @@
 
     /* Click on image should not close */
     img.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+    vid.addEventListener('click', function (e) {
         e.stopPropagation();
     });
 

@@ -36,17 +36,6 @@
     text-align: center;
 }
 
-#outcomes {
-    padding-bottom: var(--space-md);
-}
-
-.project-footnote {
-    font-size: var(--font-size-xs);
-    padding-top: var(--space-sm);
-    padding-bottom: var(--space-lg);
-    text-align: center;
-    color: var(--color-text-secondary);
-}
 @media (max-width: 768px) {
 
     .summit-section__text,

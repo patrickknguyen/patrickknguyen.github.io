@@ -2,30 +2,62 @@
    Home Page Styles
    ============================================ */
 
-/* --- Hero --- */
-.header__bottom {
-    margin-top: var(--space-2xl);
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-md);
-    padding-bottom: var(--space-lg);
+/* --- About Section --- */
+/* Intro: mirrors .project-intro / .project__layout on the case studies.
+   Row 1 is sized by an invisible 16:9 frame in cols 5-12 (the hero's footprint),
+   so the portrait's bottom-right corner lands where the hero's does.
+   Row 2 holds the about text, level with Project Objective / Overview. */
+.home-intro {
+    padding-top: var(--space-xl);
+    /* Same white space above and below the about text:
+       portrait-to-divider = grid gap + body offset - 1.25rem divider inset */
+    padding-bottom: calc(var(--space-md) + var(--font-sm) * 1.5 + 0.5rem - 1.25rem);
+}
+
+.about__frame {
+    grid-column: 5 / -1;
+    grid-row: 1;
+    aspect-ratio: 16 / 9;
 }
 
 .header__portrait {
     grid-column: 10 / span 3;
+    grid-row: 1;
+    align-self: end;
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     filter: grayscale(20%);
 }
 
-
-/* --- About Section --- */
 .about__layout {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--space-md);
     align-items: start;
+}
+
+/* Row 2 content starts where Project Objective's body text starts:
+   heading height (0.875rem x 1.5 line-height) + its 0.5rem margin */
+.about__rule,
+.about__label,
+.about__text--left,
+.about__text--right {
+    --intro-body-offset: calc(var(--font-sm) * 1.5 + 0.5rem);
+    grid-row: 2;
+    margin-top: var(--intro-body-offset);
+}
+
+/* Divider sits 1.25rem above the about text, like every other section divider,
+   and bleeds into the container padding the same way */
+.about__rule {
+    grid-column: 1 / -1;
+    align-self: start;
+    height: 1px;
+    background-color: var(--color-border);
+    margin-top: calc(var(--intro-body-offset) - 1.25rem);
+    margin-left: calc(clamp(2rem, 8vw, 10rem) * -0.75);
+    margin-right: calc(clamp(2rem, 8vw, 10rem) * -0.75);
 }
 
 .about__label {
@@ -42,11 +74,11 @@
     letter-spacing: -0.01em;
 }
 
-.about__text:nth-child(2) {
+.about__text--left {
     grid-column: 5 / span 4;
 }
 
-.about__text:nth-child(3) {
+.about__text--right {
     grid-column: 9 / span 4;
 }
 
@@ -98,10 +130,26 @@
 /* --- Home Responsive overrides --- */
 @media (max-width: 768px) {
 
+    .about__frame {
+        display: none;
+    }
+
     .header__portrait,
-    .about__text:nth-child(2),
-    .about__text:nth-child(3),
+    .about__label,
+    .about__text--left,
+    .about__text--right,
     .project-card {
         grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    .about__rule {
+        grid-row: auto;
+        margin-top: 0;
+    }
+
+    .about__text--left,
+    .about__text--right {
+        margin-top: 0;
     }
 }

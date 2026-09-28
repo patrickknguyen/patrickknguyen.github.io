@@ -27,7 +27,6 @@
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 4px;
 }
 
 /* --- Discovery Section Layout --- */
@@ -43,7 +42,6 @@
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 4px;
 }
 
 .vigor-discovery__image--stacked {
@@ -69,7 +67,6 @@
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 4px;
 }
 
 /* --- Outcomes & Learnings --- */

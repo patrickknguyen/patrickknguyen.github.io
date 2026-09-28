@@ -9,11 +9,12 @@
         content="ViGOR (Video-Generated Operative Reporting) - Computer Vision & Natural Language case study by Patrick K. Nguyen.">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/Home/favicon.svg">
+    <link rel="icon" type="image/png" href="../assets/Home/logo.png">
 
     <link rel="stylesheet" href="../global.css?v=3">
-    <link rel="stylesheet" href="../projects.css?v=4">
-    <link rel="stylesheet" href="vigor.css?v=3">
+    <link rel="stylesheet" href="../projects.css?v=14">
+    <link rel="stylesheet" href="vigor.css?v=4">
 </head>
 
 <body>
@@ -41,56 +42,68 @@
     <!-- ====== Project Intro ====== -->
     <section class="section project-intro">
         <div class="container">
-            <div class="project__layout">
+            <div class="project__layout project__layout--hero">
 
-                <div class="project__title">
-                    <h2>ViGOR (Video-Generated Operative Reporting)</h2>
-                    <p class="project__meta">Computer Vision & Natural Language · 2026</p>
+                <!-- cols 1-3: title, contents, links -->
+                <div class="project__aside">
+                    <div class="project__title">
+                        <h2>ViGOR (Video-Generated Operative Reporting)</h2>
+                        <p class="project__meta">Computer Vision & Natural Language · 2026</p>
 
-                    <ul class="project__toc">
-                        <li><a href="#background">1 / Background & Motivation</a></li>
-                        <li><a href="#challenges">2 / Challenges</a></li>
-                        <li><a href="#discovery">3 / Discovery</a></li>
-                        <li><a href="#architecture">4 / Vision-Language Architecture</a></li>
-                        <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
-                    </ul>
+                        <ul class="project__toc">
+                            <li><a href="#background">1 / Background & Motivation</a></li>
+                            <li><a href="#challenges">2 / Challenges</a></li>
+                            <li><a href="#discovery">3 / Discovery</a></li>
+                            <li><a href="#architecture">4 / Vision-Language Architecture</a></li>
+                            <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="project__links">
+                        <h3>Links</h3>
+                        <ul class="baseline-adjusted-list">
+                            <li><a class="link--disabled">GitHub Repo</a></li>
+                            <li><a href="https://med.stanford.edu/ohns/research/labs/holsinger-research-group.html">Holsinger
+                                    Research Lab</a></li>
+                        </ul>
+
+                        <h3 class="project__links-subhead">Recognitions</h3>
+                        <ul class="baseline-adjusted-list">
+                            <li><span class="link--plain">Dean's Prize for Outstanding Capstone, Harvard
+                                    University</span>
+                            </li>
+                            <li><a href="https://aimi.stanford.edu/aimi26">Presenter, Stanford AIMI Symposium (2026)</a>
+                            </li>
+
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- cols 5-12: hero, then objective (5-8) and overview (9-12) -->
+                <figure class="project__hero">
+                    <img src="../assets/Home/vigor-hero.png"
+                        alt="ViGOR wordmark over a da Vinci robotic surgical instrument">
+                </figure>
 
                 <div class="project__objective">
                     <h3>Project Objective</h3>
                     <p>
-                        With the adoption of the da Vinci SP at Stanford Medicine, Dr. Holsinger's team faced an
-                        ever-growing stream of underutilized high-quality surgical footage. ViGOR is a
-                        vision-to-language framework built to automate operative note generation directly from robotic
-                        surgical video.
+                        With the adoption of the da Vinci SP at Stanford Medicine, every robotic surgical operation was
+                        recorded in high definition. Yet after each case, Dr. Holsinger's team still dictated the
+                        operative notes from memory. ViGOR, our data science capstone project at Harvard, set out to
+                        automate operative note generation directly from robotic surgical video.
                     </p>
                 </div>
 
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        Our team built an MVP that replaces traditional, memory-based dictation with a narrative
-                        grounded in visual evidence. Working with the surgical team, we developed a human-in-the-loop
-                        interface where clinicians can review generated text directly against the video.
+                        Our vision-language prototype drafted operation notes that surgeons rated an average of 85%, and
+                        one in five matched or outperformed official records. To better understand the surgeons'
+                        workflows, I sat in while they reviewed the footage and reports. That led to two major
+                        contributions: a tool that cut their time reviewing by 80%, and a human-in-the-loop
+                        interface to easily verify each line of a draft against the source footage.
                     </p>
-                </div>
-
-                <div class="project__links">
-                    <h3>Links</h3>
-                    <ul class="baseline-adjusted-list">
-                        <li><a class="link--disabled">GitHub Repo</a></li>
-                        <li><a href="https://med.stanford.edu/ohns/research/labs/holsinger-research-group.html">Holsinger
-                                Research Lab</a></li>
-                    </ul>
-
-                    <h3 class="project__links-subhead">Recognitions</h3>
-                    <ul class="baseline-adjusted-list">
-                        <li><span class="link--plain">Dean's Prize for Outstanding Thesis, Harvard University</span>
-                        </li>
-                        <li><a href="https://aimi.stanford.edu/aimi26">Presenter, Stanford AIMI Symposium (2026)
-                            </a></li>
-
-                    </ul>
                 </div>
 
             </div>
@@ -298,18 +311,21 @@
 
                 <div class="vigor-outcomes__text section-body">
                     <p>
-                        ViGOR serves as a successful proof-of-concept for how both computer vision and natural
-                        language processing can be applied to complex industries like medicine, especially in the case
-                        of robotic surgery. The results were highly encouraging, as surgeons graded the generated notes
-                        an
-                        average of 85% when compared to the human-authored notes. In 21% of evaluated cases, the
-                        experts actually rated the generated notes to be equal to or better than the official
-                        dictations.<br><br>
-
-                        The success of the project was ultimately enabled by the collaborative relationship we built
-                        with the surgeons. By approaching them as partners rather than stakeholders, we were able to
-                        translate their
-                        clinical expertise into technical solutions and find compelling discoveries in the field.
+                        To evaluate the drafts generated by ViGOR, we had Dr. Holsinger create a scoring rubric, and two
+                        surgeons graded the same 12 cases, each with the video, Dr. Holsinger's note and ViGOR's draft.
+                        The drafts averaged 85%, and one in five scored as well as the official record or better.
+                        <br><br>
+                        We naively hoped ViGOR could replace dictation entirely. What we built is closer to a
+                        structured first draft, a solid starting point that still needs the attending surgeon's edits
+                        before it goes into the record. We built it for one team's specific needs, and how a system
+                        like ViGOR handles other surgeons, techniques and environments is still an open question.
+                        <br><br>
+                        The original plan was for the surgeons to supply training data and grade the results at the end.
+                        It became clear to me that hand-labeling video was the biggest bottleneck, so I built a
+                        tool to ease it. That small gesture paid off in ways I did not anticipate, freeing the
+                        surgeons to become stronger collaborators throughout the project. I ended up learning more about
+                        the anatomy of the throat than I ever expected to. From there, we were able to translate their
+                        clinical expertise into real, technical solutions.
                     </p>
                 </div>
 
@@ -317,7 +333,18 @@
         </div>
     </section>
 
-    <script src="../lightbox.js?v=5"></script>
+    <!-- ====== Footnote ====== -->
+    <footer class="project-footnote">
+        <div class="container">
+            <p><i>Special thanks to my teammates, Nikita Bedi, Mariss Haddad, Amir Koupaei, and Paul Tan, our
+                    professors,
+                    Bruce Huang and Stephen Elston, and our collaborators at Stanford, Dr. Chris Holsinger, Dr. Po Ling
+                    Chan, Dr. Aina Brunet Garcia, and Hlu Vang.</i>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../lightbox.js?v=6"></script>
 </body>
 
 </html>
