@@ -2,8 +2,38 @@
    Project Pages Styles (Case Study Module)
    ============================================ */
 
+/* --- Page frame: same 4em margin on all sides as the home page --- */
+:root {
+    --page-margin: 4em;
+}
+
+.container {
+    padding: 0 var(--page-margin);
+}
+
+/* Section dividers span the content width, inside the margins */
+.section--bordered .container::before {
+    left: var(--page-margin);
+    right: var(--page-margin);
+}
+
+/* Back link to the home page, top of cols 1-3 */
+.project__back {
+    font-size: var(--font-sm);
+    letter-spacing: 0.01em;
+    margin-bottom: var(--space-lg);
+}
+
+.project__back a {
+    color: var(--color-text-secondary);
+}
+
+.project__back a:hover {
+    color: var(--color-text);
+}
+
 .project-intro {
-    padding-top: var(--space-xl);
+    padding-top: var(--page-margin);
     padding-bottom: var(--space-lg); /* matches .project-section, so every divider sits 4rem below content */
 }
 
@@ -306,7 +336,17 @@
 }
 
 /* --- Mobile: stack the 12-column project grid --- */
+@media (max-width: 900px) {
+    :root {
+        --page-margin: var(--space-md);
+    }
+}
+
 @media (max-width: 768px) {
+
+    .project__layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
 
     .project__title,
     .project__objective,
