@@ -1,35 +1,53 @@
-/* ============================================
-   Design System — Minimal Portfolio (Global)
-   ============================================ */
+/* ==========================================
+   global.css
+   Design tokens, base styles, the page grid
+   and the site header. Loaded on every page.
+   ========================================== */
 
-/* --- Custom Properties --- */
+/* --- Tokens --- */
+
 :root {
     --color-bg: #f5f4f0;
     --color-text: #1a1a1a;
     --color-text-secondary: #555;
     --color-border: #d4d4d0;
-    --color-accent: #1a1a1a;
     --color-link-hover: #666;
 
     --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 2rem;
-    --space-lg: 4rem;
-    --space-xl: 6rem;
-    --space-2xl: 10rem;
-
     --font-xs: 0.8125rem;
     --font-sm: 0.875rem;
     --font-md: 1rem;
     --font-lg: 1.25rem;
-    --font-xl: clamp(2.02rem, 4.3vw, 3.24rem);
+    --font-xl: 1.5rem;
+    --font-2xl: 2rem;
 
+    --space-2xs: 0.25rem;
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 4rem;
+
+    --grid-columns: 12;
+    --grid-gutter: clamp(var(--space-md), 3vw, var(--space-lg));
+    --grid-row-gap: var(--space-md);
+    --page-margin: var(--space-lg);
     --max-width: 1800px;
+
+    /* The name's cap height at --font-2xl, rounded up */
+    --header-height: 1.5rem;
+    --content-offset: 3rem;
 }
 
-/* --- Reset & Base --- */
+/* Breakpoint is 900px in every stylesheet; media queries can't read variables */
+@media (max-width: 900px) {
+    :root {
+        --grid-columns: 1;
+        --page-margin: var(--space-md);
+    }
+}
+
+/* --- Base --- */
+
 *,
 *::before,
 *::after {
@@ -60,7 +78,7 @@ h2 {
 h3 {
     font-size: var(--font-sm);
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
 }
 
 img {
@@ -84,78 +102,38 @@ a:hover {
     color: var(--color-bg);
 }
 
+/* Trims the space above capitals so a heading's visible top lines up
+   with the image beside it */
+.site-header__name,
+.site-header__links a,
+.case-study__title h2,
+.home__bio p:first-child {
+    text-box: trim-both cap alphabetic;
+}
+
 /* --- Layout --- */
+
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 clamp(2rem, 8vw, 10rem);
+    padding: 0 var(--page-margin);
 }
 
-/* --- Base Grid Rules --- */
-.header__top>*,
-.header__bottom>*,
-.about__layout>*,
-.work__grid>*,
-.footer__inner>*,
-.project__layout>* {
+/* One grid for every page, so columns line up from page to page */
+.site-header__inner,
+.home__layout,
+.case-study__layout,
+.case-study-footnote .container {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    row-gap: var(--grid-row-gap);
+}
+
+/* Lets grid items shrink below their content width */
+.home__layout>*,
+.case-study__layout>* {
     min-width: 0;
-}
-
-/* --- Header --- */
-.header {
-    padding-top: var(--space-md);
-}
-
-.header__inner {
-    display: flex;
-    flex-direction: column;
-}
-
-.header__top {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-md);
-    align-items: baseline;
-}
-
-.header__name {
-    grid-column: 1 / span 2;
-    font-family: var(--font-heading);
-    font-size: var(--font-xl);
-    font-weight: 400;
-    line-height: 0.9;
-    text-transform: lowercase;
-    letter-spacing: -0.025em;
-    white-space: nowrap;
-}
-
-.header__nav {
-    grid-column: 9 / span 3;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    width: 100%;
-    gap: var(--space-md);
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    transform: translateY(calc(var(--font-xl) * -0.5));
-}
-
-.header__nav a {
-    font-size: var(--font-sm);
-    letter-spacing: 0.01em;
-}
-
-.header__nav a:hover {
-    color: var(--color-link-hover);
-}
-
-/* --- Section Shared --- */
-.section {
-    padding: 1.25rem 0;
-}
-
-.section--bordered {
-    border-top: none;
 }
 
 .section--bordered .container {
@@ -166,87 +144,59 @@ a:hover {
     content: "";
     position: absolute;
     top: -1.25rem;
-    left: calc(clamp(2rem, 8vw, 10rem) * 0.25);
-    right: calc(clamp(2rem, 8vw, 10rem) * 0.25);
+    left: var(--page-margin);
+    right: var(--page-margin);
     height: 1px;
     background-color: var(--color-border);
 }
 
-.section__label {
-    font-size: var(--font-sm);
-    letter-spacing: 0.01em;
-    margin-bottom: var(--space-md);
+/* --- Site Header --- */
+
+.site-header {
+    padding-top: var(--space-md);
 }
 
-/* --- Contact / Footer --- */
-.footer {
-    border-top: 1px solid var(--color-border);
-    padding: var(--space-lg) 0;
+/* Fixed row height, so content below starts at the same spot on every page */
+.site-header__inner {
+    align-items: start;
+    min-height: var(--header-height);
 }
 
-.footer__inner {
+.site-header__name {
+    grid-column: 1 / span 4;
+    font-size: var(--font-2xl);
+    font-weight: 400;
+    line-height: 1.1;
+    text-transform: lowercase;
+    letter-spacing: -0.01em;
+}
+
+/* Subgrid puts one link at the start of each column, 9 to 12 */
+.site-header__links {
+    grid-column: 9 / -1;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-md);
-    align-items: center;
+    grid-template-columns: subgrid;
 }
 
-.footer__text {
-    grid-column: 1 / span 6;
+.site-header__links a {
     font-size: var(--font-sm);
     color: var(--color-text-secondary);
+    white-space: nowrap;
 }
 
-.footer__links {
-    grid-column: 7 / span 6;
-    justify-content: flex-end;
-    display: flex;
-    gap: var(--space-md);
-}
-
-.footer__links a {
-    font-size: var(--font-sm);
-    color: var(--color-text-secondary);
-}
-
-.footer__links a:hover {
+.site-header__links a:hover {
     color: var(--color-text);
 }
 
-/* ============================================
-   Global Responsive Fallbacks
-   ============================================ */
-@media (max-width: 768px) {
-    .header__inner {
-        flex-direction: column;
-        gap: var(--space-md);
-    }
-
-    .header__top,
-    .header__bottom,
-    .about__layout,
-    .work__grid,
-    .footer__inner {
-        grid-template-columns: 1fr;
-    }
-
-    .header__nav,
-    .header__name,
-    .about__label,
-    .footer__text,
-    .footer__links,
-    .project__title,
-    .project__objective,
-    .project__overview {
+@media (max-width: 900px) {
+    .site-header__name,
+    .site-header__links {
         grid-column: 1 / -1;
     }
 
-    .header__nav,
-    .footer__links {
-        justify-content: flex-start;
-    }
-
-    .header__nav {
-        gap: var(--space-md);
+    .site-header__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-md);
     }
 }

@@ -1,52 +1,29 @@
-/* ============================================
-   clustr Project Styles
-   Only project-specific overrides belong here.
-   Shared section patterns live in projects.css.
-   ============================================ */
+/* ==========================================
+   clustr.css
+   Clustr one-offs. Layout comes from
+   case-studies.css.
+   ========================================== */
 
-/* --- Section body text — consistent column placement --- */
-.clustr-section__text {
-    grid-column: 5 / span 7;
-}
+/* --- Demo Video --- */
 
-/* --- Demo video --- */
 .clustr-demo {
     grid-column: 2 / span 10;
-    margin: var(--space-md) 0 0;
+    margin-top: var(--space-md);
 }
 
+/* Holds the video's space while it loads */
 .clustr-demo__video {
-    width: 100%;
-    height: auto;
-    display: block;
     background: var(--color-border);
 }
 
-.clustr-demo__caption {
-    margin-top: var(--space-sm);
-    font-size: var(--font-sm);
-    font-weight: 300;
-    color: var(--color-text-secondary);
-    text-align: center;
-}
+/* --- Scoring Equation --- */
 
-.clustr-demo__caption a {
-    color: var(--color-text);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-}
-
-.clustr-demo__caption a:hover {
-    color: var(--color-link-hover);
-}
-
-/* --- Scoring equation (Key Design Decisions) --- */
 .clustr-equation {
-    margin: var(--space-md) 0 0;
+    margin-top: var(--space-md);
 }
 
 .clustr-equation__math {
-    padding-left: 2rem;
+    padding-left: var(--space-md);
     overflow-x: auto;
     overflow-y: hidden;
     font-size: 0.9rem;
@@ -60,42 +37,10 @@
     text-align: left;
 }
 
-.clustr-equation__caption {
-    margin-top: var(--space-sm);
-    font-size: var(--font-sm);
-    font-weight: 300;
-    color: var(--color-text-secondary);
-}
+/* --- Below 900px --- */
 
-/* --- In Practice: board walkthrough (text left, stacked images right) --- */
-.clustr-practice__text {
-    grid-column: 1 / span 4;
-}
-
-.clustr-practice__images {
-    grid-column: 6 / -2;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-}
-
-.clustr-practice__images img {
-    width: 100%;
-    height: auto;
-    display: block;
-    cursor: zoom-in;
-}
-
-@media (max-width: 768px) {
-
-    .clustr-section__text,
-    .clustr-demo,
-    .clustr-practice__text,
-    .clustr-practice__images {
+@media (max-width: 900px) {
+    .clustr-demo {
         grid-column: 1 / -1;
-    }
-
-    .clustr-practice__text {
-        margin-bottom: var(--space-sm);
     }
 }

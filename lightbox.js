@@ -1,21 +1,20 @@
-/* ============================================
-   Lightbox — click-to-expand for project images
-   Include once per page; works on any <img> or <video>
-   inside a .project-section element.
-   Supports left/right arrow navigation.
-   ============================================ */
+/* ==========================================
+   lightbox.js
+   Click any image or video in a
+   .case-study-section to open it full screen.
+   Arrow keys and buttons step through them.
+   ========================================== */
 
 (function () {
-    /* --- Collect all project images --- */
-    var images = Array.from(document.querySelectorAll('.project-section img, .project-section video'));
+    /* --- Setup --- */
+
+    var images = Array.from(document.querySelectorAll('.case-study-section img, .case-study-section video'));
     var currentIndex = -1;
 
-    /* --- Build overlay DOM --- */
     var overlay = document.createElement('div');
     overlay.className = 'lightbox-overlay';
     overlay.setAttribute('aria-hidden', 'true');
 
-    /* --- Navigation arrows --- */
     var prevBtn = document.createElement('button');
     prevBtn.className = 'lightbox-arrow lightbox-arrow--prev';
     prevBtn.setAttribute('aria-label', 'Previous image');
@@ -29,7 +28,7 @@
     var img = document.createElement('img');
     img.className = 'lightbox-img';
 
-    /* Videos open in their own element: same autoplay/loop/muted behavior, plus controls */
+    // Videos get their own element so they keep looping, muted, with controls
     var vid = document.createElement('video');
     vid.className = 'lightbox-img';
     vid.muted = true;
@@ -44,7 +43,8 @@
 
     document.body.appendChild(overlay);
 
-    /* --- Open --- */
+    /* --- Open, Close, Navigate --- */
+
     function open(index) {
         currentIndex = index;
         var item = images[index];
@@ -71,7 +71,6 @@
         updateArrows();
     }
 
-    /* --- Close --- */
     function close() {
         vid.pause();
         overlay.classList.remove('lightbox-overlay--visible');
@@ -80,7 +79,6 @@
         currentIndex = -1;
     }
 
-    /* --- Navigate --- */
     function navigate(direction) {
         var next = currentIndex + direction;
         if (next >= 0 && next < images.length) {
@@ -88,13 +86,14 @@
         }
     }
 
-    /* --- Show/hide arrows based on position --- */
     function updateArrows() {
         prevBtn.style.visibility = currentIndex > 0 ? '' : 'hidden';
         nextBtn.style.visibility = currentIndex < images.length - 1 ? '' : 'hidden';
     }
 
-    /* Arrow clicks — stop propagation so overlay click-to-close doesn't fire */
+    /* --- Events --- */
+
+    // Stop propagation so the overlay's click-to-close doesn't also fire
     prevBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         navigate(-1);
@@ -105,7 +104,6 @@
         navigate(1);
     });
 
-    /* Click on image should not close */
     img.addEventListener('click', function (e) {
         e.stopPropagation();
     });
@@ -113,10 +111,8 @@
         e.stopPropagation();
     });
 
-    /* Click on overlay background to close */
     overlay.addEventListener('click', close);
 
-    /* Keyboard navigation */
     document.addEventListener('keydown', function (e) {
         if (currentIndex === -1) return;
         if (e.key === 'Escape') close();
@@ -124,7 +120,6 @@
         if (e.key === 'ArrowRight') navigate(1);
     });
 
-    /* --- Attach to project images --- */
     images.forEach(function (image, i) {
         image.style.cursor = 'zoom-in';
         image.addEventListener('click', function () {

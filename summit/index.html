@@ -8,30 +8,40 @@
     <meta name="description"
         content="Summit Media Center - A mobile ecosystem and evolutionary recreational space for K-12 students by Patrick K. Nguyen.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/Home/favicon.svg">
     <link rel="icon" type="image/png" href="../assets/Home/logo.png">
 
-    <link rel="stylesheet" href="../global.css?v=3">
-    <link rel="stylesheet" href="../projects.css?v=17">
-    <link rel="stylesheet" href="summit.css?v=5">
+    <link rel="stylesheet" href="../global.css?v=11">
+    <link rel="stylesheet" href="../case-studies.css?v=26">
+    <link rel="stylesheet" href="summit.css?v=7">
 </head>
 
 <body>
 
-    <!-- ====== Project Intro ====== -->
-    <section class="section project-intro">
+    <!-- ====== Site Header ====== -->
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <p class="site-header__name"><a href="../">patrick k. nguyen</a></p>
+            <nav class="site-header__links" aria-label="Links">
+                <a href="../resume/" target="_blank" rel="noopener">Resume</a>
+                <a href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="mailto:patrickknguyen@gmail.com">Email</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====== Intro ====== -->
+    <section class="case-study-intro">
         <div class="container">
-            <div class="project__layout project__layout--hero">
+            <div class="case-study__layout">
 
-                <!-- cols 1-3: title, contents, links -->
-                <div class="project__aside">
-                    <div class="project__title">
-                        <p class="project__back"><a href="../">&larr; home</a></p>
+                <div class="case-study__aside">
+                    <div class="case-study__title">
                         <h2>Summit Media Center</h2>
-                        <p class="project__meta">Design Thinking & UX Prototyping · 2020</p>
+                        <p class="case-study__meta">Design Thinking & UX Prototyping · 2020</p>
 
-                        <ul class="project__toc">
+                        <ul class="case-study__toc">
                             <li><a href="#background">1 / Background & Motivation</a></li>
                             <li><a href="#field-research">2 / Field Research</a></li>
                             <li><a href="#ux-design">3 / Designing the Experience</a></li>
@@ -39,21 +49,20 @@
                         </ul>
                     </div>
 
-                    <div class="project__links">
+                    <div class="case-study__links">
                         <h3>Links</h3>
-                        <ul class="baseline-adjusted-list">
+                        <ul>
                             <li><a href="https://corestandards.org/" target="_blank" rel="noopener">Common Core
                                     Standards</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- cols 5-12: hero, then objective (5-8) and overview (9-12) -->
-                <figure class="project__hero">
+                <figure class="case-study__hero">
                     <img src="../assets/Home/summit-hero2.png" alt="Three phone screens from the Summit Media Center prototype">
                 </figure>
 
-                <div class="project__objective">
+                <div class="case-study__objective">
                     <h3>Project Objective</h3>
                     <p>
                         Partnering with the Common Core State Standards Initiative on their 10-year anniversary, we
@@ -65,7 +74,7 @@
                     </p>
                 </div>
 
-                <div class="project__overview">
+                <div class="case-study__overview">
                     <h3>Project Overview</h3>
                     <p>
                         Over the course of the project, we leaned into field research to understand how students learn
@@ -80,15 +89,15 @@
     </section>
 
     <!-- ====== Background & Motivation ====== -->
-    <section id="background" class="section section--bordered project-section">
+    <section id="background" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>1 / Background & Motivation</h2>
                 </div>
 
-                <div class="summit-section__text section-body">
+                <div class="col-prose section-body">
                     <p>For the 10-year anniversary of the creation of the Common Core Initiative in 2010, we partnered
                         with them to rethink what the next decade of K-12 education could bring. Our focus was less on
                         delivering a solution and more on understanding the landscape through research, synthesis, and
@@ -97,7 +106,7 @@
 
                 <div class="section-tri-col summit-tri-col">
 
-                    <div class="summit-card section-body">
+                    <div class="section-body">
                         <div class="summit-card__image">
                             <img src="../assets/Summit/context.jpg" alt="Project context">
                         </div>
@@ -108,7 +117,7 @@
                             not just for college, but for life in a global economy and society?</p>
                     </div>
 
-                    <div class="summit-card section-body">
+                    <div class="section-body">
                         <div class="summit-card__image">
                             <img src="../assets/Summit/concept.jpg" alt="Design concept">
                         </div>
@@ -119,7 +128,7 @@
                             collaborate and share beyond their immediate classrooms.</p>
                     </div>
 
-                    <div class="summit-card section-body">
+                    <div class="section-body">
                         <div class="summit-card__image">
                             <img src="../assets/Summit/plan.jpg" alt="Project plan">
                         </div>
@@ -137,9 +146,9 @@
     </section>
 
     <!-- ====== Field Research ====== -->
-    <section id="field-research" class="section section--bordered project-section">
+    <section id="field-research" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>2 / Field Research</h2>
@@ -147,7 +156,7 @@
 
                 <div class="section-duo-col">
 
-                    <div class="summit-card section-body">
+                    <div class="section-body">
                         <div class="summit-card__image">
                             <img src="../assets/Summit/interview.jpg" alt="Student interviews">
                         </div>
@@ -157,7 +166,7 @@
                             Their responses gave us a much richer picture of the gaps and possibilities.</p>
                     </div>
 
-                    <div class="summit-card section-body">
+                    <div class="section-body">
                         <div class="summit-card__image">
                             <img src="../assets/Summit/contextual-inquiry.jpg" alt="Contextual inquiry">
                         </div>
@@ -175,22 +184,22 @@
     </section>
 
     <!-- ====== Designing the Experience ====== -->
-    <section id="ux-design" class="section section--bordered project-section">
+    <section id="ux-design" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>3 / Designing the Experience</h2>
                 </div>
 
-                <div class="summit-ux-small section-body">
+                <div class="col-text section-body">
                     <div class="summit-card__image">
                         <img src="../assets/Summit/wireframes.jpg" alt="Wireframes">
                     </div>
                     <h3 class="summit-card__label">Wireframes</h3>
                 </div>
 
-                <div class="summit-ux-large section-body">
+                <div class="col-media section-body">
                     <div class="summit-card__image">
                         <img src="../assets/Summit/user-flow.jpg" alt="User flow">
                     </div>
@@ -209,15 +218,15 @@
     </section>
 
     <!-- ====== Outcomes & Learnings ====== -->
-    <section id="outcomes" class="section section--bordered project-section">
+    <section id="outcomes" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>4 / Outcomes & Learnings</h2>
                 </div>
 
-                <div class="summit-outcomes-text section-body">
+                <div class="col-text section-body">
                     <p>By letting our research and conversations with students guide the direction, we
                         arrived at something we wouldn't have anticipated at the outset. The Summit Media Center felt
                         like a natural response to what we heard and observed.<br><br>
@@ -228,7 +237,7 @@
                     </p>
                 </div>
 
-                <div class="summit-outcomes section-body">
+                <div class="col-media section-body">
                     <div class="summit-card__image">
                         <img src="../assets/Summit/final.jpg" alt="Final outcomes">
                     </div>
@@ -238,8 +247,8 @@
         </div>
     </section>
 
-    <!-- ====== Footnote ====== -->
-    <footer class="project-footnote">
+    <!-- ====== Credits ====== -->
+    <footer class="case-study-footnote">
         <div class="container">
             <p><i>Special thanks to my teammates, Davis Brown and Krishna Rammohan, and our instructor, Brian Boyl.</i>
             </p>

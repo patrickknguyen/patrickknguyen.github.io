@@ -1,162 +1,229 @@
 # patrickknguyen.github.io
 
-## Style Guide (Draft)
+Portfolio of Patrick K. Nguyen. Plain HTML, CSS and a little JavaScript, served by GitHub Pages. No build step.
 
-### Color Tokens
-
-| Token                    | Value     | Usage                          |
-|--------------------------|-----------|--------------------------------|
-| `--color-bg`             | `#f5f4f0` | Page background (warm beige)   |
-| `--color-text`           | `#1a1a1a` | Primary text                   |
-| `--color-text-secondary` | `#555`    | Captions, labels, meta text    |
-| `--color-border`         | `#d4d4d0` | Section dividers, rule lines   |
-| `--color-accent`         | `#1a1a1a` | Accent (currently matches text)|
-| `--color-link-hover`     | `#666`    | Link hover state               |
-
-### Typography
-
-- **Font stack:** System — SF Pro Text, Helvetica Neue, Helvetica, Arial, sans-serif (`--font-body`)
-- **Base size:** 16px (`html`)
-- **Line height:** 1.5 (body & all content), 0.9 (site title only)
-
-### Font Size Tokens
-
-Defined in `:root` in `global.css`. All font sizes across the site reference these tokens — no hardcoded `rem` values in component CSS.
-
-| Token          | Value                            | Usage                                |
-|----------------|----------------------------------|--------------------------------------|
-| `--font-xs`    | 0.8125rem                        | Meta, captions, link labels, compact subsection body & headings |
-| `--font-sm`    | 0.875rem                         | Nav links, TOC, subheadings (h3), section labels |
-| `--font-md`    | 1rem                             | Body text, project card titles       |
-| `--font-lg`    | 1.25rem                          | Section headings (h2), about text    |
-| `--font-xl`    | clamp(2.02rem, 4.3vw, 3.24rem)  | Site title (fluid)                   |
-
-### Global Element Defaults (set in `global.css`)
-
-Base styles for `h2` and `h3` are set once globally. Project-specific CSS should **never** re-declare these — only add overrides where the design intentionally deviates.
-
-| Element | Size        | Weight | Other                  |
-|---------|-------------|--------|------------------------|
-| `h2`    | `--font-lg` | 500    | —                      |
-| `h3`    | `--font-sm` | 500    | `margin-bottom: 0.5rem`|
-
-**Current overrides:**
-- `.project__links h3` — `--font-xs`, weight 400, no margin (lighter treatment for sidebar)
-- `.section-point--xs h3` — `--font-xs`, `margin-bottom: 0.25rem` (compact subsection headings)
-
-### Spacing Scale
-
-| Token          | Value   |
-|----------------|---------|
-| `--space-xs`   | 0.5rem  |
-| `--space-sm`   | 1rem    |
-| `--space-md`   | 2rem    |
-| `--space-lg`   | 4rem    |
-| `--space-xl`   | 6rem    |
-| `--space-2xl`  | 10rem   |
-
-### Layout
-
-- **Grid:** 12-column, `repeat(12, minmax(0, 1fr))`, `--space-md` (2rem) gap
-- **Max width:** 1800px (`--max-width`)
-- **Container padding:** `clamp(2rem, 8vw, 10rem)` (fluid)
-- **Breakpoint:** 768px — grids collapse to single column
-- **Grid container:** `.project__layout` provides the 12-column grid with `align-items: start`
-- **Grid children:** All direct children of grid containers get `min-width: 0` (prevents blowout)
-
-### Reusable Section Building Blocks (defined in `projects.css`)
-
-Content sections are composed by combining these shared classes in HTML. Project-specific CSS should **only** define non-standard column widths.
-
-| Class                    | Purpose                                              |
-|--------------------------|------------------------------------------------------|
-| `.section-title`         | Section heading container — grid cols 1–4            |
-| `.section-body`          | Prose styling on child `p` (font-md, weight 300, 1.5)|
-| `.section-body--stacked` | Adds `margin-bottom: --space-md` between `p` tags    |
-| `.section-body--xs`      | Compact prose variant (`--font-xs`, weight 300, 1.5) |
-| `.section-point`         | Titled content block (h3 + p), `margin-bottom: 2rem` |
-| `.section-point--xs`     | Compact variant of section-point (`margin-bottom: 1rem`, `--font-xs` heading) |
-| `.section-col-left`      | Left content column — grid cols 5–8                  |
-| `.section-col-right`     | Right content column — grid cols 9–12                |
-| `.section-tri-col`       | 3-column subsection grid — full 12 cols, `repeat(3, 1fr)`, `--space-lg` gap |
-
-#### Link States (inside `.project__links`)
-
-| Class             | Behavior                                                |
-|-------------------|---------------------------------------------------------|
-| (default `a`)     | `--font-sm`, weight 300, `--color-text-secondary`, arrow `↗` via `::after` |
-| `.link--disabled`  | `text-decoration: line-through`, `pointer-events: none`, no arrow — for links with no URL yet |
-
-#### Intro Section (one-off, also in `projects.css`)
-
-The project intro uses its own classes (not the shared section blocks):
-
-| Class                | Cols   | Purpose                        |
-|----------------------|--------|--------------------------------|
-| `.project__title`    | 1–4    | Project name, meta, TOC        |
-| `.project__objective`| 5–7    | Objective blurb                |
-| `.project__overview` | 8–10   | Overview blurb                 |
-| `.project__links`    | 11–12  | External links sidebar         |
-
-### Layout Patterns
-
-All content sections sit inside a `.project__layout` grid. The section title always occupies cols 1–4. Content area varies:
-
-| Pattern              | Content columns                              | Example section          |
-|----------------------|----------------------------------------------|--------------------------|
-| Title + double       | `.section-col-left` (5–8) + `.section-col-right` (9–12) | Dataset, Architecture |
-| Title + wide single  | Custom class for cols 5–12 or 5–10           | VL Architecture (8 cols) |
-| Title + tri-col      | `.section-tri-col` (1–12, 3 × 4-col children) | Background, Data Pipeline, User Experience |
-
-**ViGOR-specific column overrides** (in `vigor/vigor.css`):
-- `.vigor-architecture__text` — `grid-column: 5 / span 7`
-
-**ZipVote-specific overrides** (in `zipvote/zipvote.css`):
-- `.zipvote-section__text` — `grid-column: 5 / span 7`
-- `.zipvote-ux-image img` — `aspect-ratio: 16/9`, `object-fit: cover` (auto-crops images)
-- `.zipvote-ux-label` — centered label beneath each UX image
-- `.section-body--xs` — `--font-xs` body text for compact UX card descriptions
-- `.section-point--xs` — compact subsection headings (`--font-xs`, tighter margin)
-
-### Lightbox (shared, `lightbox.js` + styles in `projects.css`)
-
-A click-to-expand overlay for project images. Include `<script src="../lightbox.js"></script>` before `</body>` on any project page.
-
-- Automatically targets all `<img>` inside `.project-section` elements
-- Click image → opens in centered overlay with dark backdrop (85% opacity)
-- Click anywhere or press `Escape` → closes
-- Adds `cursor: zoom-in` on images, `cursor: zoom-out` on overlay
-- Fade transition: 0.25s ease
-
-### CSS Architecture
+## Run Locally
 
 ```
-global.css            Design tokens (:root), reset, base element styles (h2, h3, a, body),
-                      header, footer, section borders, responsive breakpoints
-home.css              Homepage: hero portrait, about layout, work grid, project cards
-projects.css          Shared project page: intro layout, reusable section building blocks
-                      (section-title, section-body, section-col-*, section-tri-col, section-point),
-                      link states (link--disabled), lightbox overlay
-lightbox.js           Shared click-to-expand image viewer for all project pages
-vigor/vigor.css       ViGOR-only overrides — 1 rule for non-standard column width
-zipvote/zipvote.css   ZipVote-only overrides — UX card image/label/body styles
+node server.js
 ```
 
-**Load order** (each project page): `global.css` → `projects.css` → `{project}.css` → `lightbox.js`
+Open http://localhost:8000. The server only exists for local preview; GitHub Pages serves the files directly.
 
-**Cache busting:** CSS `<link>` tags use `?v=N` query strings (increment on deploy).
+## Files
 
-### Naming Conventions
+```
+index.html            Home page
+global.css            Tokens, base styles, page grid, site header. Every page.
+home.css              Home page only
+case-studies.css      Shared case study layout, figures, lightbox styles
+lightbox.js           Click-to-expand images in case studies
+server.js             Local preview server
+{case-study}/index.html  One folder per case study: vigor, clustr, summit, zipvote
+{case-study}/{name}.css  That case study's one-offs
+resume/               Résumé page, separate stylesheet, outside this system
+assets/               Images, one folder per page
+```
 
-- **BEM-style:** `block__element` for scoped components (e.g. `header__nav`, `project-card__img`, `project__links`)
-- **Shared section classes:** Unprefixed, composable across all projects (e.g. `section-title`, `section-body`, `section-point`, `section-tri-col`)
-- **Project-specific prefixes:** `vigor-*`, `zipvote-*` — only for column-width overrides that differ from shared defaults
-- **Modifier syntax:** `--` suffix for variants (e.g. `section-body--stacked`, `section-body--xs`, `section-point--xs`, `section--bordered`)
+Load order on a case study: `global.css`, `case-studies.css`, `{case-study}.css`, then `lightbox.js` before `</body>`.
 
-### Interactions
+## Principles
 
-- Link hover: `color` transition, 0.2s ease
-- Project card hover: `scale(1.03)` + `brightness(0.92)`, 0.4s ease
-- Scroll behavior: `smooth`
-- Text selection: inverted (`--color-bg` text on `--color-text` background)
-- Image lightbox: click to expand, click/Escape to dismiss
+1. **Tokens first.** Colors, type sizes, spacing and grid values live in `:root` in `global.css`. Page stylesheets use `var(--token)` and never hardcode their own values.
+2. **One grid.** Every page sits on the same 12-column grid with the same gutter, so columns line up across pages.
+3. **Two start lines.** Content starts at column 1 or column 5. Nothing else.
+4. **Shared before specific.** Layout comes from shared classes in `case-studies.css`. A case study stylesheet holds only things no other page needs.
+5. **Top edges align.** Headings beside images are trimmed so their visible top meets the image's top edge.
+
+## Tokens
+
+### Color
+
+| Token | Value | Use |
+|---|---|---|
+| `--color-bg` | `#f5f4f0` | Page background |
+| `--color-text` | `#1a1a1a` | Body text, headings |
+| `--color-text-secondary` | `#555` | Meta, captions, link lists |
+| `--color-border` | `#d4d4d0` | Dividers |
+| `--color-link-hover` | `#666` | Link hover |
+
+### Type
+
+Font: system stack (`--font-body`). Base size 16px. Body line height 1.5.
+
+| Token | Size | Use |
+|---|---|---|
+| `--font-xs` | 0.8125rem | Meta lines, link list headings |
+| `--font-sm` | 0.875rem | h3, nav links, captions, contents list |
+| `--font-md` | 1rem | Body text |
+| `--font-lg` | 1.25rem | h2 section titles, case study card titles |
+| `--font-xl` | 1.5rem | Case study title |
+| `--font-2xl` | 2rem | Site name |
+
+Weights: 300 for body text, 400 for the site name, 500 for headings.
+
+### Spacing
+
+| Token | Size |
+|---|---|
+| `--space-2xs` | 0.25rem |
+| `--space-xs` | 0.5rem |
+| `--space-sm` | 1rem |
+| `--space-md` | 2rem |
+| `--space-lg` | 4rem |
+
+### Grid and Page
+
+| Token | Value | Use |
+|---|---|---|
+| `--grid-columns` | 12, or 1 below 900px | Column count |
+| `--grid-gutter` | 2rem to 4rem, fluid | Space between columns |
+| `--grid-row-gap` | 2rem | Space between grid rows |
+| `--page-margin` | 4rem, or 2rem below 900px | Left, right and bottom page edge |
+| `--max-width` | 1800px | Content max width |
+| `--header-height` | 1.5rem | Height of the header row |
+| `--content-offset` | 3rem | Header to first content, every page |
+
+**Breakpoint:** 900px everywhere. Media queries can't read variables, so the number is repeated in each stylesheet. Below it, `--grid-columns` becomes 1 and every block spans the full width.
+
+## Layout
+
+### Columns
+
+```
+| 1  2  3 | 4 | 5  6  7  8 | 9  10  11  12 |
+| sidebar |   |      media or prose         |
+| title   |   |                             |
+| side text  |                             |
+```
+
+| Class | Columns | Use |
+|---|---|---|
+| `.section-title` | 1 to 4 | Section heading |
+| `.col-text` | 1 to 4 | Text beside media |
+| `.col-media` | 5 to 12 | Full width media |
+| `.col-prose` | 5 to 11 | Long-form text |
+| `.col-media--inset` | 5 to 11 | Slightly narrower media |
+| `.col-media--narrow` | 5 to 9 | Tall media, like a long screenshot |
+| `.section-col-left` | 5 to 8 | Paired text, left |
+| `.section-col-right` | 9 to 12 | Paired text, right |
+| `.section-tri-col` | 1 to 12 | Three 4-column blocks |
+| `.section-duo-col` | 5 to 12 | Two 4-column blocks |
+
+`.section-tri-col` and `.section-duo-col` use CSS subgrid, so their columns are the page's own columns.
+
+### Site Header
+
+On every page. Name in columns 1 to 4, links starting at columns 9, 10, 11 and 12. Not sticky. On the home page the name sits in the sticky sidebar instead, and the links sit in the grid's first row.
+
+### Home Page
+
+- Sidebar, columns 1 to 3: name, bio, portrait. Sticky when it fits the window, and the portrait sits on the bottom page margin. When it doesn't fit, the script in `index.html` lets it scroll.
+- Work, columns 5 to 12: case study cards with 16:9 images.
+- The bio and the first case study image start `--content-offset` below the header, the same line as a case study's title and hero.
+
+### Case Study Intro
+
+| Element | Columns | Row |
+|---|---|---|
+| `.case-study__title`: title, meta, contents | 1 to 3 | 1 |
+| `.case-study__hero`: 16:9 image | 5 to 12 | 1 |
+| `.case-study__links`: links, recognitions | 1 to 3 | 2 |
+| `.case-study__objective` | 5 to 8 | 2 |
+| `.case-study__overview` | 9 to 12 | 2 |
+
+The hero is always 16:9 and matches the image on the home page card.
+
+### Case Study Sections
+
+Each section is `<section class="section--bordered case-study-section">` with a `.container` and a `.case-study__layout` grid inside. The title takes columns 1 to 4. Content uses a column class from the table above.
+
+Text blocks:
+
+| Class | Use |
+|---|---|
+| `.section-body` | Body text styling for its paragraphs |
+| `.section-body--stacked` | Space between several paragraphs |
+| `.section-point` | A titled block: h3 and a paragraph |
+
+### Figures
+
+```html
+<figure class="figure col-media">
+    <img src="..." alt="What the image shows">
+    <figcaption class="figure__caption">What the reader should notice.</figcaption>
+</figure>
+```
+
+- `.figure--stack` stacks several images in one figure.
+- `.figure__caption--center` centers a caption.
+- Every image in a `.case-study-section` opens in the lightbox automatically.
+- Captions say what to notice, not what the image is.
+
+## Writing CSS
+
+### Naming
+
+- **Components** use BEM: `block__element--modifier`, like `case-study-card__img` or `figure__caption--center`.
+- **Shared layout classes** have no prefix: `col-media`, `section-title`.
+- **Case study one-offs** are prefixed with the case study name: `clustr-demo`, `zipvote-ux-label`.
+
+### Comments
+
+Every file follows the same three rules.
+
+**1. A file header** naming the file and what it's for:
+
+```css
+/* ==========================================
+   case-studies.css
+   Shared layout for every case study.
+   ========================================== */
+```
+
+**2. Section dividers** in Title Case, with a blank line after:
+
+```css
+/* --- Figures --- */
+```
+
+**3. Inline comments explain why, never what.** If the code already says it, there's no comment.
+
+```css
+/* The flex gap already spaces the caption; pull it up to match */
+.figure--stack .figure__caption {
+    margin-top: calc(var(--space-sm) - var(--space-md));
+}
+```
+
+In JavaScript, headers and dividers use `/* */` and inline comments use `//`. In HTML, the only comments are section markers that match the section's h2:
+
+```html
+<!-- ====== Discovery ====== -->
+```
+
+### Before Adding a Rule
+
+1. Is there a token for this value? Use it.
+2. Does a shared class already do this? Use it.
+3. Will a second case study need it? Put it in `case-studies.css`.
+4. Only then add it to that case study's stylesheet.
+
+## Adding a Case Study
+
+1. Copy an existing case study folder and rename it.
+2. Replace the intro: title, meta, contents list, 16:9 hero, objective, overview, links.
+3. Build sections with `.section-title` and the column classes.
+4. Add a case study card to `index.html` using the same hero image.
+5. Keep the case study stylesheet for one-offs only.
+
+## Cache Busting
+
+Stylesheet links end in `?v=N`. Increase N when a stylesheet changes, so browsers load the new version instead of a cached one.
+
+## Interactions
+
+- Links fade color on hover over 0.2s.
+- Case study cards zoom to 102% and dim slightly on hover over 0.4s.
+- The lightbox fades in over 0.25s. Click or press Escape to close, and use the arrow keys to step through images.
+- Selected text inverts: background color on text color.

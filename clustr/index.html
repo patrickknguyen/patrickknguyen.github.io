@@ -8,13 +8,12 @@
     <meta name="description"
         content="clustr - a browser-only image moodboard clustering tool blending semantic and aesthetic similarity. Machine Learning & Interaction Design case study by Patrick K. Nguyen.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../assets/Home/favicon.svg">
     <link rel="icon" type="image/png" href="../assets/Home/logo.png">
 
-    <link rel="stylesheet" href="../global.css?v=3">
-    <link rel="stylesheet" href="../projects.css?v=17">
-    <link rel="stylesheet" href="clustr.css?v=6">
+    <link rel="stylesheet" href="../global.css?v=11">
+    <link rel="stylesheet" href="../case-studies.css?v=26">
+    <link rel="stylesheet" href="clustr.css?v=8">
 
     <!-- KaTeX for the scoring equation -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -24,19 +23,30 @@
 
 <body>
 
-    <!-- ====== Project Intro ====== -->
-    <section class="section project-intro">
+    <!-- ====== Site Header ====== -->
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <p class="site-header__name"><a href="../">patrick k. nguyen</a></p>
+            <nav class="site-header__links" aria-label="Links">
+                <a href="../resume/" target="_blank" rel="noopener">Resume</a>
+                <a href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="mailto:patrickknguyen@gmail.com">Email</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====== Intro ====== -->
+    <section class="case-study-intro">
         <div class="container">
-            <div class="project__layout project__layout--hero">
+            <div class="case-study__layout">
 
-                <!-- cols 1-3: title, contents, links -->
-                <div class="project__aside">
-                    <div class="project__title">
-                        <p class="project__back"><a href="../">&larr; home</a></p>
+                <div class="case-study__aside">
+                    <div class="case-study__title">
                         <h2>Clustr</h2>
-                        <p class="project__meta">Computer Vision & UX Prototyping · 2026</p>
+                        <p class="case-study__meta">Computer Vision & UX Prototyping · 2026</p>
 
-                        <ul class="project__toc">
+                        <ul class="case-study__toc">
                             <li><a href="#background">1 / Background & Motivation</a></li>
                             <li><a href="#decisions">2 / Key Design Decisions</a></li>
                             <li><a href="#practice">3 / In Practice</a></li>
@@ -44,9 +54,9 @@
                         </ul>
                     </div>
 
-                    <div class="project__links">
+                    <div class="case-study__links">
                         <h3>Links</h3>
-                        <ul class="baseline-adjusted-list">
+                        <ul>
                             <li><a href="https://patrickknguyen.github.io/clustr-app/" target="_blank"
                                     rel="noopener">Demo</a>
                             <li><a href="https://github.com/patrickknguyen/clustr-app" target="_blank" rel="noopener">GitHub
@@ -57,12 +67,11 @@
                     </div>
                 </div>
 
-                <!-- cols 5-12: hero, then objective (5-8) and overview (9-12) -->
-                <figure class="project__hero">
+                <figure class="case-study__hero">
                     <img src="../assets/Home/clustr-hero.png" alt="Clustr canvas with a moodboard sorted into image clusters">
                 </figure>
 
-                <div class="project__objective">
+                <div class="case-study__objective">
                     <h3>Project Objective</h3>
                     <p>
                         My moodboards get messy quickly. Often I can feel a direction forming but find it hard to
@@ -71,7 +80,7 @@
                     </p>
                 </div>
 
-                <div class="project__overview">
+                <div class="case-study__overview">
                     <h3>Project Overview</h3>
                     <p>
                         Clustr is a prototype that sorts a collection of images into
@@ -85,15 +94,15 @@
     </section>
 
     <!-- ====== Demo Video ====== -->
-    <section class="section section--bordered project-section">
+    <section class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
-                <figure class="clustr-demo">
+            <div class="case-study__layout">
+                <figure class="figure clustr-demo">
                     <video class="clustr-demo__video" src="clustr-demo.mp4" poster="clustr-demo-poster.jpg" autoplay
                         muted loop playsinline preload="metadata"
                         aria-label="Screen recording of clustr embedding a set of reference images and re-clustering the layout as the semantic–aesthetic slider is dragged.">
                     </video>
-                    <figcaption class="clustr-demo__caption">Try the clustr demo <a
+                    <figcaption class="figure__caption figure__caption--center">Try the clustr demo <a
                             href="https://patrickknguyen.github.io/clustr-app/" target="_blank" rel="noopener">here</a>.
                     </figcaption>
                 </figure>
@@ -102,9 +111,9 @@
     </section>
 
     <!-- ====== Background & Motivation ====== -->
-    <section id="background" class="section section--bordered project-section">
+    <section id="background" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>1 / Background & Motivation</h2>
@@ -138,9 +147,9 @@
     </section>
 
     <!-- ====== Key Design Decisions ====== -->
-    <section id="decisions" class="section section--bordered project-section">
+    <section id="decisions" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>2 / Key Design Decisions</h2>
@@ -158,11 +167,11 @@
                             that do not exist, so I needed to implement a
                             minimum threshold.
                         </p>
-                        <figure class="clustr-equation">
+                        <figure class="figure clustr-equation">
                             <div class="clustr-equation__math"
                                 data-tex="\begin{aligned} &amp;\mathrm{score}(w, c) = s(w, c) - \frac{1}{K}\sum_{k=1}^{K} s(w, k) \\ &amp;\text{where } s(w, c) \geq 0.9 \cdot \max_{w'} s(w', c) \end{aligned}">
                             </div>
-                            <figcaption class="clustr-equation__caption">
+                            <figcaption class="figure__caption">
                                 <em>s</em> is the cosine similarity between a word and the cluster's center. A
                                 word scores higher the more it beats its average fit across all <em>K</em> clusters,
                                 within 90% of the cluster's best match.
@@ -180,11 +189,11 @@
                             needs to be rescaled. The point is not to find the best cluster, it is to let the user
                             explore whatever grouping is useful for their board.
                         </p>
-                        <figure class="clustr-equation">
+                        <figure class="figure clustr-equation">
                             <div class="clustr-equation__math"
                                 data-tex="\begin{aligned} &amp;d_{\alpha} = \sqrt{(1 - \alpha)\, d_{\text{CLIP}}^{2} + \alpha\, \lambda^{2} d_{\text{DINO}}^{2}} \\[6pt] &amp;\text{where } \lambda = \frac{\sigma(d_{\text{CLIP}})}{\sigma(d_{\text{DINO}})} \end{aligned}">
                             </div>
-                            <figcaption class="clustr-equation__caption">
+                            <figcaption class="figure__caption">
                                 <em>d</em> is the distance between two images and <em>σ</em> is the standard
                                 deviation of those distances. <em>λ</em> rescales DINO's distances to
                                 match CLIP's spread, so the slider <em>α</em> blends the two evenly.
@@ -211,15 +220,15 @@
     </section>
 
     <!-- ====== In Practice ====== -->
-    <section id="practice" class="section section--bordered project-section">
+    <section id="practice" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>3 / In Practice</h2>
                 </div>
 
-                <div class="clustr-practice__text section-body">
+                <div class="col-text section-body">
                     <p>
                         The board on the right is a sample collection from Unsplash, "Architecture", 40 images loaded
                         into Clustr's library.
@@ -240,7 +249,7 @@
                         the original collection.
                     </p>
                 </div>
-                <div class="clustr-practice__images">
+                <div class="figure figure--stack col-media--inset">
                     <img src="../assets/Clustr/inpractice-1.jpg"
                         alt="Uploaded photo library of mixed interior and exterior architecture images, before clustering">
                     <img src="../assets/Clustr/inpractice-2-crop.png"
@@ -254,15 +263,15 @@
     </section>
 
     <!-- ====== Outcomes & Learnings ====== -->
-    <section id="outcomes" class="section section--bordered project-section">
+    <section id="outcomes" class="section--bordered case-study-section">
         <div class="container">
-            <div class="project__layout">
+            <div class="case-study__layout">
 
                 <div class="section-title">
                     <h2>4 / Outcomes & Learnings</h2>
                 </div>
 
-                <div class="clustr-section__text section-body section-body--stacked">
+                <div class="col-prose section-body section-body--stacked">
                     <div class="section-point">
                         <p>
                             This started to prove a point that moodboard tools are sitting on a gold mine for fun

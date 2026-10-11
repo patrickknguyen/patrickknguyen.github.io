@@ -12,11 +12,10 @@
     content="Patrick K. Nguyen builds computer vision systems and the interfaces people use to understand and trust them.">
   <meta property="og:type" content="website">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/Home/favicon.svg">
   <link rel="icon" type="image/png" href="assets/Home/logo.png">
-  <link rel="stylesheet" href="global.css">
-  <link rel="stylesheet" href="home.css?v=12">
+  <link rel="stylesheet" href="global.css?v=11">
+  <link rel="stylesheet" href="home.css?v=21">
 </head>
 
 <body>
@@ -25,85 +24,81 @@
     <div class="container">
       <div class="home__layout">
 
-        <!-- ====== Sidebar: stays put while the work scrolls (cols 1-4) ====== -->
+        <!-- ====== Links ====== -->
+        <nav class="site-header__links home__nav" aria-label="Links">
+          <a href="resume/" target="_blank" rel="noopener">Resume</a>
+          <a href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="mailto:patrickknguyen@gmail.com">Email</a>
+        </nav>
+
+        <!-- ====== Sidebar ====== -->
         <aside id="about" class="home__sidebar">
-          <h1 class="home__name">patrick k. nguyen</h1>
+          <h1 class="site-header__name home__name">patrick k. nguyen</h1>
 
           <div class="home__bio">
-            <p>In his 2018 Design in Tech Report, John Maeda describes a new kind of designer, the computational
-              designer, who designs for scale. Design was moving past the "Photoshop era", and as he put it, “execution
-              has outpaced innovation.” The question of what to build and why is one designers are
-              in a unique position to answer.
+            <p>In his 2018 Design in Tech Report, John Maeda made the case for the computational designer, one who
+              designs for scale. As he put it, "execution has outpaced innovation." The question of what to build and
+              why is one designers are in a unique position to answer.
               <br><br>
-              I studied graphic design at ArtCenter, where we learned print down to the grain of the
-              paper stock. However when working as a designer, my work lived on top of algorithms and design systems.
-              So I went for a master’s in data science at Harvard, to have a deeper understanding of this medium. Today
-              I'm most interested in computer vision and design engineering.
+              I studied graphic design at ArtCenter, where we learned print down to the grain of the paper stock. Once I
+              started working, I didn’t print a single thing. My designs lived on screens, shaped by code and algorithms
+              I didn’t fully understand. So I went to Harvard for a master’s in data science to learn that medium. Today
+              I’m most interested in computer vision and design engineering.
             </p>
           </div>
 
           <div class="home__sidebar-foot">
-            <nav id="contact" class="home__links" aria-label="Contact and links">
-              <h3>Links</h3>
-              <ul>
-                <li><a href="resume/" target="_blank" rel="noopener">Resume</a></li>
-                <li><a href="mailto:patrickknguyen@gmail.com">Email</a></li>
-                <li><a href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a></li>
-                <li><a href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
-                </li>
-              </ul>
-            </nav>
-
             <img class="home__portrait" src="assets/Home/profile-bw.jpg" alt="Patrick K. Nguyen portrait">
           </div>
         </aside>
 
-        <!-- ====== Work: scrolling case studies (cols 5-12) ====== -->
+        <!-- ====== Work ====== -->
         <section id="work" class="home__work" aria-label="Selected work">
 
-          <a href="vigor/" class="project-card" id="project-vigor">
-            <div class="project-card__media">
-              <img class="project-card__img" src="assets/Home/vigor-hero.png"
+          <a href="vigor/" class="case-study-card" id="case-study-vigor">
+            <div class="case-study-card__media">
+              <img class="case-study-card__img" src="assets/Home/vigor-hero.png"
                 alt="ViGOR wordmark over a da Vinci robotic surgical instrument">
             </div>
-            <div class="project-card__info">
-              <p class="project-card__title">ViGOR: Video-Generated Operative Reporting</p>
-              <p class="project-card__meta">Computer Vision &amp; Natural Language &middot; 2026</p>
-              <p class="project-card__desc">Drafting operative notes from surgical video instead of the surgeon's
+            <div class="case-study-card__info">
+              <p class="case-study-card__title">ViGOR: Video-Generated Operative Reporting</p>
+              <p class="case-study-card__meta">Computer Vision &amp; Natural Language &middot; 2026</p>
+              <p class="case-study-card__desc">Drafting operative notes from surgical video instead of the surgeon's
                 memory.</p>
             </div>
           </a>
 
-          <a href="clustr/" class="project-card" id="project-clustr">
-            <div class="project-card__media">
-              <img class="project-card__img" src="assets/Home/clustr-hero.png" alt="Clustr image clustering prototype">
+          <a href="clustr/" class="case-study-card" id="case-study-clustr">
+            <div class="case-study-card__media">
+              <img class="case-study-card__img" src="assets/Home/clustr-hero.png" alt="Clustr image clustering prototype">
             </div>
-            <div class="project-card__info">
-              <p class="project-card__title">Clustr</p>
-              <p class="project-card__meta">Computer Vision &amp; UX Prototyping &middot; 2026</p>
-              <p class="project-card__desc">Putting words to the patterns hiding in a messy moodboard.</p>
-            </div>
-          </a>
-
-          <a href="zipvote/" class="project-card" id="project-zipvote">
-            <div class="project-card__media">
-              <img class="project-card__img" src="assets/Home/zipvote-hero.png" alt="ZipVote voter matching tool">
-            </div>
-            <div class="project-card__info">
-              <p class="project-card__title">ZipVote (WIP)</p>
-              <p class="project-card__meta">Information &amp; Web Design &middot; 2026</p>
-              <p class="project-card__desc">Making local elections less intimidating for first-time voters.</p>
+            <div class="case-study-card__info">
+              <p class="case-study-card__title">Clustr</p>
+              <p class="case-study-card__meta">Computer Vision &amp; UX Prototyping &middot; 2026</p>
+              <p class="case-study-card__desc">Putting words to the patterns hiding in a messy moodboard.</p>
             </div>
           </a>
 
-          <a href="summit/" class="project-card" id="project-summit">
-            <div class="project-card__media">
-              <img class="project-card__img" src="assets/Home/summit-hero.png" alt="Summit Media Center project">
+          <a href="zipvote/" class="case-study-card" id="case-study-zipvote">
+            <div class="case-study-card__media">
+              <img class="case-study-card__img" src="assets/Home/zipvote-hero.png" alt="ZipVote voter matching tool">
             </div>
-            <div class="project-card__info">
-              <p class="project-card__title">Summit Media Center</p>
-              <p class="project-card__meta">Design Thinking &amp; UX Prototyping &middot; 2020</p>
-              <p class="project-card__desc">Reimagining how K-12 students learn, starting from how they create.</p>
+            <div class="case-study-card__info">
+              <p class="case-study-card__title">ZipVote (WIP)</p>
+              <p class="case-study-card__meta">Information &amp; Web Design &middot; 2026</p>
+              <p class="case-study-card__desc">Making local elections less intimidating for first-time voters.</p>
+            </div>
+          </a>
+
+          <a href="summit/" class="case-study-card" id="case-study-summit">
+            <div class="case-study-card__media">
+              <img class="case-study-card__img" src="assets/Home/summit-hero.png" alt="Summit Media Center project">
+            </div>
+            <div class="case-study-card__info">
+              <p class="case-study-card__title">Summit Media Center</p>
+              <p class="case-study-card__meta">Design Thinking &amp; UX Prototyping &middot; 2020</p>
+              <p class="case-study-card__desc">Reimagining how K-12 students learn, starting from how they create.</p>
             </div>
           </a>
 
@@ -114,17 +109,20 @@
   </main>
 
   <script>
-    // Pin the sidebar only when it fits the window; otherwise let it scroll
-    // with the page so the links and portrait are never cut off.
+    // Pins the sidebar only when it fits between the top offset and the bottom
+    // page margin; otherwise it scrolls with the page so the portrait isn't cut off
     (function () {
       var bar = document.querySelector('.home__sidebar');
       function fit() {
         bar.classList.remove('is-unpinned');
+        var style = getComputedStyle(bar);
+        var gap = parseFloat(style.rowGap) || 0;
         var content = Array.prototype.reduce.call(bar.children, function (h, el) {
-          return h + el.offsetHeight;
-        }, 0) + 32 * (bar.children.length - 1);
-        var margin = parseFloat(getComputedStyle(bar).top) || 0;
-        if (content > window.innerHeight - 2 * margin) bar.classList.add('is-unpinned');
+          return h + el.offsetHeight + (parseFloat(getComputedStyle(el).marginBottom) || 0);
+        }, 0) + gap * (bar.children.length - 1);
+        var top = parseFloat(style.top) || 0;
+        var bottom = parseFloat(getComputedStyle(document.querySelector('.home')).paddingBottom) || 0;
+        if (content > window.innerHeight - top - bottom) bar.classList.add('is-unpinned');
       }
       fit();
       window.addEventListener('resize', fit);

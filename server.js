@@ -1,3 +1,10 @@
+/* ==========================================
+   server.js
+   Local preview server: run `node server.js`
+   and open http://localhost:8000. Not used
+   by GitHub Pages.
+   ========================================== */
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -20,7 +27,7 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  // Decode URL to support paths with spaces or special characters
+  // Decoding lets paths with spaces resolve to real files
   let decodedUrl;
   try {
     decodedUrl = decodeURIComponent(req.url);
@@ -28,25 +35,23 @@ const server = http.createServer((req, res) => {
     decodedUrl = req.url;
   }
 
-  // Remove query parameters or hash from URL path
   const urlPath = decodedUrl.split('?')[0].split('#')[0];
-  
-  // Resolve absolute file path
+
   let filePath = path.join(__dirname, urlPath === '/' ? 'index.html' : urlPath);
 
-  // If path is a directory (e.g. /vigor or /summit), try to serve index.html within it
+  // Folder URLs like /vigor serve that folder's index.html
   try {
     const stats = fs.statSync(filePath);
     if (stats.isDirectory()) {
       filePath = path.join(filePath, 'index.html');
     }
   } catch (e) {
-    // If folder doesn't exist, let readFile handle the error
+    // A missing path falls through to readFile, which returns the 404
   }
-  
+
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-  
+
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === 'ENOENT') {

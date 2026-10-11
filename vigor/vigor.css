@@ -1,116 +1,18 @@
-/* ============================================
-   ViGOR Project Styles
-   Only project-specific overrides belong here.
-   Shared section patterns live in projects.css.
-   ============================================ */
+/* ==========================================
+   vigor.css
+   ViGOR one-offs. Layout comes from
+   case-studies.css.
+   ========================================== */
 
-/* --- Recognitions subhead (inside Links) --- */
-.project__links-subhead {
+/* --- Links --- */
+
+.case-study__links-subhead {
     margin-top: var(--space-md);
 }
 
-.project__links .link--plain {
+/* A recognition with no link, styled to match the links above it */
+.case-study__links .link--plain {
     font-size: var(--font-sm);
     font-weight: 300;
     color: var(--color-text-secondary);
-    display: inline-flex;
-    align-items: center;
-}
-
-/* --- Initial Approach: stacked text cols 1-4, figure cols 5-12 --- */
-.challenges__text {
-    grid-column: 1 / span 4;
-}
-
-.challenges__figure {
-    grid-column: 5 / -1;
-    margin: 0;
-}
-
-.challenges__caption {
-    margin-top: var(--space-sm);
-    font-size: var(--font-sm);
-    font-weight: 300;
-    color: var(--color-text-secondary);
-}
-
-.challenges__figure img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* --- Discovery Section Layout --- */
-.vigor-discovery__text {
-    grid-column: 1 / span 4;
-}
-
-.vigor-discovery__image {
-    grid-column: 5 / -1;
-    margin: 0;
-}
-
-.vigor-discovery__caption {
-    margin-top: var(--space-sm);
-    font-size: var(--font-sm);
-    font-weight: 300;
-    color: var(--color-text-secondary);
-}
-
-/* stacked figure spaces children with gap; pull the caption up to match */
-.vigor-discovery__image--stacked .vigor-discovery__caption {
-    margin-top: calc(var(--space-sm) - var(--space-md));
-}
-
-.vigor-discovery__image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.vigor-discovery__image--stacked {
-    grid-column: 5 / -2;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-}
-
-@media (max-width: 768px) {
-
-    .vigor-discovery__text,
-    .vigor-discovery__image {
-        grid-column: 1 / -1;
-    }
-
-    .vigor-discovery__image {
-        margin-bottom: var(--space-sm);
-    }
-}
-
-/* --- Review Interface: tall screenshot, narrower (cols 5-10) --- */
-.vigor-interface__image {
-    grid-column: 6 / -3;
-}
-
-/* --- Vision-Language Architecture --- */
-.vigor-architecture__image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* --- Outcomes & Learnings --- */
-.vigor-outcomes__text {
-    grid-column: 5 / span 6;
-}
-
-@media (max-width: 768px) {
-
-    .challenges__text,
-    .challenges__figure,
-    .vigor-interface__image,
-    .vigor-discovery__image--stacked,
-    .vigor-outcomes__text {
-        grid-column: 1 / -1;
-    }
 }

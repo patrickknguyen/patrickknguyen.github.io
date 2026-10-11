@@ -1,17 +1,13 @@
-/* ============================================
-   ZipVote Project Styles
-   Only project-specific overrides belong here.
-   Shared section patterns live in projects.css.
-   ============================================ */
+/* ==========================================
+   zipvote.css
+   ZipVote one-offs. Layout comes from
+   case-studies.css.
+   ========================================== */
 
-/* --- Section body text — consistent column placement --- */
-.zipvote-section__text {
-    grid-column: 5 / span 7;
-}
+/* --- UX Cards --- */
 
 .zipvote-ux-image img {
     width: 100%;
-    display: block;
     aspect-ratio: 16 / 9;
     object-fit: cover;
 }
@@ -22,17 +18,13 @@
     text-align: center;
 }
 
-/* Smaller body text variant for UX card descriptions */
 .section-body--xs p {
     font-size: var(--font-xs);
     font-weight: 300;
-    line-height: 1.5;
-    color: var(--color-text);
 }
 
-/* Smaller section-point variant for compact subsections */
 .section-point--xs {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
 }
 
 .section-point--xs:last-child {
@@ -41,10 +33,5 @@
 
 .section-point--xs h3 {
     font-size: var(--font-xs);
-    margin-bottom: 0.25rem;
-}
-@media (max-width: 768px) {
-    .zipvote-section__text {
-        grid-column: 1 / -1;
-    }
+    margin-bottom: var(--space-2xs);
 }

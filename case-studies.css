@@ -1,0 +1,335 @@
+/* ==========================================
+   case-studies.css
+   Shared layout for every case study.
+   Blocks start at col 1 or col 5 and take
+   their width from a .col-* class. Each case
+   study's own stylesheet holds only one-offs.
+   ========================================== */
+
+/* --- Intro --- */
+
+.case-study-intro {
+    padding-top: var(--content-offset);
+    /* Same as .case-study-section, so every divider sits 4rem below content */
+    padding-bottom: var(--space-lg);
+}
+
+.case-study__layout {
+    align-items: start;
+}
+
+/* Title and links are grid items despite sitting inside the aside */
+.case-study__aside {
+    display: contents;
+}
+
+.case-study__title {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+}
+
+.case-study__title h2 {
+    font-size: var(--font-xl);
+    line-height: 1.25;
+    /* The trimmed heading needs a touch more room above the meta line */
+    margin-bottom: var(--space-xs);
+}
+
+.case-study__meta {
+    font-size: var(--font-xs);
+    color: var(--color-text-secondary);
+}
+
+.case-study__toc {
+    list-style: none;
+    margin-top: var(--space-md);
+}
+
+.case-study__toc li {
+    margin-bottom: var(--space-xs);
+}
+
+.case-study__toc a {
+    font-size: var(--font-sm);
+}
+
+.case-study__hero {
+    grid-column: 5 / -1;
+    grid-row: 1;
+    margin: 0;
+}
+
+.case-study__hero img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.case-study__objective {
+    grid-column: 5 / span 4;
+    grid-row: 2;
+}
+
+.case-study__overview {
+    grid-column: 9 / span 4;
+    grid-row: 2;
+}
+
+.case-study__objective h3,
+.case-study__overview h3 {
+    letter-spacing: 0.01em;
+}
+
+.case-study__objective p,
+.case-study__overview p {
+    font-size: var(--font-md);
+    font-weight: 300;
+}
+
+/* Row 2, so the links top-align with the objective and overview */
+.case-study__links {
+    grid-column: 1 / span 3;
+    grid-row: 2;
+}
+
+.case-study__links h3 {
+    font-size: var(--font-xs);
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.case-study__links ul {
+    list-style: none;
+}
+
+.case-study__links a {
+    font-size: var(--font-sm);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+}
+
+.case-study__links a::after {
+    content: "\2197";
+    margin-left: 0.25em;
+    font-size: 0.9em;
+}
+
+.case-study__links a:hover {
+    color: var(--color-text);
+}
+
+/* For links that aren't live yet */
+.case-study__links .link--disabled {
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+.case-study__links .link--disabled::after {
+    content: none;
+}
+
+/* --- Sections --- */
+
+.case-study-section {
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-lg);
+}
+
+/* The last section tightens up to meet the credits */
+.case-study-section:has(+ .case-study-footnote) {
+    padding-bottom: var(--space-md);
+}
+
+.case-study-footnote {
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.case-study-footnote .container>* {
+    grid-column: 3 / span 8;
+}
+
+.section-title {
+    grid-column: 1 / span 4;
+}
+
+.section-body p {
+    font-size: var(--font-md);
+    font-weight: 300;
+}
+
+.section-body--stacked p {
+    margin-bottom: var(--space-md);
+}
+
+.section-body--stacked p:last-child {
+    margin-bottom: 0;
+}
+
+.section-point {
+    margin-bottom: var(--space-md);
+}
+
+.section-point:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Column Placements --- */
+
+.col-text { grid-column: 1 / span 4; }
+.col-media { grid-column: 5 / -1; }
+.col-media--narrow { grid-column: 5 / span 5; }
+.section-col-left { grid-column: 5 / span 4; }
+.section-col-right { grid-column: 9 / span 4; }
+
+.col-prose,
+.col-media--inset {
+    grid-column: 5 / span 7;
+}
+
+/* --- Multi-Column Subsections --- */
+
+/* Subgrid reuses the page's tracks and gutter, so columns line up with everything else */
+.section-tri-col,
+.section-duo-col {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    row-gap: var(--grid-row-gap);
+}
+
+.section-tri-col>*,
+.section-duo-col>* {
+    grid-column: span 4;
+}
+
+.section-duo-col>*:first-child {
+    grid-column: 5 / span 4;
+}
+
+/* Side by side, the gutter spaces the points, not their bottom margin */
+.section-tri-col>.section-point,
+.section-duo-col>.section-point {
+    margin-bottom: 0;
+}
+
+/* --- Figures --- */
+
+.figure {
+    margin: 0;
+}
+
+.figure img,
+.figure video {
+    display: block;
+    width: 100%;
+}
+
+.figure--stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.figure__caption {
+    margin-top: var(--space-sm);
+    font-size: var(--font-sm);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+}
+
+/* The flex gap already spaces the caption; pull it up to match */
+.figure--stack .figure__caption {
+    margin-top: calc(var(--space-sm) - var(--space-md));
+}
+
+.figure__caption--center {
+    text-align: center;
+}
+
+.figure__caption a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.figure__caption a:hover {
+    color: var(--color-link-hover);
+}
+
+/* --- Lightbox --- */
+
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    cursor: zoom-out;
+}
+
+.lightbox-overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-img {
+    max-width: 80%;
+    max-height: 90vh;
+    object-fit: contain;
+    cursor: default;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: var(--space-xs);
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 4rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.lightbox-arrow:hover {
+    opacity: 0.6;
+}
+
+.lightbox-arrow--prev {
+    left: var(--space-md);
+}
+
+.lightbox-arrow--next {
+    right: var(--space-md);
+}
+
+/* --- Below 900px --- */
+
+@media (max-width: 900px) {
+    .case-study__layout>*,
+    .case-study__aside>*,
+    .section-tri-col>*,
+    .section-duo-col>*,
+    .section-duo-col>*:first-child,
+    .case-study-footnote .container>* {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    .case-study__title { order: 1; }
+    .case-study__hero { order: 2; }
+    .case-study__objective { order: 3; }
+    .case-study__overview { order: 4; }
+    .case-study__links { order: 5; }
+}
