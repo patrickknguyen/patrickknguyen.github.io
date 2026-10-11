@@ -259,6 +259,23 @@
     color: var(--color-link-hover);
 }
 
+/* --- Example Cards --- */
+
+/* A summary in .col-prose, then a .section-tri-col of image, label and text */
+.example-cards {
+    margin-top: var(--space-sm);
+}
+
+.example-card__image img {
+    width: 100%;
+}
+
+.example-card__label {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
 /* --- Lightbox --- */
 
 .lightbox-overlay {

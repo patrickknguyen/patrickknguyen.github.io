@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patrick K. Nguyen — clustr</title>
+    <title>Patrick K. Nguyen · Clustr</title>
     <meta name="description"
-        content="clustr - a browser-only image moodboard clustering tool blending semantic and aesthetic similarity. Machine Learning & Interaction Design case study by Patrick K. Nguyen.">
+        content="Clustr - a browser-only image moodboard clustering tool blending semantic and aesthetic similarity. Machine Learning & Interaction Design case study by Patrick K. Nguyen.">
 
     <link rel="icon" type="image/svg+xml" href="../assets/Home/favicon.svg">
     <link rel="icon" type="image/png" href="../assets/Home/logo.png">
 
     <link rel="stylesheet" href="../global.css?v=11">
-    <link rel="stylesheet" href="../case-studies.css?v=26">
-    <link rel="stylesheet" href="clustr.css?v=8">
+    <link rel="stylesheet" href="../case-studies.css?v=27">
+    <link rel="stylesheet" href="clustr.css?v=11">
 
     <!-- KaTeX for the scoring equation -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -47,10 +47,10 @@
                         <p class="case-study__meta">Computer Vision & UX Prototyping · 2026</p>
 
                         <ul class="case-study__toc">
-                            <li><a href="#background">1 / Background & Motivation</a></li>
-                            <li><a href="#decisions">2 / Key Design Decisions</a></li>
-                            <li><a href="#practice">3 / In Practice</a></li>
-                            <li><a href="#outcomes">4 / Outcomes & Learnings</a></li>
+                            <li><a href="#problem">1 / Problem &amp; Approach</a></li>
+                            <li><a href="#practice">2 / In Practice</a></li>
+                            <li><a href="#decisions">3 / Key Design Decisions</a></li>
+                            <li><a href="#outcomes">4 / Outcomes &amp; Learnings</a></li>
                         </ul>
                     </div>
 
@@ -59,7 +59,8 @@
                         <ul>
                             <li><a href="https://patrickknguyen.github.io/clustr-app/" target="_blank"
                                     rel="noopener">Demo</a>
-                            <li><a href="https://github.com/patrickknguyen/clustr-app" target="_blank" rel="noopener">GitHub
+                            <li><a href="https://github.com/patrickknguyen/clustr-app" target="_blank"
+                                    rel="noopener">GitHub
                                     Repo</a></li>
                             <li><a href="https://github.com/unsplash/datasets" target="_blank" rel="noopener">Unsplash
                                     Dataset</a></li>
@@ -68,7 +69,8 @@
                 </div>
 
                 <figure class="case-study__hero">
-                    <img src="../assets/Home/clustr-hero.png" alt="Clustr canvas with a moodboard sorted into image clusters">
+                    <img src="../assets/Home/clustr-hero.png"
+                        alt="Clustr canvas with a moodboard sorted into image clusters">
                 </figure>
 
                 <div class="case-study__objective">
@@ -84,7 +86,7 @@
                     <h3>Project Overview</h3>
                     <p>
                         Clustr is a prototype that sorts a collection of images into
-                        labeled groups. It pairs two different vision models (CLIP and DINO), letting the user blend
+                        labeled groups. It pairs two different vision models, CLIP and DINO, letting the user blend
                         grouping by subject with grouping by look to suit their boards.
                     </p>
                 </div>
@@ -100,9 +102,9 @@
                 <figure class="figure clustr-demo">
                     <video class="clustr-demo__video" src="clustr-demo.mp4" poster="clustr-demo-poster.jpg" autoplay
                         muted loop playsinline preload="metadata"
-                        aria-label="Screen recording of clustr embedding a set of reference images and re-clustering the layout as the semantic–aesthetic slider is dragged.">
+                        aria-label="Screen recording of Clustr embedding a set of reference images and re-clustering the layout as the semantic–aesthetic slider is dragged.">
                     </video>
-                    <figcaption class="figure__caption figure__caption--center">Try the clustr demo <a
+                    <figcaption class="figure__caption figure__caption--center">Try the Clustr demo <a
                             href="https://patrickknguyen.github.io/clustr-app/" target="_blank" rel="noopener">here</a>.
                     </figcaption>
                 </figure>
@@ -110,107 +112,35 @@
         </div>
     </section>
 
-    <!-- ====== Background & Motivation ====== -->
-    <section id="background" class="section--bordered case-study-section">
+    <!-- ====== Problem & Approach ====== -->
+    <section id="problem" class="section--bordered case-study-section">
         <div class="container">
             <div class="case-study__layout">
 
                 <div class="section-title">
-                    <h2>1 / Background & Motivation</h2>
+                    <h2>1 / Problem &amp; Approach</h2>
                 </div>
 
                 <div class="section-tri-col section-body">
                     <div class="section-point">
-                        <h3>Missed Opportunity</h3>
+                        <h3>Reading Messy Boards</h3>
                         <p>
-                            This project started while using Pinterest. Every day, users save and hand sort
-                            millions of images. AI labs pay people to do this kind of work for training models, while
-                            Pinterest users willingly do it for free. I see this as an opportunity to return that effort
-                            into an easier and more enjoyable experience.
+                            A moodboard is meant to point toward a direction. Reading it means grouping the images that
+                            belong together and finding words for what they share, work that usually happens in the
+                            designer’s head. I wanted to build something that helps designers see and name the patterns
+                            in their boards without taking the decision away from them.
                         </p>
                     </div>
 
                     <div class="section-point">
                         <h3>Suggestive, Not Definitive</h3>
                         <p>
-                            Computer vision is often pictured in high-stake scenarios such as surveillance, where it is
+                            Computer vision is often pictured in high-stakes settings like surveillance, where it is
                             judged
-                            on accuracy. Instead, I want to use computer vision as part of my creative process. With
-                            this in mind, I designed for suggestion rather than certainty, even if the grouping isn't
-                            perfect, leaving the final call to the user.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== Key Design Decisions ====== -->
-    <section id="decisions" class="section--bordered case-study-section">
-        <div class="container">
-            <div class="case-study__layout">
-
-                <div class="section-title">
-                    <h2>2 / Key Design Decisions</h2>
-                </div>
-
-                <div class="section-tri-col section-body">
-                    <div class="section-point">
-                        <h3>Focusing on Distinctiveness</h3>
-                        <p>
-                            Images from the same moodboard already share common themes, so I used those words to
-                            automatically name the board. The more interesting labels come from the subgroups.
-                            Similar to TF-IDF, each cluster's labels favor words that only describe it and not the
-                            others,
-                            penalizing universally applicable words. This approach however is prone to force patterns
-                            that do not exist, so I needed to implement a
-                            minimum threshold.
-                        </p>
-                        <figure class="figure clustr-equation">
-                            <div class="clustr-equation__math"
-                                data-tex="\begin{aligned} &amp;\mathrm{score}(w, c) = s(w, c) - \frac{1}{K}\sum_{k=1}^{K} s(w, k) \\ &amp;\text{where } s(w, c) \geq 0.9 \cdot \max_{w'} s(w', c) \end{aligned}">
-                            </div>
-                            <figcaption class="figure__caption">
-                                <em>s</em> is the cosine similarity between a word and the cluster's center. A
-                                word scores higher the more it beats its average fit across all <em>K</em> clusters,
-                                within 90% of the cluster's best match.
-                            </figcaption>
-                        </figure>
-                    </div>
-
-                    <div class="section-point">
-                        <h3>Putting the User in Control</h3>
-                        <p>
-                            There is no single correct approach to interpreting a moodboard, so instead of
-                            committing to one, Clustr uses a slider that blends
-                            grouping by subject (CLIP) and grouping by visual similarity (DINO). The two models do not
-                            naturally share a scale, so each board
-                            needs to be rescaled. The point is not to find the best cluster, it is to let the user
-                            explore whatever grouping is useful for their board.
-                        </p>
-                        <figure class="figure clustr-equation">
-                            <div class="clustr-equation__math"
-                                data-tex="\begin{aligned} &amp;d_{\alpha} = \sqrt{(1 - \alpha)\, d_{\text{CLIP}}^{2} + \alpha\, \lambda^{2} d_{\text{DINO}}^{2}} \\[6pt] &amp;\text{where } \lambda = \frac{\sigma(d_{\text{CLIP}})}{\sigma(d_{\text{DINO}})} \end{aligned}">
-                            </div>
-                            <figcaption class="figure__caption">
-                                <em>d</em> is the distance between two images and <em>σ</em> is the standard
-                                deviation of those distances. <em>λ</em> rescales DINO's distances to
-                                match CLIP's spread, so the slider <em>α</em> blends the two evenly.
-                            </figcaption>
-                        </figure>
-                    </div>
-
-                    <div class="section-point">
-                        <h3>The Vocabulary Source</h3>
-                        <p>
-                            I planned to test on Pinterest boards, but Pinterest doesn't give up images or metadata
-                            easily. Fortunately Unsplash has a public dataset of images with AI-generated tags. I
-                            kept the top 400 tags, where they stayed useful before getting too noisy. However, those
-                            tags
-                            are almost all nouns, which suits the subject end of the slider but leaves the aesthetic end
-                            with less to say. So I generated a matching list of 66 adjectives that the labels shift
-                            toward as α moves toward DINO.
+                            on accuracy. I wanted to use it as part of my creative process instead. So I designed for
+                            suggestion rather than certainty: even when a grouping isn't perfect, it gives me something
+                            to
+                            react to, and the final call stays with the user.
                         </p>
                     </div>
                 </div>
@@ -225,37 +155,137 @@
             <div class="case-study__layout">
 
                 <div class="section-title">
-                    <h2>3 / In Practice</h2>
+                    <h2>2 / In Practice</h2>
                 </div>
 
-                <div class="col-text section-body">
+                <div class="col-prose section-body">
                     <p>
-                        The board on the right is a sample collection from Unsplash, "Architecture", 40 images loaded
-                        into Clustr's library.
-                        Unsorted, it doesn't signal much beyond architecture. Clustr titled the board "Indoors,
-                        Condo". These are the strongest universally applicable labels in the vocabulary list.
-                        <br><br>
-                        In the Map View, set at α = 0.00 (semantic end using only CLIP) the images split into two
-                        clusters:
-                        interiors and exteriors, labeled "furniture, home decor, flooring" and "building, metropolis,
-                        high rise."
-                        <br><br>
-                        At α = 1.00 (aesthetic end using only DINO) cluster membership does not change much, but how
-                        the images are positioned and their cluster labels do: "warm, rustic" on one side and "concrete,
-                        symmetrical, geometric" on the other.
-                        <br><br>
-                        Using Clustr I can quickly interpret that the board predominately features Mid-Century Modern
-                        interiors and Brutalist exteriors, something that I wouldn't immediately intuit while looking at
-                        the original collection.
+                        To test Clustr, I loaded a sample board: Unsplash's “Architecture” collection, 40 images that
+                        say little beyond architecture when unsorted. Sliding from subject to look kept the same two
+                        groups but changed how they were described. Together, the two views told me the board was mostly
+                        Mid-Century Modern interiors and Brutalist exteriors, something I wouldn't have put into words
+                        from the unsorted collection.
                     </p>
                 </div>
-                <div class="figure figure--stack col-media--inset">
-                    <img src="../assets/Clustr/inpractice-1.jpg"
-                        alt="Uploaded photo library of mixed interior and exterior architecture images, before clustering">
-                    <img src="../assets/Clustr/inpractice-2-crop.png"
-                        alt="Clustr map at alpha 0.00, semantic, split into an exterior cluster and an interior cluster">
-                    <img src="../assets/Clustr/inpractice-3-crop.png"
-                        alt="Clustr map at alpha 1.00, aesthetic, relabeling the exterior cluster concrete symmetrical geometric and the interior cluster warm rustic">
+
+                <div class="section-tri-col example-cards clustr-practice">
+
+                    <div class="section-body">
+                        <div class="example-card__image">
+                            <img src="../assets/Clustr/inpractice-1.jpg"
+                                alt="Uploaded photo library of mixed interior and exterior architecture images, before clustering">
+                        </div>
+                        <h3 class="example-card__label">Library</h3>
+                        <p>
+                            Unsorted, the 40 images read as a wall of buildings and rooms with no clear direction.
+                            Clustr
+                            names the whole board from the words every image shares: “Indoors, Condo.”
+                        </p>
+                    </div>
+
+                    <div class="section-body">
+                        <div class="example-card__image">
+                            <img src="../assets/Clustr/inpractice-2-crop.png"
+                                alt="Clustr map at alpha 0.00, semantic, split into an exterior cluster and an interior cluster">
+                        </div>
+                        <h3 class="example-card__label">By Subject</h3>
+                        <p>
+                            At α = 0, using only CLIP, the board splits into interiors and exteriors, labeled
+                            “furniture,
+                            home decor, flooring” and “building, metropolis, high rise.”
+                        </p>
+                    </div>
+
+                    <div class="section-body">
+                        <div class="example-card__image">
+                            <img src="../assets/Clustr/inpractice-3-crop.png"
+                                alt="Clustr map at alpha 1.00, aesthetic, relabeling the exterior cluster concrete symmetrical geometric and the interior cluster warm rustic">
+                        </div>
+                        <h3 class="example-card__label">By Look</h3>
+                        <p>
+                            At α = 1, using only DINO, the groups barely change, but their positions and labels do:
+                            “warm,
+                            rustic” on one side and “concrete, symmetrical, geometric” on the other.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Key Design Decisions ====== -->
+    <section id="decisions" class="section--bordered case-study-section">
+        <div class="container">
+            <div class="case-study__layout">
+
+                <div class="section-title">
+                    <h2>3 / Key Design Decisions</h2>
+                </div>
+
+                <div class="section-tri-col section-body">
+                    <div class="section-point">
+                        <h3>Watching It Sort</h3>
+                        <p>
+                            I started from one image in my head: a pile of references rearranging itself into groups.
+                            Everything else was worked backward from that moment. Clustr shows its grouping as motion,
+                            with
+                            images moving across the map into their clusters and moving again as the slider is dragged.
+                            Watching images travel makes the result feel like a suggestion to question, not a verdict.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Putting the User in Control</h3>
+                        <p>
+                            There is no single right way to read a moodboard, so instead of picking one, I gave the user
+                            a
+                            slider. One end groups by subject with CLIP, the other groups by look with DINO, and
+                            anywhere
+                            between blends the two. The goal isn't the best clustering. It's letting someone explore
+                            until a
+                            grouping is useful. Making the slider feel even took one fix: the two models measure
+                            distance on
+                            different scales, so each board is rescaled before blending.
+                        </p>
+                        <figure class="figure clustr-equation">
+                            <div class="clustr-equation__math"
+                                data-tex="\begin{aligned} &amp;d_{\alpha} = \sqrt{(1 - \alpha)\, d_{\text{CLIP}}^{2} + \alpha\, \lambda^{2} d_{\text{DINO}}^{2}} \\[6pt] &amp;\text{where } \lambda = \frac{\sigma(d_{\text{CLIP}})}{\sigma(d_{\text{DINO}})} \end{aligned}">
+                            </div>
+                            <figcaption class="figure__caption">
+                                <em>d</em> is the distance between two images and <em>σ</em> is the standard
+                                deviation of those distances. <em>λ</em> rescales DINO's distances to
+                                match CLIP's spread, so the slider <em>α</em> blends the two evenly.
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Finding the Right Words</h3>
+                        <p>
+                            Labels come from Unsplash's public image tags. I kept the top 400, the point where they
+                            stayed
+                            useful before getting noisy, and generated 66 adjectives to go with them, since the tags are
+                            almost all nouns and the look end of the slider needed words too. The words that fit every
+                            image
+                            name the board itself. Each group then favors words that describe it but not the others,
+                            like
+                            TF-IDF. Left alone, that can invent differences that aren't there, so a word must also clear
+                            a
+                            minimum match to its group.
+                        </p>
+                        <figure class="figure clustr-equation">
+                            <div class="clustr-equation__math"
+                                data-tex="\begin{aligned} &amp;\mathrm{score}(w, c) = s(w, c) - \frac{1}{K}\sum_{k=1}^{K} s(w, k) \\ &amp;\text{where } s(w, c) \geq 0.9 \cdot \max_{w'} s(w', c) \end{aligned}">
+                            </div>
+                            <figcaption class="figure__caption">
+                                <em>s</em> is the cosine similarity between a word and the cluster's center. A
+                                word scores higher the more it beats its average fit across all <em>K</em> clusters,
+                                within 90% of the cluster's best match.
+                            </figcaption>
+                        </figure>
+                    </div>
                 </div>
 
             </div>
@@ -268,25 +298,44 @@
             <div class="case-study__layout">
 
                 <div class="section-title">
-                    <h2>4 / Outcomes & Learnings</h2>
+                    <h2>4 / Outcomes &amp; Learnings</h2>
                 </div>
 
-                <div class="col-prose section-body section-body--stacked">
+                <div class="section-tri-col section-body">
                     <div class="section-point">
+                        <h3>Results</h3>
                         <p>
-                            This started to prove a point that moodboard tools are sitting on a gold mine for fun
-                            interactions using computer vision. The project turned out way better than I expected.
-                            <br><br>
-                            I first started building with a vision of watching the images rearrange themselves into
-                            clusters,
-                            then worked backwards from there. The most challenging part was putting myself in the shoes
-                            of the user
-                            rather than being guided only by accuracy metrics. There were several levers I needed to
-                            balance, such as accuracy, flexibility, visual appeal, and speed.
-                            <br><br>
-                            As a proof of concept, its biggest limit is vocabulary. Unsplash's tags were the most
-                            accessible option, but certainly not the most useful. A more intelligent vocabulary
-                            would make Clustr's labels much more meaningful.
+                            Clustr is a working prototype I designed and built end to end, from the scoring math to the
+                            interface. It blends two vision models on a single slider, names a board and each of its
+                            groups,
+                            and re-sorts them as you watch. It showed how much room moodboard tools have for playful
+                            interactions built using computer vision.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Limitations</h3>
+                        <p>
+                            Vocabulary is the biggest limit. Unsplash's tags were the most accessible source, not the
+                            most
+                            useful, and a richer vocabulary would make the labels far more meaningful. So far I've only
+                            tested Clustr on my own boards and sample collections. The next step is putting it in front
+                            of
+                            other designers.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Reflection</h3>
+                        <p>
+                            Clustr is meant to feel simple to use, but getting it there took many small decisions, from
+                            how the two
+                            models blend to which words a group earns. The hardest part was designing for a person
+                            rather
+                            than a
+                            metric. A grouping that moves smoothly and invites a second look is far more enjoyable than
+                            a
+                            precise one that feels final.
                         </p>
                     </div>
                 </div>

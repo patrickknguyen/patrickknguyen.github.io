@@ -146,6 +146,25 @@ Text blocks:
 | `.section-body--stacked` | Space between several paragraphs |
 | `.section-point` | A titled block: h3 and a paragraph |
 
+### Example Cards
+
+A summary up top, then three examples beneath it. Used in Summit's Background and Clustr's In Practice.
+
+```html
+<div class="col-prose section-body"><p>Summary of what the examples show.</p></div>
+
+<div class="section-tri-col example-cards">
+    <div class="section-body">
+        <div class="example-card__image"><img src="..." alt="..."></div>
+        <h3 class="example-card__label">Label</h3>
+        <p>One specific example.</p>
+    </div>
+    <!-- two more cards -->
+</div>
+```
+
+The summary sits beside the section title. Each card's text is a direct example of the summary, not a repeat of it.
+
 ### Figures
 
 ```html
@@ -201,6 +220,12 @@ In JavaScript, headers and dividers use `/* */` and inline comments use `//`. In
 ```html
 <!-- ====== Discovery ====== -->
 ```
+
+### Copy
+
+- Straight apostrophes: `don't`, not `don’t`.
+- Case study names keep their capitals everywhere, including page titles and alt text: Clustr, ViGOR, ZipVote.
+- No em dashes. Page titles use a middle dot: `Patrick K. Nguyen · Clustr`.
 
 ### Before Adding a Rule
 

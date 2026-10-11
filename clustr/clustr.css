@@ -16,6 +16,14 @@
     background: var(--color-border);
 }
 
+/* --- In Practice --- */
+
+/* The maps are wider than the library shot; a shared 16:9 crop keeps the labels on one line */
+.clustr-practice img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
 /* --- Scoring Equation --- */
 
 .clustr-equation {
