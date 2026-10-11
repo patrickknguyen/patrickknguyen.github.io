@@ -32,11 +32,12 @@
                         <p class="project__meta">Computer Vision & Natural Language · 2026</p>
 
                         <ul class="project__toc">
-                            <li><a href="#background">1 / Background & Motivation</a></li>
-                            <li><a href="#challenges">2 / Challenges</a></li>
+                            <li><a href="#background">1 / Context &amp; Role</a></li>
+                            <li><a href="#challenges">2 / Initial Approach</a></li>
                             <li><a href="#discovery">3 / Discovery</a></li>
-                            <li><a href="#architecture">4 / Vision-Language Architecture</a></li>
-                            <li><a href="#outcomes">5 / Outcomes & Learnings</a></li>
+                            <li><a href="#architecture">4 / Architecture</a></li>
+                            <li><a href="#interface">5 / Review Interface</a></li>
+                            <li><a href="#outcomes">6 / Outcomes &amp; Learnings</a></li>
                         </ul>
                     </div>
 
@@ -79,11 +80,11 @@
                 <div class="project__overview">
                     <h3>Project Overview</h3>
                     <p>
-                        Our vision-language prototype drafted operation notes that surgeons rated an average of 85%, and
-                        one in five matched or outperformed official records. To better understand the surgeons'
-                        workflows, I sat in while they reviewed the footage and reports. That led to two major
-                        contributions: a tool that cut their time reviewing by 80%, and a human-in-the-loop
-                        interface to easily verify each line of a draft against the source footage.
+                        ViGOR turns robotic surgery video into a draft operative note, breaking each case into action
+                        segments. Surgeons rated the drafts 85/100 on average, and one in five matched or beat the
+                        official note. Working closely with the surgeons, I designed and built the two tools they used
+                        directly: a labeling tool that cut three weeks of labeling to four days, and a review page that
+                        ties every sentence to its footage.
                     </p>
                 </div>
 
@@ -97,34 +98,28 @@
             <div class="project__layout">
 
                 <div class="section-title">
-                    <h2>1 / Background & Motivation</h2>
+                    <h2>1 / Context & Role</h2>
                 </div>
 
                 <div class="section-tri-col section-body">
                     <div class="section-point">
-                        <h3>Improving Clinical Accuracy</h3>
+                        <h3>Dictation from Memory</h3>
                         <p>
-                            Memory-based operative notes leave room for error and omission. Reconstructing events
-                            straight from surgical video ensures the final operative record reflects reality, not
-                            recall.
+                            The operative note is the official record of a surgery. On Dr. Holsinger’s team, it was
+                            dictated from memory hours or sometimes days after the operation. The longer the gap, the
+                            more room for details to slip. Meanwhile, the da Vinci had recorded every minute of the
+                            case, but at an hour or more per case, the footage was impractical to review by hand.
                         </p>
                     </div>
 
                     <div class="section-point">
-                        <h3>Reducing Administrative Burden</h3>
+                        <h3>Working Directly with Stanford Surgeons</h3>
                         <p>
-                            Documentation represents a significant and growing share of a surgeon's non-clinical time.
-                            Automating the first draft of an operative note could meaningfully reduce that burden,
-                            freeing capacity for direct patient care.
-                        </p>
-                    </div>
-
-                    <div class="section-point">
-                        <h3>Leveraging Robotic Video</h3>
-                        <p>
-                            Robotic surgical systems generate immense amounts of stabilized 4K video. While difficult to
-                            process manually, this unstructured data provides a highly controlled environment ideal for
-                            computer vision.
+                            I worked across the whole pipeline, but I spent much of my time with the surgeons,
+                            sitting in while they reviewed footage and notes. What I saw there led to the cautery
+                            signal that reframed the project around action segments, and to the architecture I proposed
+                            to match. I designed and built the project’s three tools: the cautery signal detector,
+                            the segmentation tool surgeons labeled with, and the review page that became a final output.
                         </p>
                     </div>
                 </div>
@@ -139,47 +134,49 @@
             <div class="project__layout">
 
                 <div class="section-title">
-                    <h2>2 / Challenges</h2>
+                    <h2>2 / Initial Approach</h2>
                 </div>
 
-                <div class="section-tri-col section-body">
+                <div class="challenges__text section-body">
                     <div class="section-point">
-                        <h3>The Stanford Dataset</h3>
+                        <h3>The Dataset</h3>
                         <p>
-                            Our project intitated with 62 de-identified robotic surgical videos and corresponding
-                            operative notes created by Dr. Holsinger's surgical team at Stanford.
-                            However, many cases featured legacy user interfaces or were missing key procedural
-                            elements. To ensure a robust training environment, we implemented a rigorous inclusion
-                            criteria, narrowing our scope to 36 standardized cases.
+                            We started with 62 de-identified robotic surgery videos and their operative notes from Dr.
+                            Holsinger’s team. Many cases used an older version of the da Vinci interface or were missing
+                            key steps, so we narrowed to 36 standardized cases, trading volume for consistency.
                         </p>
                     </div>
 
                     <div class="section-point">
                         <h3>Phase Classification</h3>
                         <p>
-                            For training, each video was expert-labeled across nine predefined surgical phases. Our
-                            initial strategy centered on training a phase classification model. We aimed to utilize a
-                            Vision Transformer (ViT) to map frames to one of nine phases. We designed the pipeline to
-                            identify these clinical milestones before passing them to
-                            a language model for clinical caption generation.
+                            Surgeons labeled each video across nine pre-defined surgical phases. Our first plan was to
+                            train a vision model to classify every frame into one of those phases, then pass the
+                            resulting timeline to a language model to write the note.
                         </p>
                     </div>
 
                     <div class="section-point">
-                        <h3>Label Sparsity and Non-Linear Flow</h3>
+                        <h3>Label Sparsity and Non-Linearity</h3>
                         <p>
-                            Model development immediately exposed two fundamental data issues. First, expert surgeons
-                            labeled only 35% of the video frames, leaving 65% as non-operative "dead time". Second,
-                            procedures exhibited non-linear progression, where steps were frequently repeated or
-                            skipped. It was clear that a rigid, chronological checklist was insufficient for capturing
-                            clinical accuracy.
+                            The data broke that plan quickly. Surgeons had labeled only 35% of frames, and the remaining
+                            frames
+                            fell outside any phase. Procedures also rarely ran in order, with steps repeated or skipped.
+                            A fixed sequence of nine phases couldn’t describe what actually happened in the operating
+                            room. We needed a different way to find the moments that mattered.
                         </p>
                     </div>
                 </div>
 
-                <div class="challenges__figure">
-                    <img src="../assets/Vigor/fold0_labels.png" alt="Fold 0 label distribution across surgical phases">
-                </div>
+                <figure class="challenges__figure">
+                    <img src="../assets/Vigor/fold0_labels.png"
+                        alt="Phase labels across six surgical cases, mostly unlabeled gray with phases repeating out of order">
+                    <figcaption class="challenges__caption">
+                        Phase labels across six cases. Gray marks unlabeled footage, about 65% of footage overall.
+                        Within
+                        a single case, phases repeat and jump out of order, as in SU025 and SU045.
+                    </figcaption>
+                </figure>
 
             </div>
         </div>
@@ -199,42 +196,59 @@
                     <div class="section-point">
                         <h3>Cautery Activity as Signal</h3>
                         <p>
-                            While observing surgeons, we noticed a consistent pattern: clinical milestones were
-                            intrinsically tied to instrument activity. To test this, we built a
-                            diagnostic tool to extract signals from the da Vinci’s Head-Up Display (HUD) when
-                            cautery pedals were engaged. The data revealed a 90% correlation between these triggers and
-                            clinically significant events, allowing us to bypass 65% of the visual noise and focus
-                            solely on high-information frames.
+                            Sitting in while surgeons reviewed footage, I noticed that clinical milestones lined up with
+                            instrument activity, especially cautery, which cuts and seals tissue. I built a tool that
+                            reads the da Vinci’s on-screen display to log every time the cut and coagulation pedals were
+                            engaged. Of all frames with cautery active, 90% fell inside a labeled phase, so we could set
+                            aside most of the unlabeled footage. The signal had gaps. Vascular ligation used no cautery,
+                            and margin marking and tumor removal had stretches without it. These steps look visually
+                            distinct, though, so surgeons could label them quickly by hand.
                         </p>
                     </div>
                 </div>
-                <div class="vigor-discovery__image">
-                    <img src="../assets/Vigor/cautery_detect.png" alt="Cautery activity detection from da Vinci HUD">
-                </div>
+                <figure class="vigor-discovery__image">
+                    <img src="../assets/Vigor/cautery_coag.png"
+                        alt="Surgical phases for one case above coagulation pedal activity over time">
+                    <figcaption class="vigor-discovery__caption">
+                        One case, SU045. The top row shows the phases surgeons labeled, and the row below shows
+                        coagulation pedal activity read from the display. Cautery bursts cluster inside
+                        labeled phases and mostly go quiet in the gaps.
+                    </figcaption>
+                </figure>
 
                 <!-- Subsection 2: Action Segmentation -->
                 <div class="vigor-discovery__text section-body">
                     <div class="section-point">
-                        <h3>Action Segmentation</h3>
+                        <h3>Action Segmentation Tool</h3>
                         <p>
-                            Following this insight, we developed an Action Segmentation Tool to group cautery activity.
-                            We found a 30-seconds buffer was perfect to account for tool repositioning and brief pauses
-                            in activity. The interface serves pre-segmented actions directly to surgeons, eliminating
-                            the need to scrub through raw footage. This new approach resulted in a 80% reduction in
-                            expert labeling time while also improving inter-rater consistency and accuracy.
+                            I grouped cautery activations within 30 seconds of each other into
+                            a single action segment, enough to cover tool repositioning and brief pauses. This changed
+                            how we framed the problem. Instead of classifying each frame into one of nine phases, we
+                            worked
+                            with actions.
+                            <br><br>
+                            I built a tool for surgeons to review one segment at a
+                            time with keyframes and cautery activity instead of scrubbing through an hour of footage.
+                            Labeling that we had planned to take three weeks was done in four days. The surgeons
+                            estimated
+                            each video review went from 75 to 15 minutes.
                         </p>
                     </div>
                 </div>
-                <div class="vigor-discovery__image vigor-discovery__image--stacked">
-                    <img src="../assets/Vigor/segment1.png" alt="Action segmentation example 1">
-                    <img src="../assets/Vigor/segment2.png" alt="Action segmentation example 2">
-                </div>
+                <figure class="vigor-discovery__image vigor-discovery__image--stacked">
+                    <img src="../assets/Vigor/segments.png"
+                        alt="Two action segments, each shown as a cautery activity bar above six keyframes">
+                    <figcaption class="vigor-discovery__caption">
+                        Two segments as surgeons saw them. The bar marks when cautery was active, with a keyframe
+                        every 15 seconds, so a surgeon can label the whole action at a glance.
+                    </figcaption>
+                </figure>
 
             </div>
         </div>
     </section>
 
-    <!-- ====== Vision-Language Architecture ====== -->
+    <!-- ====== Architecture ====== -->
     <section id="architecture" class="section section--bordered project-section">
         <div class="container">
             <div class="project__layout">
@@ -243,39 +257,83 @@
                     <h2>4 / Vision-Language Architecture</h2>
                 </div>
 
-                <div class="section-tri-col section-body">
-                    <!-- Column 1: The 3-Stage ML Pipeline -->
+                <div class="vigor-discovery__text section-body">
                     <div class="section-point">
-                        <h3>The 3-Stage Vision-to-Language Pipeline</h3>
+                        <h3>Pivoting to Action Segments</h3>
                         <p>
-                            First, a Visual Encoder (DINOv3) extracts frame-level features using a
-                            patchwork attention mechanism. We found this model to generalize better to the robotic
-                            endoscopy environment than models pre-trained on datasets like Cholec80.<br><br>
-                            Second, we use a Multi-Stage Temporal Convolutional Network (MS-TCN) to infer action
-                            segments, creating a structured timeline of video segments. Segments are then passed as
-                            keyframes constructed into mosaics to the language models. <br><br>
-                            Finally, we constructed two-pass strategy. In Pass 1, the VLM identifies instruments and
-                            actions within each segment to provide key observations. In Pass 2, these observations are
-                            synthesized into a structured operative note.
+                            With action segments as the basic unit, I
+                            proposed pairing a frozen, pretrained vision encoder with a small temporal model, a far
+                            faster and cheaper approach than training a vision-language model end to end. The temporal
+                            model
+                            learned from the labels surgeons made with the segmentation tool.
                         </p>
                     </div>
-
-                    <!-- Column 2: Architecture Diagram -->
-                    <div class="vigor-architecture__image">
-                        <img src="../assets/Vigor/walkthrough.png" alt="ViGOR architecture walkthrough">
-                    </div>
-
-                    <!-- Column 3: The Human-in-the-Loop Interface -->
                     <div class="section-point">
-                        <h3>The Human-in-the-Loop Interface</h3>
+                        <h3>Three Stages</h3>
                         <p>
-                            The human-in-the-loop interface anchors each line of generated text directly to its
-                            corresponding video keyframes and mosaics. This allows clinicians to interact with
-                            and easily validate the generated narrative against the video evidence before finalizing
-                            the report.
+                            A vision model reads each frame. A temporal model groups those frames into action segments.
+                            A vision-language model then
+                            works
+                            in two passes. The first describes each segment on its own: the instruments, the anatomy and
+                            the action. The second writes those descriptions into an operative note in Dr. Holsinger’s
+                            first-person voice.
                         </p>
                     </div>
                 </div>
+                <figure class="vigor-discovery__image">
+                    <img src="../assets/Vigor/pipeline.svg"
+                        alt="Pipeline: video, frames, action segments, a first pass describing each segment, and a second pass writing the draft note">
+                </figure>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Review Interface ====== -->
+    <section id="interface" class="section section--bordered project-section">
+        <div class="container">
+            <div class="project__layout">
+
+                <div class="section-title">
+                    <h2>5 / Review Interface</h2>
+                </div>
+
+                <div class="vigor-discovery__text section-body">
+                    <div class="section-point">
+                        <h3>Building Trust</h3>
+                        <p>
+                            The review interface has two parts. At the top is the draft note, with each sentence citing
+                            the action
+                            segments it came from. Below, each segment includes: keyframe mosaics sampled from the
+                            segment, the phase the model predicted with its confidence next to the surgeon’s label, and
+                            the
+                            instruments, anatomy and observations from the first pass. Clicking a citation jumps from a
+                            sentence to its corresponding segment, so a surgeon can check any claim against the source.
+                        </p>
+                    </div>
+                    <div class="section-point">
+                        <h3>From One Meeting to Final Output</h3>
+                        <p>
+                            I originally built the interface for a single check-in with a surgeon before our final
+                            evaluation. In
+                            one
+                            case, the draft said a suction instrument retracted the base of the tongue. The surgeon
+                            found
+                            that odd, clicked the citation, and saw it in the footage. The cards also exposed errors the
+                            note hid, like misidentified forceps. The surgeon enjoyed using the interface enough that it
+                            became a final
+                            output alongside the draft note.
+                        </p>
+                    </div>
+                </div>
+                <figure class="vigor-discovery__image vigor-interface__image">
+                    <img src="../assets/Vigor/walkthrough.png"
+                        alt="Review page with a draft operative note citing action segments, above keyframe mosaics and a segment card">
+                    <figcaption class="vigor-discovery__caption">
+                        Case SU038. The draft note sits at the top in Dr. Holsinger’s voice. Each citation jumps to its
+                        action segment below, showing keyframes and what the model saw.
+                    </figcaption>
+                </figure>
 
             </div>
         </div>
@@ -287,27 +345,49 @@
             <div class="project__layout">
 
                 <div class="section-title">
-                    <h2>5 / Outcomes &amp; Learnings</h2>
+                    <h2>6 / Outcomes &amp; Learnings</h2>
                 </div>
 
-                <div class="vigor-outcomes__text section-body">
-                    <p>
-                        To evaluate the drafts generated by ViGOR, we had Dr. Holsinger create a scoring rubric, and two
-                        surgeons graded the same 12 cases, each with the video, Dr. Holsinger's note and ViGOR's draft.
-                        The drafts averaged 85%, and one in five scored as well as the official record or better.
-                        <br><br>
-                        We naively hoped ViGOR could replace dictation entirely. What we built is closer to a
-                        structured first draft, a solid starting point that still needs the attending surgeon's edits
-                        before it goes into the record. We built it for one team's specific needs, and how a system
-                        like ViGOR handles other surgeons, techniques and environments is still an open question.
-                        <br><br>
-                        The original plan was for the surgeons to supply training data and grade the results at the end.
-                        It became clear to me that hand-labeling video was the biggest bottleneck, so I built a
-                        tool to ease it. That small gesture paid off in ways I did not anticipate, freeing the
-                        surgeons to become stronger collaborators throughout the project. I ended up learning more about
-                        the anatomy of the throat than I ever expected to. From there, we were able to translate their
-                        clinical expertise into real, technical solutions.
-                    </p>
+                <div class="section-tri-col section-body">
+                    <div class="section-point">
+                        <h3>Results</h3>
+                        <p>
+                            Two surgeons graded ViGOR’s drafts on 12 cases in a blind review, using a rubric Dr.
+                            Holsinger
+                            wrote and scoring each against the video and his official note. The drafts averaged 85/100,
+                            and
+                            one in five scored as well as the official note or better. The review page I built for one
+                            meeting became a final output. After the project, our team was invited to present at the
+                            Stanford AIMI Symposium.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Limitations</h3>
+                        <p>
+                            We naively hoped ViGOR could replace dictation. What we built is a structured first draft
+                            that
+                            still needs the attending surgeon’s edits before it goes into the record. We built it for
+                            one
+                            team, one procedure and 36 cases, so how it handles other surgeons, techniques and operating
+                            rooms is an open question. The evaluation was small, and while the review was blind, the
+                            pipeline’s writing style was easy to recognize after a few notes.
+                        </p>
+                    </div>
+
+                    <div class="section-point">
+                        <h3>Learnings</h3>
+                        <p>
+                            I started this project thinking the hard part would be the model. The bigger lever was the
+                            surgeons’ time. Building a tool to take labeling off their plate turned them from data
+                            sources
+                            into collaborators, and I learned more about the anatomy of the throat than I ever expected
+                            to.
+                            At AIMI, I was moved by a room full of clinicians eager to bring AI into their practice.
+                            However, clinicians won’t use what they can’t trust. The surgeons were able to
+                            trust ViGOR because they helped shape it.
+                        </p>
+                    </div>
                 </div>
 
             </div>

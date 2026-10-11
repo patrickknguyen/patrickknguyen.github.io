@@ -17,10 +17,21 @@
     align-items: center;
 }
 
-/* --- Challenges figure (spans under cols 2–3 of the tri-col) --- */
+/* --- Initial Approach: stacked text cols 1-4, figure cols 5-12 --- */
+.challenges__text {
+    grid-column: 1 / span 4;
+}
+
 .challenges__figure {
     grid-column: 5 / -1;
-    margin-top: 0;
+    margin: 0;
+}
+
+.challenges__caption {
+    margin-top: var(--space-sm);
+    font-size: var(--font-sm);
+    font-weight: 300;
+    color: var(--color-text-secondary);
 }
 
 .challenges__figure img {
@@ -36,6 +47,19 @@
 
 .vigor-discovery__image {
     grid-column: 5 / -1;
+    margin: 0;
+}
+
+.vigor-discovery__caption {
+    margin-top: var(--space-sm);
+    font-size: var(--font-sm);
+    font-weight: 300;
+    color: var(--color-text-secondary);
+}
+
+/* stacked figure spaces children with gap; pull the caption up to match */
+.vigor-discovery__image--stacked .vigor-discovery__caption {
+    margin-top: calc(var(--space-sm) - var(--space-md));
 }
 
 .vigor-discovery__image img {
@@ -52,14 +76,20 @@
 }
 
 @media (max-width: 768px) {
+
     .vigor-discovery__text,
     .vigor-discovery__image {
         grid-column: 1 / -1;
     }
-    
+
     .vigor-discovery__image {
         margin-bottom: var(--space-sm);
     }
+}
+
+/* --- Review Interface: tall screenshot, narrower (cols 5-10) --- */
+.vigor-interface__image {
+    grid-column: 6 / -3;
 }
 
 /* --- Vision-Language Architecture --- */
@@ -73,9 +103,12 @@
 .vigor-outcomes__text {
     grid-column: 5 / span 6;
 }
+
 @media (max-width: 768px) {
 
+    .challenges__text,
     .challenges__figure,
+    .vigor-interface__image,
     .vigor-discovery__image--stacked,
     .vigor-outcomes__text {
         grid-column: 1 / -1;

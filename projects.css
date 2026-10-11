@@ -155,6 +155,23 @@
     color: var(--color-text-secondary);
 }
 
+/* Footnote text spans the middle 8 of 12 columns */
+.project-footnote .container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-md);
+}
+
+.project-footnote .container > * {
+    grid-column: 3 / span 8;
+}
+
+@media (max-width: 768px) {
+    .project-footnote .container > * {
+        grid-column: 1 / -1;
+    }
+}
+
 /* --- Reusable Section Building Blocks --- */
 
 /* Section title — always cols 1–4 */

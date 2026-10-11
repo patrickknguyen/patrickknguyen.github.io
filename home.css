@@ -17,7 +17,7 @@
 .home__layout {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-md);
+    gap: var(--space-lg);
     align-items: start;
 }
 
@@ -26,7 +26,7 @@
 }
 
 /* --- Sidebar --- */
-/* Cols 1-3, col 4 is breathing room (same as the case study intro).
+/* Cols 1-4 (matches the four-column sections in the case studies).
    Fills the viewport so the links and portrait sit near the bottom. */
 .home__sidebar {
     grid-column: 1 / span 3;
