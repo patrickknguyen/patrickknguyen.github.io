@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patrick K. Nguyen · Clustr</title>
+    <title>Clustr | Patrick K. Nguyen</title>
     <meta name="description"
         content="Clustr - a browser-only image moodboard clustering tool blending semantic and aesthetic similarity. Machine Learning & Interaction Design case study by Patrick K. Nguyen.">
 
     <link rel="icon" type="image/svg+xml" href="../assets/Home/favicon.svg">
     <link rel="icon" type="image/png" href="../assets/Home/logo.png">
 
-    <link rel="stylesheet" href="../global.css?v=11">
-    <link rel="stylesheet" href="../case-studies.css?v=27">
+    <link rel="stylesheet" href="../global.css?v=22">
+    <link rel="stylesheet" href="../case-studies.css?v=33">
     <link rel="stylesheet" href="clustr.css?v=11">
 
     <!-- KaTeX for the scoring equation -->
@@ -29,8 +29,8 @@
             <p class="site-header__name"><a href="../">patrick k. nguyen</a></p>
             <nav class="site-header__links" aria-label="Links">
                 <a href="../resume/" target="_blank" rel="noopener">Resume</a>
-                <a href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
+                <a class="link-external" href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
+                <a class="link-external" href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
                 <a href="mailto:patrickknguyen@gmail.com">Email</a>
             </nav>
         </div>
@@ -44,17 +44,45 @@
                 <div class="case-study__aside">
                     <div class="case-study__title">
                         <h2>Clustr</h2>
-                        <p class="case-study__meta">Computer Vision & UX Prototyping · 2026</p>
-
-                        <ul class="case-study__toc">
-                            <li><a href="#problem">1 / Problem &amp; Approach</a></li>
-                            <li><a href="#practice">2 / In Practice</a></li>
-                            <li><a href="#decisions">3 / Key Design Decisions</a></li>
-                            <li><a href="#outcomes">4 / Outcomes &amp; Learnings</a></li>
-                        </ul>
+                        <p class="case-study__meta">Computer Vision & UX Prototyping, 2026</p>
                     </div>
 
-                    <div class="case-study__links">
+                    <div class="case-study__objective">
+                        <h3>Project Objective</h3>
+                        <p>
+                            My moodboards get messy quickly. Often I can feel a direction forming but find it hard to
+                            verbalize it. I wanted to use computer vision to bring these patterns to the surface, while
+                            keeping the experience playful.
+                        </p>
+                    </div>
+
+                    <div class="case-study__overview">
+                        <h3>Project Overview</h3>
+                        <p>
+                            Clustr is a prototype that sorts a collection of images into
+                            labeled groups. It pairs two different vision models, CLIP and DINO, letting the user blend
+                            grouping by subject with grouping by look to suit their boards.
+                        </p>
+                    </div>
+                </div>
+
+                <figure class="case-study__hero">
+                    <img class="img--outlined" src="../assets/Home/clustr-hero.png"
+                        alt="Clustr canvas with a moodboard sorted into image clusters">
+                </figure>
+
+                <nav class="case-study__contents" aria-label="Contents">
+                    <h3>Contents</h3>
+                    <ul class="case-study__toc">
+                        <li><a href="#problem">1 / Problem &amp; Approach</a></li>
+                        <li><a href="#practice">2 / In Practice</a></li>
+                        <li><a href="#decisions">3 / Key Design Decisions</a></li>
+                        <li><a href="#outcomes">4 / Outcomes &amp; Learnings</a></li>
+                    </ul>
+                </nav>
+
+                <div class="case-study__links">
+                    <div class="case-study__links-group">
                         <h3>Links</h3>
                         <ul>
                             <li><a href="https://patrickknguyen.github.io/clustr-app/" target="_blank"
@@ -68,29 +96,6 @@
                     </div>
                 </div>
 
-                <figure class="case-study__hero">
-                    <img src="../assets/Home/clustr-hero.png"
-                        alt="Clustr canvas with a moodboard sorted into image clusters">
-                </figure>
-
-                <div class="case-study__objective">
-                    <h3>Project Objective</h3>
-                    <p>
-                        My moodboards get messy quickly. Often I can feel a direction forming but find it hard to
-                        verbalize it. I wanted to use computer vision to bring these patterns to the surface, while
-                        keeping the experience playful.
-                    </p>
-                </div>
-
-                <div class="case-study__overview">
-                    <h3>Project Overview</h3>
-                    <p>
-                        Clustr is a prototype that sorts a collection of images into
-                        labeled groups. It pairs two different vision models, CLIP and DINO, letting the user blend
-                        grouping by subject with grouping by look to suit their boards.
-                    </p>
-                </div>
-
             </div>
         </div>
     </section>
@@ -100,7 +105,7 @@
         <div class="container">
             <div class="case-study__layout">
                 <figure class="figure clustr-demo">
-                    <video class="clustr-demo__video" src="clustr-demo.mp4" poster="clustr-demo-poster.jpg" autoplay
+                    <video class="clustr-demo__video img--outlined" src="clustr-demo.mp4" poster="clustr-demo-poster.jpg" autoplay
                         muted loop playsinline preload="metadata"
                         aria-label="Screen recording of Clustr embedding a set of reference images and re-clustering the layout as the semantic–aesthetic slider is dragged.">
                     </video>
@@ -172,7 +177,7 @@
 
                     <div class="section-body">
                         <div class="example-card__image">
-                            <img src="../assets/Clustr/inpractice-1.jpg"
+                            <img class="img--outlined" src="../assets/Clustr/inpractice-1.jpg"
                                 alt="Uploaded photo library of mixed interior and exterior architecture images, before clustering">
                         </div>
                         <h3 class="example-card__label">Library</h3>
@@ -185,7 +190,7 @@
 
                     <div class="section-body">
                         <div class="example-card__image">
-                            <img src="../assets/Clustr/inpractice-2-crop.png"
+                            <img class="img--outlined" src="../assets/Clustr/inpractice-2-crop.png"
                                 alt="Clustr map at alpha 0.00, semantic, split into an exterior cluster and an interior cluster">
                         </div>
                         <h3 class="example-card__label">By Subject</h3>
@@ -198,7 +203,7 @@
 
                     <div class="section-body">
                         <div class="example-card__image">
-                            <img src="../assets/Clustr/inpractice-3-crop.png"
+                            <img class="img--outlined" src="../assets/Clustr/inpractice-3-crop.png"
                                 alt="Clustr map at alpha 1.00, aesthetic, relabeling the exterior cluster concrete symmetrical geometric and the interior cluster warm rustic">
                         </div>
                         <h3 class="example-card__label">By Look</h3>

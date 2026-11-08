@@ -18,43 +18,43 @@
     align-items: start;
 }
 
-/* Title and links are grid items despite sitting inside the aside */
+/* Row 1: title, objective and overview (cols 1-4) beside the hero (cols 5-12).
+   Row 2: contents (cols 1-4) beside the links, so their tops line up */
 .case-study__aside {
-    display: contents;
-}
-
-.case-study__title {
-    grid-column: 1 / span 3;
+    grid-column: 1 / span 4;
     grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
 }
 
 .case-study__title h2 {
-    font-size: var(--font-xl);
-    line-height: 1.25;
+    font-size: var(--font-2xl);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     /* The trimmed heading needs a touch more room above the meta line */
     margin-bottom: var(--space-xs);
 }
 
 .case-study__meta {
-    font-size: var(--font-xs);
+    font-size: var(--font-sm);
     color: var(--color-text-secondary);
 }
 
-.case-study__toc {
-    list-style: none;
-    margin-top: var(--space-md);
+.case-study__objective h3,
+.case-study__overview h3 {
+    letter-spacing: 0.01em;
+    color: var(--color-text-secondary);
 }
 
-.case-study__toc li {
-    margin-bottom: var(--space-xs);
-}
-
-.case-study__toc a {
-    font-size: var(--font-sm);
+.case-study__objective p,
+.case-study__overview p {
+    font-size: var(--font-md);
+    font-weight: 300;
 }
 
 .case-study__hero {
-    grid-column: 5 / -1;
+    grid-column: 5 / span 7;
     grid-row: 1;
     margin: 0;
 }
@@ -65,37 +65,39 @@
     object-fit: cover;
 }
 
-.case-study__objective {
-    grid-column: 5 / span 4;
+/* Spaced like the links, so the two read as one row */
+.case-study__contents {
+    grid-column: 1 / span 4;
     grid-row: 2;
 }
 
-.case-study__overview {
-    grid-column: 9 / span 4;
-    grid-row: 2;
+.case-study__toc {
+    list-style: none;
 }
 
-.case-study__objective h3,
-.case-study__overview h3 {
-    letter-spacing: 0.01em;
+.case-study__toc a {
+    font-size: var(--font-sm);
 }
 
-.case-study__objective p,
-.case-study__overview p {
-    font-size: var(--font-md);
-    font-weight: 300;
-}
-
-/* Row 2, so the links top-align with the objective and overview */
+/* Subgrid keeps the page's columns, so each group starts at col 5 or col 9 */
 .case-study__links {
-    grid-column: 1 / span 3;
+    grid-column: 5 / -1;
     grid-row: 2;
+    display: grid;
+    grid-template-columns: subgrid;
+    row-gap: var(--space-md);
 }
 
+.case-study__links-group {
+    grid-column: span 4;
+}
+
+.case-study__contents h3,
 .case-study__links h3 {
-    font-size: var(--font-xs);
+    font-size: var(--font-sm);
     font-weight: 400;
     margin-bottom: 0;
+    color: var(--color-text-secondary);
 }
 
 .case-study__links ul {
@@ -105,17 +107,12 @@
 .case-study__links a {
     font-size: var(--font-sm);
     font-weight: 300;
-    color: var(--color-text-secondary);
 }
 
 .case-study__links a::after {
     content: "\2197";
     margin-left: 0.25em;
     font-size: 0.9em;
-}
-
-.case-study__links a:hover {
-    color: var(--color-text);
 }
 
 /* For links that aren't live yet */
@@ -178,11 +175,25 @@
 
 /* --- Column Placements --- */
 
-.col-text { grid-column: 1 / span 4; }
-.col-media { grid-column: 5 / -1; }
-.col-media--narrow { grid-column: 5 / span 5; }
-.section-col-left { grid-column: 5 / span 4; }
-.section-col-right { grid-column: 9 / span 4; }
+.col-text {
+    grid-column: 1 / span 4;
+}
+
+.col-media {
+    grid-column: 5 / -2;
+}
+
+.col-media--narrow {
+    grid-column: 5 / span 5;
+}
+
+.section-col-left {
+    grid-column: 5 / span 4;
+}
+
+.section-col-right {
+    grid-column: 9 / span 4;
+}
 
 .col-prose,
 .col-media--inset {
@@ -289,7 +300,7 @@
     background: rgba(0, 0, 0, 0.85);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.3s ease;
     cursor: zoom-out;
 }
 
@@ -303,6 +314,21 @@
     max-height: 90vh;
     object-fit: contain;
     cursor: default;
+    /* Grows into place as the backdrop fades in, and shrinks back on close.
+       Same easing as the home page hover */
+    transform: scale(0.94);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox-overlay--visible .lightbox-img {
+    transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lightbox-img {
+        transform: none;
+        transition: none;
+    }
 }
 
 .lightbox-arrow {
@@ -334,6 +360,12 @@
 /* --- Below 900px --- */
 
 @media (max-width: 900px) {
+
+    /* The columns' pieces join one grid so the hero can sit under the title */
+    .case-study__aside {
+        display: contents;
+    }
+
     .case-study__layout>*,
     .case-study__aside>*,
     .section-tri-col>*,
@@ -344,9 +376,33 @@
         grid-row: auto;
     }
 
-    .case-study__title { order: 1; }
-    .case-study__hero { order: 2; }
-    .case-study__objective { order: 3; }
-    .case-study__overview { order: 4; }
-    .case-study__links { order: 5; }
+    .case-study__title {
+        order: 1;
+    }
+
+    .case-study__hero {
+        order: 2;
+    }
+
+    .case-study__objective {
+        order: 3;
+    }
+
+    .case-study__overview {
+        order: 4;
+    }
+
+    .case-study__contents {
+        order: 5;
+    }
+
+    .case-study__links {
+        order: 6;
+    }
+
+    .case-study__links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
 }

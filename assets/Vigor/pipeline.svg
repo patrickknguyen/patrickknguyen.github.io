@@ -6,7 +6,7 @@
       <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
     </marker>
   </defs>
-  <rect y="22" width="1000" height="278" fill="#f5f4f0"/>
+  <rect y="22" width="1000" height="278" fill="#fff"/>
 
   <!-- step titles -->
   <g font-size="15" fill="#1a1a1a">
@@ -37,7 +37,7 @@
   <!-- 1 video: simple player -->
   <g>
     <rect x="29" y="99" width="110" height="76" rx="6" fill="#8a8a86"/>
-    <path d="M74,120 L100,137 L74,154 z" fill="#f5f4f0"/>
+    <path d="M74,120 L100,137 L74,154 z" fill="#fff"/>
   </g>
 
   <!-- 2 frames: grid -->

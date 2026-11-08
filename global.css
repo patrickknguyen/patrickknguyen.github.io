@@ -7,10 +7,13 @@
 /* --- Tokens --- */
 
 :root {
-    --color-bg: #f5f4f0;
+    --color-bg: #fff;
     --color-text: #1a1a1a;
-    --color-text-secondary: #555;
+    --color-text-secondary: #767676;
+    /* Lightest grey that passes contrast for large text (24px and up) */
+    --color-text-secondary-large: #e6e6e6;
     --color-border: #d4d4d0;
+    --color-divider: var(--color-border);
     --color-link-hover: #666;
 
     --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -19,30 +22,32 @@
     --font-md: 1rem;
     --font-lg: 1.25rem;
     --font-xl: 1.5rem;
-    --font-2xl: 2rem;
+    --font-2xl: 2.5rem;
 
     --space-2xs: 0.25rem;
     --space-xs: 0.5rem;
     --space-sm: 1rem;
     --space-md: 2rem;
     --space-lg: 4rem;
+    --space-xl: 8rem;
 
     --grid-columns: 12;
-    --grid-gutter: clamp(var(--space-md), 3vw, var(--space-lg));
+    --grid-gutter: clamp(var(--space-md), 5vw, var(--space-xl));
     --grid-row-gap: var(--space-md);
-    --page-margin: var(--space-lg);
+    --page-margin: 1.5rem;
     --max-width: 1800px;
 
     /* The name's cap height at --font-2xl, rounded up */
     --header-height: 1.5rem;
-    --content-offset: 3rem;
+    --content-offset: 6rem;
 }
 
 /* Breakpoint is 900px in every stylesheet; media queries can't read variables */
 @media (max-width: 900px) {
     :root {
         --grid-columns: 1;
-        --page-margin: var(--space-md);
+        --page-margin: var(--space-sm);
+        --content-offset: 3rem;
     }
 }
 
@@ -107,7 +112,7 @@ a:hover {
 .site-header__name,
 .site-header__links a,
 .case-study__title h2,
-.home__bio p:first-child {
+.home__label span {
     text-box: trim-both cap alphabetic;
 }
 
@@ -147,13 +152,13 @@ a:hover {
     left: var(--page-margin);
     right: var(--page-margin);
     height: 1px;
-    background-color: var(--color-border);
+    background-color: var(--color-divider);
 }
 
 /* --- Site Header --- */
 
 .site-header {
-    padding-top: var(--space-md);
+    padding-top: var(--page-margin);
 }
 
 /* Fixed row height, so content below starts at the same spot on every page */
@@ -165,30 +170,45 @@ a:hover {
 .site-header__name {
     grid-column: 1 / span 4;
     font-size: var(--font-2xl);
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.1;
     text-transform: lowercase;
     letter-spacing: -0.01em;
 }
 
-/* Subgrid puts one link at the start of each column, 9 to 12 */
+/* Smaller on the case studies; the home page sets its own size */
+.site-header .site-header__name {
+    font-size: var(--font-lg);
+}
+
+/* A thin grey edge for images with white backgrounds, the same grey as the
+   dividers. Drawn inside the image, so it doesn't change its size */
+.img--outlined {
+    outline: 1px solid var(--color-border);
+    outline-offset: -1px;
+}
+
+/* External links get a small arrow */
+.link-external::after {
+    content: "\2197";
+    margin-left: 0.25em;
+    font-size: 0.9em;
+}
+
+/* Subgrid puts one link at the start of each column, 8 to 11 */
 .site-header__links {
-    grid-column: 9 / -1;
+    grid-column: 8 / span 4;
     display: grid;
     grid-template-columns: subgrid;
 }
 
 .site-header__links a {
     font-size: var(--font-sm);
-    color: var(--color-text-secondary);
     white-space: nowrap;
 }
 
-.site-header__links a:hover {
-    color: var(--color-text);
-}
-
 @media (max-width: 900px) {
+
     .site-header__name,
     .site-header__links {
         grid-column: 1 / -1;
@@ -198,5 +218,66 @@ a:hover {
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs) var(--space-md);
+    }
+}
+
+/* --- Page Transitions --- */
+
+/* Between pages, the old page lifts and wipes away, then the new one rises in.
+   Browsers without cross-page view transitions just load the page as usual */
+@view-transition {
+    navigation: auto;
+}
+
+/* Registered so the wipe's mask can animate */
+@property --wipe-offset {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+@keyframes page-exit {
+    from {
+        opacity: 1;
+        --wipe-offset: 0;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        --wipe-offset: 1;
+        transform: translateY(-30px);
+    }
+}
+
+@keyframes page-enter {
+    from {
+        opacity: 0;
+        --wipe-offset: 0;
+        transform: translateY(30%);
+    }
+
+    to {
+        opacity: 1;
+        --wipe-offset: 1;
+        transform: translateY(0);
+    }
+}
+
+::view-transition-old(root) {
+    mask-image: linear-gradient(0deg, transparent calc(100% * var(--wipe-offset)), black calc(100% * var(--wipe-offset)));
+    animation: page-exit 0.4s cubic-bezier(0.27, 0, 0.51, 1) both;
+}
+
+::view-transition-new(root) {
+    mask-image: linear-gradient(0deg, black calc(100% * var(--wipe-offset)), transparent calc(100% * var(--wipe-offset)));
+    animation: page-enter 0.6s cubic-bezier(0.27, 0, 0.04, 1) 0.4s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
     }
 }

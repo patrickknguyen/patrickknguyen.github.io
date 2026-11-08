@@ -14,8 +14,8 @@
 
   <link rel="icon" type="image/svg+xml" href="assets/Home/favicon.svg">
   <link rel="icon" type="image/png" href="assets/Home/logo.png">
-  <link rel="stylesheet" href="global.css?v=11">
-  <link rel="stylesheet" href="home.css?v=21">
+  <link rel="stylesheet" href="global.css?v=22">
+  <link rel="stylesheet" href="home.css?v=29">
 </head>
 
 <body>
@@ -27,8 +27,8 @@
         <!-- ====== Links ====== -->
         <nav class="site-header__links home__nav" aria-label="Links">
           <a href="resume/" target="_blank" rel="noopener">Resume</a>
-          <a href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="link-external" href="https://github.com/patrickknguyen" target="_blank" rel="noopener">GitHub</a>
+          <a class="link-external" href="https://www.linkedin.com/in/patrickknguyen" target="_blank" rel="noopener">LinkedIn</a>
           <a href="mailto:patrickknguyen@gmail.com">Email</a>
         </nav>
 
@@ -36,8 +36,11 @@
         <aside id="about" class="home__sidebar">
           <h1 class="site-header__name home__name">patrick k. nguyen</h1>
 
+          <h2 class="home__label"><span>About</span></h2>
+
           <div class="home__bio">
-            <p>In his 2018 Design in Tech Report, John Maeda made the case for the computational designer, one who
+            <p>In his <a class="link-external" href="https://designintech.report/wp-content/uploads/2019/01/dit2018as_pdf.pdf"
+                target="_blank" rel="noopener">2018 Design in Tech Report</a>, John Maeda made the case for the computational designer, one who
               designs for scale. As he put it, "execution has outpaced innovation." The question of what to build and
               why is one designers are in a unique position to answer.
               <br><br>
@@ -55,6 +58,7 @@
 
         <!-- ====== Work ====== -->
         <section id="work" class="home__work" aria-label="Selected work">
+          <h2 class="home__label"><span>Case Studies</span></h2>
 
           <a href="vigor/" class="case-study-card" id="case-study-vigor">
             <div class="case-study-card__media">
@@ -63,7 +67,7 @@
             </div>
             <div class="case-study-card__info">
               <p class="case-study-card__title">ViGOR: Video-Generated Operative Reporting</p>
-              <p class="case-study-card__meta">Computer Vision &amp; Natural Language &middot; 2026</p>
+              <p class="case-study-card__meta">Computer Vision &amp; Natural Language, 2026</p>
               <p class="case-study-card__desc">Drafting operative notes from surgical video instead of the surgeon's
                 memory.</p>
             </div>
@@ -71,11 +75,11 @@
 
           <a href="clustr/" class="case-study-card" id="case-study-clustr">
             <div class="case-study-card__media">
-              <img class="case-study-card__img" src="assets/Home/clustr-hero.png" alt="Clustr image clustering prototype">
+              <img class="case-study-card__img img--outlined" src="assets/Home/clustr-hero.png" alt="Clustr image clustering prototype">
             </div>
             <div class="case-study-card__info">
               <p class="case-study-card__title">Clustr</p>
-              <p class="case-study-card__meta">Computer Vision &amp; UX Prototyping &middot; 2026</p>
+              <p class="case-study-card__meta">Computer Vision &amp; UX Prototyping, 2026</p>
               <p class="case-study-card__desc">Putting words to the patterns hiding in a messy moodboard.</p>
             </div>
           </a>
@@ -86,7 +90,7 @@
             </div>
             <div class="case-study-card__info">
               <p class="case-study-card__title">ZipVote (WIP)</p>
-              <p class="case-study-card__meta">Information &amp; Web Design &middot; 2026</p>
+              <p class="case-study-card__meta">Information &amp; Web Design, 2026</p>
               <p class="case-study-card__desc">Making local elections less intimidating for first-time voters.</p>
             </div>
           </a>
@@ -97,7 +101,7 @@
             </div>
             <div class="case-study-card__info">
               <p class="case-study-card__title">Summit Media Center</p>
-              <p class="case-study-card__meta">Design Thinking &amp; UX Prototyping &middot; 2020</p>
+              <p class="case-study-card__meta">Design Thinking &amp; UX Prototyping, 2020</p>
               <p class="case-study-card__desc">Reimagining how K-12 students learn, starting from how they create.</p>
             </div>
           </a>

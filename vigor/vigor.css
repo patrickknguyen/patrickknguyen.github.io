@@ -6,13 +6,9 @@
 
 /* --- Links --- */
 
-.case-study__links-subhead {
-    margin-top: var(--space-md);
-}
-
 /* A recognition with no link, styled to match the links above it */
 .case-study__links .link--plain {
     font-size: var(--font-sm);
     font-weight: 300;
-    color: var(--color-text-secondary);
+    color: var(--color-text);
 }

@@ -1,13 +1,13 @@
 /* ==========================================
    home.css
    Home page: a sticky sidebar (cols 1-3)
-   beside the scrolling case studies (cols 5-12).
+   beside the scrolling case studies (cols 5-11).
    ========================================== */
 
 /* --- Layout --- */
 
 .home {
-    padding: var(--space-md) 0 var(--page-margin);
+    padding: var(--page-margin) 0;
 }
 
 /* Row 1 matches the site header row on the case studies */
@@ -26,9 +26,9 @@
     grid-column: 1 / span 3;
     grid-row: 1 / span 2;
     position: sticky;
-    top: var(--space-md);
+    top: var(--page-margin);
     /* Fills the window down to the bottom page margin, so the portrait sits on it */
-    min-height: calc(100svh - var(--space-md) - var(--page-margin));
+    min-height: calc(100svh - 2 * var(--page-margin));
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
@@ -46,12 +46,37 @@
     /* Lines the bio up with the first case study image */
     margin-bottom: calc(var(--content-offset) - var(--space-md));
     white-space: nowrap;
-    /* Scales down on narrow windows to stay on one line */
-    font-size: min(var(--font-2xl), 10.5cqi);
+    /* Same size as the name on the case studies */
+    font-size: var(--font-lg);
+}
+
+/* "About" and "Case Studies", styled like the case study link labels */
+/* "About" and "Case Studies", sized like the case study titles.
+   The heading takes no height, so the bio and first image stay put;
+   its text sits just above, with its baseline --space-sm over the content */
+.home__label {
+    position: relative;
+    height: 0;
+    font-size: var(--font-2xl);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-text-secondary-large);
+}
+
+.home__label span {
+    position: absolute;
+    left: 0;
+    bottom: var(--space-sm);
+    white-space: nowrap;
+}
+
+/* Cancels the sidebar's flex gap after the label, so the bio doesn't move */
+.home__sidebar .home__label {
+    margin-bottom: calc(-1 * var(--space-md));
 }
 
 .home__bio p {
-    font-size: 1.0625rem;
+    font-size: var(--font-md);
     font-weight: 300;
     line-height: 1.55;
     letter-spacing: -0.005em;
@@ -71,7 +96,7 @@
 /* --- Work --- */
 
 .home__work {
-    grid-column: 5 / -1;
+    grid-column: 5 / span 7;
     grid-row: 2;
     /* The row gap plus this equals --content-offset, same as the case study heroes */
     padding-top: calc(var(--content-offset) - var(--grid-row-gap));
@@ -91,23 +116,24 @@
 .case-study-card+.case-study-card {
     margin-top: var(--space-lg);
     padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-divider);
 }
 
+/* On hover the image lifts: a slight enlarge and a soft shadow */
 .case-study-card__media {
     overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.case-study-card:hover .case-study-card__media {
+    transform: scale(1.015);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
 }
 
 .case-study-card__img {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    transition: transform 0.4s ease, filter 0.4s ease;
-}
-
-.case-study-card:hover .case-study-card__img {
-    transform: scale(1.02);
-    filter: brightness(0.94);
 }
 
 .case-study-card__info {
@@ -121,7 +147,7 @@
 }
 
 .case-study-card__meta {
-    font-size: var(--font-xs);
+    font-size: var(--font-sm);
     color: var(--color-text-secondary);
     margin-top: var(--space-2xs);
     margin-bottom: var(--space-xs);
@@ -136,6 +162,7 @@
 /* --- Below 900px --- */
 
 @media (max-width: 900px) {
+
     /* The sidebar's pieces join the grid so the links can sit under the name */
     .home__sidebar {
         display: contents;
@@ -143,6 +170,7 @@
 
     .home__name,
     .home__nav,
+    .home__sidebar .home__label,
     .home__bio,
     .home__sidebar-foot,
     .home__work {
@@ -150,11 +178,44 @@
         grid-row: auto;
     }
 
-    .home__name { order: 1; margin-bottom: 0; }
-    .home__nav { order: 2; }
-    .home__bio { order: 3; }
-    .home__sidebar-foot { order: 4; margin-bottom: var(--space-lg); }
-    .home__work { order: 5; padding-top: 0; }
+    .home__name {
+        order: 1;
+        margin-bottom: 0;
+    }
+
+    .home__nav {
+        order: 2;
+    }
+
+    /* Stacked, the labels take up space again */
+    .home__label {
+        height: auto;
+        margin-bottom: var(--space-sm);
+    }
+
+    .home__sidebar .home__label {
+        margin-bottom: calc(var(--space-sm) - var(--grid-row-gap));
+    }
+
+    .home__label span {
+        position: static;
+        display: block;
+    }
+
+    .home__sidebar .home__label,
+    .home__bio {
+        order: 3;
+    }
+
+    .home__sidebar-foot {
+        order: 4;
+        margin-bottom: var(--space-lg);
+    }
+
+    .home__work {
+        order: 5;
+        padding-top: 0;
+    }
 
     .case-study-card+.case-study-card {
         margin-top: var(--space-md);
