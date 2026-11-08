@@ -14,9 +14,10 @@
     --color-text-secondary: #949494;
     --color-text-faint: #e6e6e6;
     --color-bg-subtle: #f9f9f9;
-    --color-link-hover: #666;
-    --color-border: #d4d4d0;
-    --color-divider: var(--color-border);
+    /* Roles that reuse the greys above */
+    --color-link-hover: var(--color-text-secondary);
+    --color-border: var(--color-text-secondary);
+    --color-divider: var(--color-text-faint);
 
     /* Type: a 12 / 14 / 16 / 20 / 24 / 40 scale on the system font */
     --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -34,11 +35,8 @@
 
     --leading-tight: 1.15;
     --leading-normal: 1.5;
-    --leading-relaxed: 1.55;
 
     --tracking-tight: -0.03em;
-    --tracking-snug: -0.005em;
-    --tracking-wide: 0.01em;
 
     /* Space */
     --space-2xs: 0.25rem;
@@ -175,11 +173,6 @@ a:hover {
     font-weight: var(--weight-light);
 }
 
-.home__bio p {
-    line-height: var(--leading-relaxed);
-    letter-spacing: var(--tracking-snug);
-}
-
 /* Small body: section text and the link lists under the hero */
 .section-body p,
 .case-study__links a,
@@ -287,7 +280,7 @@ a.link--disabled::after {
     top: -1.25rem;
     left: var(--page-margin);
     right: var(--page-margin);
-    height: 1px;
+    height: 2px;
     background-color: var(--color-divider);
 }
 

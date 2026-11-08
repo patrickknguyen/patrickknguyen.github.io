@@ -43,11 +43,6 @@
     margin-bottom: var(--space-xs);
 }
 
-.case-study__objective h3,
-.case-study__overview h3 {
-    letter-spacing: var(--tracking-wide);
-}
-
 .case-study__hero {
     grid-column: 5 / span 7;
     grid-row: 1;

@@ -32,10 +32,9 @@ Load order on a case study: `global.css`, `case-studies.css`, `{case-study}.css`
 
 1. **Tokens first.** Every color, size, weight, space, easing and shadow is a token in `:root` in `global.css`. Other stylesheets use `var(--token)` and don't hardcode values.
 2. **Type in one place.** Every text style is defined once, in the Type Styles section of `global.css`. Page stylesheets handle layout and spacing, never type.
-3. **One grid.** Every page sits on the same 12-column grid with the same gutter, so columns line up across pages.
-4. **Two start lines.** Content starts at column 1 or column 5. Nothing else.
-5. **Shared before specific.** Layout comes from shared classes in `case-studies.css`. A case study stylesheet holds only things no other page needs.
-6. **Top edges align.** Headings beside images are trimmed so their visible top meets the image's top edge, and the first content on every page starts at the same height.
+3. **One grid, read in thirds.** Every page sits on the same 12-column grid with the same gutter, so columns line up across pages. The 12 columns are used as three groups of four, so content starts at column 1, 5 or 9. Two deliberate exceptions: the nav starts at column 8, and heroes, media and prose stop at column 11, leaving column 12 as breathing room on the right.
+4. **Shared before specific.** Layout comes from shared classes in `case-studies.css`. A case study stylesheet holds only things no other page needs.
+5. **Top edges align.** Headings beside images are trimmed so their visible top meets the image's top edge, and the first content on every page starts at the same height.
 
 ## Tokens
 
@@ -44,12 +43,13 @@ Load order on a case study: `global.css`, `case-studies.css`, `{case-study}.css`
 | Token | Value | Use |
 |---|---|---|
 | `--color-bg` | `#fff` | Page background |
+| `--color-bg-subtle` | `#f9f9f9` | Case study sections below the intro |
 | `--color-text` | `#1a1a1a` | Body text, headings, links |
 | `--color-text-secondary` | `#949494` | Tags, captions, labels, thank-you notes |
 | `--color-text-faint` | `#e6e6e6` | "About" and "Case Studies" on the home page |
-| `--color-link-hover` | `#666` | Link hover |
-| `--color-border` | `#d4d4d0` | Image outlines, video placeholder |
-| `--color-divider` | `--color-border` | Lines between sections and case study cards |
+| `--color-link-hover` | `--color-text-secondary` | Link hover |
+| `--color-border` | `--color-text-secondary` | Image outlines, video placeholder |
+| `--color-divider` | `--color-faint` | Lines between case study sections |
 
 Contrast on white: `--color-text-secondary` is 3:1, which passes WCAG AA only for large text (24px and up). It's lighter than AA asks for at small sizes, on purpose. `--color-text-faint` is 1.25:1 and decorative.
 
@@ -74,10 +74,7 @@ Font: system stack (`--font-body`). Base size 16px.
 | `--weight-semibold` | 600 | Titles and headings |
 | `--leading-tight` | 1.15 | Display text and the site name |
 | `--leading-normal` | 1.5 | Everything else |
-| `--leading-relaxed` | 1.55 | The home page bio |
 | `--tracking-tight` | -0.03em | Display text, card titles, site name |
-| `--tracking-snug` | -0.005em | The home page bio |
-| `--tracking-wide` | 0.01em | "Project Objective" and "Project Overview" |
 
 ### Type Styles
 
@@ -129,6 +126,7 @@ Defined in `global.css`. To restyle a kind of text, change it there.
 | `--duration-base` | 0.3s | Lightbox fade |
 | `--duration-slow` | 0.5s | Card hover, lightbox scale |
 | `--shadow-lift` | `0 8px 28px rgba(0, 0, 0, 0.1)` | Card hover |
+| `--shadow-soft` | `0 8px 28px rgba(0, 0, 0, 0.05)` | The case study intro over the grey below it |
 
 Page transitions keep their own curves and timings in `global.css`, since nothing else uses them.
 
@@ -137,11 +135,12 @@ Page transitions keep their own curves and timings in `global.css`, since nothin
 ### Columns
 
 ```
-| 1  2  3 | 4 | 5  6  7  8  9  10  11 | 12 |
-| sidebar |   |    media or prose     |    |
-| title   |   |                       |    |
-| side text  |                        |    |
+| 1   2   3   4 | 5   6   7   8 | 9   10  11 | 12 |
+| title, side   | media or prose             |    |
+| point         | point         | point           |
 ```
+
+Three groups of four. Titles and side text take the first group. Media and prose span the second and third, stopping at column 11. `.section-tri-col` puts one block in each group.
 
 | Class | Columns | Use |
 |---|---|---|
@@ -165,7 +164,7 @@ On every page. Name in columns 1 to 4, links starting at columns 8, 9, 10 and 11
 ### Home Page
 
 - Sidebar, columns 1 to 3: name, "About", bio, portrait. Sticky when it fits the window, and the portrait sits on the bottom page margin. When it doesn't fit, the script in `index.html` lets it scroll.
-- Work, columns 5 to 11: "Case Studies", then case study cards with 16:9 images. Each card is title, description, then tags.
+- Work, columns 5 to 11: "Case Studies", then case study cards with 16:9 images. Each card is title, description, then tags. Cards are spaced, not divided.
 - "About" and "Case Studies" take no height, so the bio and the first image start `--content-offset` below the header, the same line as a case study's title and hero.
 
 ### Case Study Intro
@@ -182,6 +181,8 @@ The hero is always 16:9 and matches the image on the home page card. Contents an
 ### Case Study Sections
 
 Each section is `<section class="section--bordered case-study-section">` with a `.container` and a `.case-study__layout` grid inside. The title takes columns 1 to 4. Content uses a column class from the table above.
+
+Everything below the intro sits on `--color-bg-subtle`, and the white intro casts `--shadow-soft` onto it. A divider separates each section from the next, except the first, where the change from white to grey already does that job.
 
 Text blocks:
 
@@ -306,6 +307,6 @@ Stylesheet links end in `?v=N`. Increase N when a stylesheet changes, so browser
 - Links fade color on hover over 0.2s.
 - Case study cards lift on hover: the image grows to 101.5% and gains a soft shadow over 0.5s.
 - Moving between pages, the old page lifts and wipes away over 0.4s, then the new one rises in over 0.6s. Browsers without cross-page view transitions load normally.
-- The lightbox fades in over 0.3s while the image grows from 94% into place. Click or press Escape to close, and use the arrow keys to step through images.
+- The lightbox fades in over 0.3s while the image grows from 94% into place. Transparent images get a white backing so dark text stays readable. Click or press Escape to close, and use the arrow keys to step through images.
 - With Reduce Motion on, the page transition and lightbox scale are off.
 - Selected text inverts: background color on text color.
