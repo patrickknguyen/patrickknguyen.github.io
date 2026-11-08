@@ -1,7 +1,7 @@
 /* ==========================================
    zipvote.css
    ZipVote one-offs. Layout comes from
-   case-studies.css.
+   case-studies.css, type from global.css.
    ========================================== */
 
 /* --- UX Cards --- */
@@ -13,6 +13,7 @@
 }
 
 .zipvote-ux-label {
+    font-weight: var(--weight-medium);
     margin-top: var(--space-sm);
     margin-bottom: var(--space-md);
     text-align: center;
@@ -20,7 +21,7 @@
 
 .section-body--xs p {
     font-size: var(--font-xs);
-    font-weight: 300;
+    font-weight: var(--weight-light);
 }
 
 .section-point--xs {

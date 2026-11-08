@@ -1,7 +1,8 @@
 /* ==========================================
    home.css
-   Home page: a sticky sidebar (cols 1-3)
+   Home page layout: a sticky sidebar (cols 1-3)
    beside the scrolling case studies (cols 5-11).
+   Type styles live in global.css.
    ========================================== */
 
 /* --- Layout --- */
@@ -32,7 +33,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    container-type: inline-size;
 }
 
 /* Set by the script in index.html when the sidebar is taller than the window */
@@ -46,40 +46,6 @@
     /* Lines the bio up with the first case study image */
     margin-bottom: calc(var(--content-offset) - var(--space-md));
     white-space: nowrap;
-    /* Same size as the name on the case studies */
-    font-size: var(--font-lg);
-}
-
-/* "About" and "Case Studies", styled like the case study link labels */
-/* "About" and "Case Studies", sized like the case study titles.
-   The heading takes no height, so the bio and first image stay put;
-   its text sits just above, with its baseline --space-sm over the content */
-.home__label {
-    position: relative;
-    height: 0;
-    font-size: var(--font-2xl);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    color: var(--color-text-secondary-large);
-}
-
-.home__label span {
-    position: absolute;
-    left: 0;
-    bottom: var(--space-sm);
-    white-space: nowrap;
-}
-
-/* Cancels the sidebar's flex gap after the label, so the bio doesn't move */
-.home__sidebar .home__label {
-    margin-bottom: calc(-1 * var(--space-md));
-}
-
-.home__bio p {
-    font-size: var(--font-md);
-    font-weight: 300;
-    line-height: 1.55;
-    letter-spacing: -0.005em;
 }
 
 .home__sidebar-foot {
@@ -93,6 +59,28 @@
     filter: grayscale(20%);
 }
 
+/* --- Section Labels --- */
+
+/* "About" and "Case Studies". The heading takes no height, so the bio and
+   first image stay level with the case study heroes; its text sits just
+   above, with its baseline 1.5rem over the content */
+.home__label {
+    position: relative;
+    height: 0;
+}
+
+.home__label span {
+    position: absolute;
+    left: 0;
+    bottom: calc(var(--space-sm) + var(--space-xs));
+    white-space: nowrap;
+}
+
+/* Cancels the sidebar's flex gap after the label, so the bio doesn't move */
+.home__sidebar .home__label {
+    margin-bottom: calc(-1 * var(--space-md));
+}
+
 /* --- Work --- */
 
 .home__work {
@@ -104,30 +92,26 @@
     flex-direction: column;
 }
 
-.case-study-card {
+/* The whole card is one link; its text keeps its own colors on hover */
+.case-study-card,
+.case-study-card:hover {
     display: block;
     color: inherit;
 }
 
-.case-study-card:hover {
-    color: inherit;
-}
-
 .case-study-card+.case-study-card {
-    margin-top: var(--space-lg);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-divider);
+    margin-top: calc(var(--space-md) + var(--space-sm));
 }
 
 /* On hover the image lifts: a slight enlarge and a soft shadow */
 .case-study-card__media {
     overflow: hidden;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform var(--duration-slow) var(--ease-out), box-shadow var(--duration-slow) var(--ease-out);
 }
 
 .case-study-card:hover .case-study-card__media {
     transform: scale(1.015);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lift);
 }
 
 .case-study-card__img {
@@ -137,26 +121,20 @@
 }
 
 .case-study-card__info {
-    padding-top: var(--space-md);
+    padding-top: var(--space-sm);
 }
 
 .case-study-card__title {
-    font-size: var(--font-lg);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-}
-
-.case-study-card__meta {
-    font-size: var(--font-sm);
-    color: var(--color-text-secondary);
-    margin-top: var(--space-2xs);
     margin-bottom: var(--space-xs);
 }
 
-.case-study-card__desc {
-    font-size: var(--font-md);
-    font-weight: 300;
+/* Description with its tags right under it, read as one unit */
+.case-study-card__summary {
     max-width: 44rem;
+}
+
+.case-study-card__meta {
+    margin-top: var(--space-2xs);
 }
 
 /* --- Below 900px --- */
@@ -187,21 +165,6 @@
         order: 2;
     }
 
-    /* Stacked, the labels take up space again */
-    .home__label {
-        height: auto;
-        margin-bottom: var(--space-sm);
-    }
-
-    .home__sidebar .home__label {
-        margin-bottom: calc(var(--space-sm) - var(--grid-row-gap));
-    }
-
-    .home__label span {
-        position: static;
-        display: block;
-    }
-
     .home__sidebar .home__label,
     .home__bio {
         order: 3;
@@ -217,8 +180,22 @@
         padding-top: 0;
     }
 
+    /* Stacked, the labels take up space again */
+    .home__label {
+        height: auto;
+        margin-bottom: var(--space-sm);
+    }
+
+    .home__sidebar .home__label {
+        margin-bottom: calc(var(--space-sm) - var(--grid-row-gap));
+    }
+
+    .home__label span {
+        position: static;
+        display: block;
+    }
+
     .case-study-card+.case-study-card {
-        margin-top: var(--space-md);
-        padding-top: var(--space-md);
+        margin-top: calc(var(--space-sm) + var(--space-xs));
     }
 }

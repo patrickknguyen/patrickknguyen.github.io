@@ -1,29 +1,46 @@
 /* ==========================================
    global.css
-   Design tokens, base styles, the page grid
-   and the site header. Loaded on every page.
+   The design system: tokens, base styles,
+   type styles, the page grid, the site header
+   and page transitions. Loaded on every page.
    ========================================== */
 
 /* --- Tokens --- */
 
 :root {
+    /* Color */
     --color-bg: #fff;
     --color-text: #1a1a1a;
-    --color-text-secondary: #767676;
-    /* Lightest grey that passes contrast for large text (24px and up) */
-    --color-text-secondary-large: #e6e6e6;
+    --color-text-secondary: #949494;
+    --color-text-faint: #e6e6e6;
+    --color-bg-subtle: #f9f9f9;
+    --color-link-hover: #666;
     --color-border: #d4d4d0;
     --color-divider: var(--color-border);
-    --color-link-hover: #666;
 
+    /* Type: a 12 / 14 / 16 / 20 / 24 / 40 scale on the system font */
     --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-xs: 0.8125rem;
+    --font-xs: 0.75rem;
     --font-sm: 0.875rem;
     --font-md: 1rem;
     --font-lg: 1.25rem;
     --font-xl: 1.5rem;
     --font-2xl: 2.5rem;
 
+    --weight-light: 300;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+
+    --leading-tight: 1.15;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.55;
+
+    --tracking-tight: -0.03em;
+    --tracking-snug: -0.005em;
+    --tracking-wide: 0.01em;
+
+    /* Space */
     --space-2xs: 0.25rem;
     --space-xs: 0.5rem;
     --space-sm: 1rem;
@@ -31,15 +48,24 @@
     --space-lg: 4rem;
     --space-xl: 8rem;
 
+    /* Grid and page */
     --grid-columns: 12;
     --grid-gutter: clamp(var(--space-md), 5vw, var(--space-xl));
     --grid-row-gap: var(--space-md);
     --page-margin: 1.5rem;
     --max-width: 1800px;
-
-    /* The name's cap height at --font-2xl, rounded up */
+    /* Height of the header row, so content starts at the same spot on every page */
     --header-height: 1.5rem;
+    /* Space between the header row and the first content */
     --content-offset: 6rem;
+
+    /* Motion and depth */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast: 0.2s;
+    --duration-base: 0.3s;
+    --duration-slow: 0.5s;
+    --shadow-lift: 0 8px 28px rgba(0, 0, 0, 0.1);
+    --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.05);
 }
 
 /* Breakpoint is 900px in every stylesheet; media queries can't read variables */
@@ -70,19 +96,19 @@ body {
     font-family: var(--font-body);
     background-color: var(--color-bg);
     color: var(--color-text);
-    line-height: 1.5;
+    line-height: var(--leading-normal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 h2 {
     font-size: var(--font-lg);
-    font-weight: 500;
+    font-weight: var(--weight-semibold);
 }
 
 h3 {
     font-size: var(--font-sm);
-    font-weight: 500;
+    font-weight: var(--weight-semibold);
     margin-bottom: var(--space-xs);
 }
 
@@ -95,7 +121,7 @@ img {
 a {
     color: var(--color-text);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--duration-fast) ease;
 }
 
 a:hover {
@@ -107,13 +133,122 @@ a:hover {
     color: var(--color-bg);
 }
 
-/* Trims the space above capitals so a heading's visible top lines up
-   with the image beside it */
+/* --- Type Styles ---
+   Every text style on the site, defined once. Page stylesheets
+   handle layout and spacing, not type. */
+
+/* Display: case study titles, and "About" and "Case Studies" on the home page */
+.case-study__title h2,
+.home__label {
+    font-size: var(--font-2xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+}
+
+.home__label {
+    color: var(--color-text-faint);
+}
+
+/* Title: case study names on the home page cards */
+.case-study-card__title {
+    font-size: var(--font-xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+}
+
+/* Name: "patrick k. nguyen" in the header */
+.site-header__name {
+    font-size: var(--font-lg);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    text-transform: lowercase;
+}
+
+/* Body: the abstract, the bio and the card descriptions */
+.case-study__objective p,
+.case-study__overview p,
+.home__bio p,
+.case-study-card__desc {
+    font-size: var(--font-md);
+    font-weight: var(--weight-light);
+}
+
+.home__bio p {
+    line-height: var(--leading-relaxed);
+    letter-spacing: var(--tracking-snug);
+}
+
+/* Small body: section text and the link lists under the hero */
+.section-body p,
+.case-study__links a,
+.case-study__links .link--plain {
+    font-size: var(--font-sm);
+    font-weight: var(--weight-light);
+}
+
+/* Nav and contents links */
+.site-header__links a,
+.case-study__toc a {
+    font-size: var(--font-sm);
+}
+
+/* Label: the grey headings over the contents and link lists */
+.case-study__contents h3,
+.case-study__links h3 {
+    font-size: var(--font-sm);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-secondary);
+}
+
+/* Meta: tags, captions and the thank-you notes */
+.case-study__meta,
+.case-study-card__meta,
+.figure__caption,
+.case-study-footnote {
+    font-size: var(--font-xs);
+    color: var(--color-text-secondary);
+}
+
+.figure__caption {
+    font-weight: var(--weight-light);
+}
+
+/* Trims the space above capitals and below the baseline, so a heading's
+   visible top lines up with the image beside it */
 .site-header__name,
 .site-header__links a,
 .case-study__title h2,
 .home__label span {
     text-box: trim-both cap alphabetic;
+}
+
+/* --- Links and Images --- */
+
+/* External links get a small arrow */
+.link-external::after,
+.case-study__links a::after {
+    content: "\2197";
+    margin-left: 0.25em;
+    font-size: 0.9em;
+}
+
+/* For links that aren't live yet */
+.link--disabled {
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+a.link--disabled::after {
+    content: none;
+}
+
+/* A thin grey edge for images with white backgrounds, the same grey as the
+   dividers. Drawn inside the image, so it doesn't change its size */
+.img--outlined {
+    outline: 1px solid var(--color-border);
+    outline-offset: -1px;
 }
 
 /* --- Layout --- */
@@ -141,6 +276,7 @@ a:hover {
     min-width: 0;
 }
 
+/* A divider across the page, 1.25rem above the section's content */
 .section--bordered .container {
     position: relative;
 }
@@ -161,7 +297,6 @@ a:hover {
     padding-top: var(--page-margin);
 }
 
-/* Fixed row height, so content below starts at the same spot on every page */
 .site-header__inner {
     align-items: start;
     min-height: var(--header-height);
@@ -169,30 +304,6 @@ a:hover {
 
 .site-header__name {
     grid-column: 1 / span 4;
-    font-size: var(--font-2xl);
-    font-weight: 500;
-    line-height: 1.1;
-    text-transform: lowercase;
-    letter-spacing: -0.01em;
-}
-
-/* Smaller on the case studies; the home page sets its own size */
-.site-header .site-header__name {
-    font-size: var(--font-lg);
-}
-
-/* A thin grey edge for images with white backgrounds, the same grey as the
-   dividers. Drawn inside the image, so it doesn't change its size */
-.img--outlined {
-    outline: 1px solid var(--color-border);
-    outline-offset: -1px;
-}
-
-/* External links get a small arrow */
-.link-external::after {
-    content: "\2197";
-    margin-left: 0.25em;
-    font-size: 0.9em;
 }
 
 /* Subgrid puts one link at the start of each column, 8 to 11 */
@@ -203,7 +314,6 @@ a:hover {
 }
 
 .site-header__links a {
-    font-size: var(--font-sm);
     white-space: nowrap;
 }
 
@@ -264,6 +374,7 @@ a:hover {
     }
 }
 
+/* The new page starts as the old one finishes: 0.4s out, then 0.6s in */
 ::view-transition-old(root) {
     mask-image: linear-gradient(0deg, transparent calc(100% * var(--wipe-offset)), black calc(100% * var(--wipe-offset)));
     animation: page-exit 0.4s cubic-bezier(0.27, 0, 0.51, 1) both;

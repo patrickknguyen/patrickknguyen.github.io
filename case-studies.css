@@ -1,25 +1,35 @@
 /* ==========================================
    case-studies.css
-   Shared layout for every case study.
-   Blocks start at col 1 or col 5 and take
-   their width from a .col-* class. Each case
-   study's own stylesheet holds only one-offs.
+   Shared layout for every case study: the
+   intro, sections, figures and the lightbox.
+   Blocks start at col 1 or col 5 and take their
+   width from a .col-* class. Type styles live in
+   global.css; each case study's own stylesheet
+   holds only one-offs.
    ========================================== */
 
 /* --- Intro --- */
 
+/* Row 1: title, objective and overview (cols 1-4) beside the hero (cols 5-11).
+   Row 2: contents (cols 1-4) beside the links, so their tops line up */
+
+/* The white intro casts a soft shadow onto the grey below it.
+   It sits above the next section so the shadow shows, and the clip
+   keeps the shadow off its top edge */
 .case-study-intro {
     padding-top: var(--content-offset);
-    /* Same as .case-study-section, so every divider sits 4rem below content */
     padding-bottom: var(--space-lg);
+    position: relative;
+    z-index: 1;
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-soft);
+    clip-path: inset(0 0 -4rem 0);
 }
 
 .case-study__layout {
     align-items: start;
 }
 
-/* Row 1: title, objective and overview (cols 1-4) beside the hero (cols 5-12).
-   Row 2: contents (cols 1-4) beside the links, so their tops line up */
 .case-study__aside {
     grid-column: 1 / span 4;
     grid-row: 1;
@@ -29,28 +39,13 @@
 }
 
 .case-study__title h2 {
-    font-size: var(--font-2xl);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
     /* The trimmed heading needs a touch more room above the meta line */
     margin-bottom: var(--space-xs);
 }
 
-.case-study__meta {
-    font-size: var(--font-sm);
-    color: var(--color-text-secondary);
-}
-
 .case-study__objective h3,
 .case-study__overview h3 {
-    letter-spacing: 0.01em;
-    color: var(--color-text-secondary);
-}
-
-.case-study__objective p,
-.case-study__overview p {
-    font-size: var(--font-md);
-    font-weight: 300;
+    letter-spacing: var(--tracking-wide);
 }
 
 .case-study__hero {
@@ -65,18 +60,9 @@
     object-fit: cover;
 }
 
-/* Spaced like the links, so the two read as one row */
 .case-study__contents {
     grid-column: 1 / span 4;
     grid-row: 2;
-}
-
-.case-study__toc {
-    list-style: none;
-}
-
-.case-study__toc a {
-    font-size: var(--font-sm);
 }
 
 /* Subgrid keeps the page's columns, so each group starts at col 5 or col 9 */
@@ -92,40 +78,29 @@
     grid-column: span 4;
 }
 
+/* The contents list is spaced like the links, so the two read as one row */
 .case-study__contents h3,
 .case-study__links h3 {
-    font-size: var(--font-sm);
-    font-weight: 400;
     margin-bottom: 0;
-    color: var(--color-text-secondary);
 }
 
+.case-study__toc,
 .case-study__links ul {
     list-style: none;
 }
 
-.case-study__links a {
-    font-size: var(--font-sm);
-    font-weight: 300;
+/* --- Sections --- */
+
+/* Everything below the abstract sits on a subtle grey, so the intro reads as its own block */
+.case-study-section,
+.case-study-footnote {
+    background-color: var(--color-bg-subtle);
 }
 
-.case-study__links a::after {
-    content: "\2197";
-    margin-left: 0.25em;
-    font-size: 0.9em;
-}
-
-/* For links that aren't live yet */
-.case-study__links .link--disabled {
-    text-decoration: line-through;
-    pointer-events: none;
-}
-
-.case-study__links .link--disabled::after {
+/* The change from white to grey already separates the intro, so no line there */
+.case-study-intro + .case-study-section .container::before {
     content: none;
 }
-
-/* --- Sections --- */
 
 .case-study-section {
     padding-top: var(--space-md);
@@ -141,7 +116,6 @@
     padding-top: var(--space-sm);
     padding-bottom: var(--space-lg);
     text-align: center;
-    color: var(--color-text-secondary);
 }
 
 .case-study-footnote .container>* {
@@ -152,23 +126,12 @@
     grid-column: 1 / span 4;
 }
 
-.section-body p {
-    font-size: var(--font-md);
-    font-weight: 300;
-}
-
-.section-body--stacked p {
-    margin-bottom: var(--space-md);
-}
-
-.section-body--stacked p:last-child {
-    margin-bottom: 0;
-}
-
+.section-body--stacked p,
 .section-point {
     margin-bottom: var(--space-md);
 }
 
+.section-body--stacked p:last-child,
 .section-point:last-child {
     margin-bottom: 0;
 }
@@ -187,17 +150,17 @@
     grid-column: 5 / span 5;
 }
 
+.col-prose,
+.col-media--inset {
+    grid-column: 5 / span 7;
+}
+
 .section-col-left {
     grid-column: 5 / span 4;
 }
 
 .section-col-right {
     grid-column: 9 / span 4;
-}
-
-.col-prose,
-.col-media--inset {
-    grid-column: 5 / span 7;
 }
 
 /* --- Multi-Column Subsections --- */
@@ -246,9 +209,6 @@
 
 .figure__caption {
     margin-top: var(--space-sm);
-    font-size: var(--font-sm);
-    font-weight: 300;
-    color: var(--color-text-secondary);
 }
 
 /* The flex gap already spaces the caption; pull it up to match */
@@ -260,14 +220,10 @@
     text-align: center;
 }
 
+/* Black and underlined, so a link stands out in a grey caption */
 .figure__caption a {
-    color: var(--color-text);
     text-decoration: underline;
     text-underline-offset: 2px;
-}
-
-.figure__caption a:hover {
-    color: var(--color-link-hover);
 }
 
 /* --- Example Cards --- */
@@ -282,6 +238,8 @@
 }
 
 .example-card__label {
+    /* A label under an image, so it stays lighter than the subheadings */
+    font-weight: var(--weight-medium);
     margin-top: var(--space-sm);
     margin-bottom: var(--space-md);
     text-align: center;
@@ -300,7 +258,7 @@
     background: rgba(0, 0, 0, 0.85);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--duration-base) ease;
     cursor: zoom-out;
 }
 
@@ -309,26 +267,20 @@
     pointer-events: auto;
 }
 
+/* Grows into place as the backdrop fades in, and shrinks back on close */
 .lightbox-img {
+    /* Shows behind transparent images, like the ViGOR diagram, so dark text stays readable */
+    background-color: var(--color-bg);
     max-width: 80%;
     max-height: 90vh;
     object-fit: contain;
     cursor: default;
-    /* Grows into place as the backdrop fades in, and shrinks back on close.
-       Same easing as the home page hover */
     transform: scale(0.94);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform var(--duration-slow) var(--ease-out);
 }
 
 .lightbox-overlay--visible .lightbox-img {
     transform: scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .lightbox-img {
-        transform: none;
-        transition: none;
-    }
 }
 
 .lightbox-arrow {
@@ -357,11 +309,18 @@
     right: var(--space-md);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .lightbox-img {
+        transform: none;
+        transition: none;
+    }
+}
+
 /* --- Below 900px --- */
 
 @media (max-width: 900px) {
 
-    /* The columns' pieces join one grid so the hero can sit under the title */
+    /* The aside's pieces join the grid so the hero can sit under the title */
     .case-study__aside {
         display: contents;
     }
@@ -398,9 +357,6 @@
 
     .case-study__links {
         order: 6;
-    }
-
-    .case-study__links {
         display: flex;
         flex-direction: column;
         gap: var(--space-md);

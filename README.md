@@ -13,27 +13,29 @@ Open http://localhost:8000. The server only exists for local preview; GitHub Pag
 ## Files
 
 ```
-index.html            Home page
-global.css            Tokens, base styles, page grid, site header. Every page.
-home.css              Home page only
-case-studies.css      Shared case study layout, figures, lightbox styles
-lightbox.js           Click-to-expand images in case studies
-server.js             Local preview server
+index.html               Home page
+global.css               The design system: tokens, base styles, type styles, page grid,
+                         site header, page transitions. Every page.
+home.css                 Home page layout
+case-studies.css         Shared case study layout, figures, lightbox
+lightbox.js              Click-to-expand images in case studies
+server.js                Local preview server
 {case-study}/index.html  One folder per case study: vigor, clustr, summit, zipvote
-{case-study}/{name}.css  That case study's one-offs
-resume/               Résumé page, separate stylesheet, outside this system
-assets/               Images, one folder per page
+{case-study}/{name}.css  That case study's one-offs, only if it has any (Clustr, ZipVote)
+resume/                  Résumé page, separate stylesheet, outside this system
+assets/                  Images, one folder per page
 ```
 
-Load order on a case study: `global.css`, `case-studies.css`, `{case-study}.css`, then `lightbox.js` before `</body>`.
+Load order on a case study: `global.css`, `case-studies.css`, `{case-study}.css` if there is one, then `lightbox.js` before `</body>`.
 
 ## Principles
 
-1. **Tokens first.** Colors, type sizes, spacing and grid values live in `:root` in `global.css`. Page stylesheets use `var(--token)` and never hardcode their own values.
-2. **One grid.** Every page sits on the same 12-column grid with the same gutter, so columns line up across pages.
-3. **Two start lines.** Content starts at column 1 or column 5. Nothing else.
-4. **Shared before specific.** Layout comes from shared classes in `case-studies.css`. A case study stylesheet holds only things no other page needs.
-5. **Top edges align.** Headings beside images are trimmed so their visible top meets the image's top edge.
+1. **Tokens first.** Every color, size, weight, space, easing and shadow is a token in `:root` in `global.css`. Other stylesheets use `var(--token)` and don't hardcode values.
+2. **Type in one place.** Every text style is defined once, in the Type Styles section of `global.css`. Page stylesheets handle layout and spacing, never type.
+3. **One grid.** Every page sits on the same 12-column grid with the same gutter, so columns line up across pages.
+4. **Two start lines.** Content starts at column 1 or column 5. Nothing else.
+5. **Shared before specific.** Layout comes from shared classes in `case-studies.css`. A case study stylesheet holds only things no other page needs.
+6. **Top edges align.** Headings beside images are trimmed so their visible top meets the image's top edge, and the first content on every page starts at the same height.
 
 ## Tokens
 
@@ -41,26 +43,57 @@ Load order on a case study: `global.css`, `case-studies.css`, `{case-study}.css`
 
 | Token | Value | Use |
 |---|---|---|
-| `--color-bg` | `#f5f4f0` | Page background |
-| `--color-text` | `#1a1a1a` | Body text, headings |
-| `--color-text-secondary` | `#555` | Meta, captions, link lists |
-| `--color-border` | `#d4d4d0` | Dividers |
+| `--color-bg` | `#fff` | Page background |
+| `--color-text` | `#1a1a1a` | Body text, headings, links |
+| `--color-text-secondary` | `#949494` | Tags, captions, labels, thank-you notes |
+| `--color-text-faint` | `#e6e6e6` | "About" and "Case Studies" on the home page |
 | `--color-link-hover` | `#666` | Link hover |
+| `--color-border` | `#d4d4d0` | Image outlines, video placeholder |
+| `--color-divider` | `--color-border` | Lines between sections and case study cards |
+
+Contrast on white: `--color-text-secondary` is 3:1, which passes WCAG AA only for large text (24px and up). It's lighter than AA asks for at small sizes, on purpose. `--color-text-faint` is 1.25:1 and decorative.
 
 ### Type
 
-Font: system stack (`--font-body`). Base size 16px. Body line height 1.5.
+Font: system stack (`--font-body`). Base size 16px.
 
 | Token | Size | Use |
 |---|---|---|
-| `--font-xs` | 0.8125rem | Meta lines, link list headings |
-| `--font-sm` | 0.875rem | h3, nav links, captions, contents list |
-| `--font-md` | 1rem | Body text |
-| `--font-lg` | 1.25rem | h2 section titles, case study card titles |
-| `--font-xl` | 1.5rem | Case study title |
-| `--font-2xl` | 2rem | Site name |
+| `--font-xs` | 0.75rem (12px) | Tags, captions, thank-you notes |
+| `--font-sm` | 0.875rem (14px) | Section text, nav, labels, link lists, h3 |
+| `--font-md` | 1rem (16px) | Abstract, bio, card descriptions |
+| `--font-lg` | 1.25rem (20px) | Site name, section titles (h2) |
+| `--font-xl` | 1.5rem (24px) | Card titles on the home page |
+| `--font-2xl` | 2.5rem (40px) | Case study titles, home section labels |
 
-Weights: 300 for body text, 400 for the site name, 500 for headings.
+| Token | Value | Use |
+|---|---|---|
+| `--weight-light` | 300 | Body text |
+| `--weight-regular` | 400 | Labels |
+| `--weight-medium` | 500 | Site name, labels under example images |
+| `--weight-semibold` | 600 | Titles and headings |
+| `--leading-tight` | 1.15 | Display text and the site name |
+| `--leading-normal` | 1.5 | Everything else |
+| `--leading-relaxed` | 1.55 | The home page bio |
+| `--tracking-tight` | -0.03em | Display text, card titles, site name |
+| `--tracking-snug` | -0.005em | The home page bio |
+| `--tracking-wide` | 0.01em | "Project Objective" and "Project Overview" |
+
+### Type Styles
+
+Defined in `global.css`. To restyle a kind of text, change it there.
+
+| Style | Spec | Where |
+|---|---|---|
+| Display | 2xl, semibold, tight | Case study titles, "About", "Case Studies" |
+| Title | xl, semibold, tight | Card titles on the home page |
+| Name | lg, medium, tight, lowercase | "patrick k. nguyen" |
+| Heading (h2) | lg, semibold | Section titles |
+| Subheading (h3) | sm, semibold | Points within sections, abstract labels |
+| Body | md, light | Abstract, bio, card descriptions |
+| Small body | sm, light | Section text, link lists |
+| Label | sm, regular, secondary | "Contents", "Links", "Recognitions" |
+| Meta | xs, secondary | Tags, captions, thank-you notes |
 
 ### Spacing
 
@@ -71,68 +104,80 @@ Weights: 300 for body text, 400 for the site name, 500 for headings.
 | `--space-sm` | 1rem |
 | `--space-md` | 2rem |
 | `--space-lg` | 4rem |
+| `--space-xl` | 8rem |
 
 ### Grid and Page
 
 | Token | Value | Use |
 |---|---|---|
 | `--grid-columns` | 12, or 1 below 900px | Column count |
-| `--grid-gutter` | 2rem to 4rem, fluid | Space between columns |
+| `--grid-gutter` | 5vw, between 2rem and 8rem | Space between columns |
 | `--grid-row-gap` | 2rem | Space between grid rows |
-| `--page-margin` | 4rem, or 2rem below 900px | Left, right and bottom page edge |
+| `--page-margin` | 1.5rem, or 1rem below 900px | Page edges |
 | `--max-width` | 1800px | Content max width |
 | `--header-height` | 1.5rem | Height of the header row |
-| `--content-offset` | 3rem | Header to first content, every page |
+| `--content-offset` | 6rem, or 3rem below 900px | Header to first content, every page |
 
 **Breakpoint:** 900px everywhere. Media queries can't read variables, so the number is repeated in each stylesheet. Below it, `--grid-columns` becomes 1 and every block spans the full width.
+
+### Motion and Depth
+
+| Token | Value | Use |
+|---|---|---|
+| `--ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | Card hover, lightbox |
+| `--duration-fast` | 0.2s | Link color |
+| `--duration-base` | 0.3s | Lightbox fade |
+| `--duration-slow` | 0.5s | Card hover, lightbox scale |
+| `--shadow-lift` | `0 8px 28px rgba(0, 0, 0, 0.1)` | Card hover |
+
+Page transitions keep their own curves and timings in `global.css`, since nothing else uses them.
 
 ## Layout
 
 ### Columns
 
 ```
-| 1  2  3 | 4 | 5  6  7  8 | 9  10  11  12 |
-| sidebar |   |      media or prose         |
-| title   |   |                             |
-| side text  |                             |
+| 1  2  3 | 4 | 5  6  7  8  9  10  11 | 12 |
+| sidebar |   |    media or prose     |    |
+| title   |   |                       |    |
+| side text  |                        |    |
 ```
 
 | Class | Columns | Use |
 |---|---|---|
 | `.section-title` | 1 to 4 | Section heading |
 | `.col-text` | 1 to 4 | Text beside media |
-| `.col-media` | 5 to 12 | Full width media |
+| `.col-media` | 5 to 11 | Full width media |
 | `.col-prose` | 5 to 11 | Long-form text |
-| `.col-media--inset` | 5 to 11 | Slightly narrower media |
+| `.col-media--inset` | 5 to 11 | Media matched to prose width |
 | `.col-media--narrow` | 5 to 9 | Tall media, like a long screenshot |
 | `.section-col-left` | 5 to 8 | Paired text, left |
 | `.section-col-right` | 9 to 12 | Paired text, right |
 | `.section-tri-col` | 1 to 12 | Three 4-column blocks |
 | `.section-duo-col` | 5 to 12 | Two 4-column blocks |
 
-`.section-tri-col` and `.section-duo-col` use CSS subgrid, so their columns are the page's own columns.
+`.section-tri-col`, `.section-duo-col`, the site header links and the case study links use CSS subgrid, so their columns are the page's own columns.
 
 ### Site Header
 
-On every page. Name in columns 1 to 4, links starting at columns 9, 10, 11 and 12. Not sticky. On the home page the name sits in the sticky sidebar instead, and the links sit in the grid's first row.
+On every page. Name in columns 1 to 4, links starting at columns 8, 9, 10 and 11. Not sticky. On the home page the name sits in the sticky sidebar instead, and the links sit in the grid's first row.
 
 ### Home Page
 
-- Sidebar, columns 1 to 3: name, bio, portrait. Sticky when it fits the window, and the portrait sits on the bottom page margin. When it doesn't fit, the script in `index.html` lets it scroll.
-- Work, columns 5 to 12: case study cards with 16:9 images.
-- The bio and the first case study image start `--content-offset` below the header, the same line as a case study's title and hero.
+- Sidebar, columns 1 to 3: name, "About", bio, portrait. Sticky when it fits the window, and the portrait sits on the bottom page margin. When it doesn't fit, the script in `index.html` lets it scroll.
+- Work, columns 5 to 11: "Case Studies", then case study cards with 16:9 images. Each card is title, description, then tags.
+- "About" and "Case Studies" take no height, so the bio and the first image start `--content-offset` below the header, the same line as a case study's title and hero.
 
 ### Case Study Intro
 
 | Element | Columns | Row |
 |---|---|---|
-| `.case-study__title`: title, meta, contents | 1 to 3 | 1 |
-| `.case-study__hero`: 16:9 image | 5 to 12 | 1 |
-| `.case-study__links`: links, recognitions | 1 to 3 | 2 |
-| `.case-study__objective` | 5 to 8 | 2 |
-| `.case-study__overview` | 9 to 12 | 2 |
+| `.case-study__aside`: title, tags, objective, overview | 1 to 4 | 1 |
+| `.case-study__hero`: 16:9 image | 5 to 11 | 1 |
+| `.case-study__contents`: contents list | 1 to 4 | 2 |
+| `.case-study__links`: links, then recognitions | 5 to 12, one group every 4 columns | 2 |
 
-The hero is always 16:9 and matches the image on the home page card.
+The hero is always 16:9 and matches the image on the home page card. Contents and links share a row, so their tops line up.
 
 ### Case Study Sections
 
@@ -178,6 +223,14 @@ The summary sits beside the section title. Each card's text is a direct example 
 - `.figure__caption--center` centers a caption.
 - Every image in a `.case-study-section` opens in the lightbox automatically.
 - Captions say what to notice, not what the image is.
+
+### Shared Helpers
+
+| Class | Use |
+|---|---|
+| `.img--outlined` | Thin grey edge for images with white backgrounds |
+| `.link-external` | Adds a ↗ arrow. Links under a case study hero get it automatically |
+| `.link--disabled` | Struck through and unclickable, for links that aren't live yet |
 
 ## Writing CSS
 
@@ -225,22 +278,24 @@ In JavaScript, headers and dividers use `/* */` and inline comments use `//`. In
 
 - Straight apostrophes: `don't`, not `don’t`.
 - Case study names keep their capitals everywhere, including page titles and alt text: Clustr, ViGOR, ZipVote.
-- No em dashes. Page titles use a middle dot: `Patrick K. Nguyen · Clustr`.
+- No em dashes and no middle dots. Tags use a comma: `Computer Vision & UX Prototyping, 2026`. Page titles use a pipe: `Clustr | Patrick K. Nguyen`.
 
 ### Before Adding a Rule
 
 1. Is there a token for this value? Use it.
-2. Does a shared class already do this? Use it.
-3. Will a second case study need it? Put it in `case-studies.css`.
-4. Only then add it to that case study's stylesheet.
+2. Is it text? Use or extend a type style in `global.css`.
+3. Does a shared class already do this? Use it.
+4. Will a second case study need it? Put it in `case-studies.css`.
+5. Only then add it to that case study's stylesheet.
 
 ## Adding a Case Study
 
 1. Copy an existing case study folder and rename it.
-2. Replace the intro: title, meta, contents list, 16:9 hero, objective, overview, links.
+2. Replace the intro: title, tags, objective, overview, 16:9 hero, contents list, links.
 3. Build sections with `.section-title` and the column classes.
 4. Add a case study card to `index.html` using the same hero image.
-5. Keep the case study stylesheet for one-offs only.
+5. Add `.img--outlined` to any image with a white background.
+6. Only add a case study stylesheet if it needs one-offs.
 
 ## Cache Busting
 
@@ -249,6 +304,8 @@ Stylesheet links end in `?v=N`. Increase N when a stylesheet changes, so browser
 ## Interactions
 
 - Links fade color on hover over 0.2s.
-- Case study cards zoom to 102% and dim slightly on hover over 0.4s.
-- The lightbox fades in over 0.25s. Click or press Escape to close, and use the arrow keys to step through images.
+- Case study cards lift on hover: the image grows to 101.5% and gains a soft shadow over 0.5s.
+- Moving between pages, the old page lifts and wipes away over 0.4s, then the new one rises in over 0.6s. Browsers without cross-page view transitions load normally.
+- The lightbox fades in over 0.3s while the image grows from 94% into place. Click or press Escape to close, and use the arrow keys to step through images.
+- With Reduce Motion on, the page transition and lightbox scale are off.
 - Selected text inverts: background color on text color.

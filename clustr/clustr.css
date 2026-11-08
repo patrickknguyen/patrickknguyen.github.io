@@ -1,7 +1,7 @@
 /* ==========================================
    clustr.css
    Clustr one-offs. Layout comes from
-   case-studies.css.
+   case-studies.css, type from global.css.
    ========================================== */
 
 /* --- Demo Video --- */
@@ -34,6 +34,7 @@
     padding-left: var(--space-md);
     overflow-x: auto;
     overflow-y: hidden;
+    /* KaTeX draws its math at 1.21em; this brings it back near body size */
     font-size: 0.9rem;
 }
 
