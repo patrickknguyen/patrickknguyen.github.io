@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* Resume sheet layout: desktop screens and print */
+@custom-variant sheet {
+  @media (width >= 56.25rem) {
+    @slot;
+  }
+  @media print {
+    @slot;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --breakpoint-desktop: 56.25rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  /* The gutter matches the page margin; change both together */
+  --spacing-gutter: 3rem;
+  --spacing-page: 3rem;
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --border: oklch(0.922 0 0);
+}
+
+@layer base {
+  html {
+    @apply font-sans;
+    /* A visible scrollbar's track can't match both the white and grey bands, and hiding it
+       keeps the page from shifting when the lightbox locks scrolling */
+    scrollbar-width: none;
+  }
+  body {
+    @apply bg-background text-foreground text-body;
+  }
+}
+
+@utility meta-label {
+  @apply font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground;
+}
+
+@utility site-name {
+  @apply text-body font-normal lowercase tracking-wide;
+  text-box: cap alphabetic;
+}
+
+@utility display-title {
+  @apply text-body font-normal tracking-wide;
+  text-box: cap alphabetic;
+}
+
+@utility section-title {
+  @apply text-body font-normal tracking-wide;
+}
+
+@utility subhead {
+  @apply font-semibold;
+}
+
+/* For images with white edges that would otherwise disappear into the page */
+@utility outlined {
+  outline: 1px solid var(--muted-foreground);
+  outline-offset: -1px;
+}
+
+::selection {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+/* Lightbox: the image morphs between the page and the center while the backdrop fades.
+   The lightbox sets data-lightbox so these rules and the page transition don't mix. */
+::view-transition-group(lightbox-media),
+html[data-lightbox]::view-transition-old(root),
+html[data-lightbox]::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Page transition, scaled down from lukaszydek.com for a quieter design */
+@keyframes page-exit {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-12px); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(48px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html:not([data-lightbox])::view-transition-old(root),
+html:not([data-lightbox])::view-transition-new(root) {
+  /* The default blending brightens the two pages where they overlap */
+  mix-blend-mode: normal;
+  backface-visibility: hidden;
+}
+
+html:not([data-lightbox])::view-transition-old(root) {
+  animation: 0.35s cubic-bezier(0.27, 0, 0.51, 1) both page-exit;
+}
+
+html:not([data-lightbox])::view-transition-new(root) {
+  animation: 0.55s cubic-bezier(0.27, 0, 0.04, 1) 0.25s both page-enter;
+}
+
+/* Let clicks through to the page while a transition runs */
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* The resume sheet's own padding sets the print margins */
+@page {
+  size: letter;
+  margin: 0;
+}
